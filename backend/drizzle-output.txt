@@ -1,0 +1,1649 @@
+import {
+  pgTable,
+  uuid,
+  numeric,
+  timestamp,
+  index,
+  varchar,
+  boolean,
+} from 'drizzle-orm/pg-core';
+import { users } from './users.schema';
+
+// --- КОНФИГУРАЦИЯ ---
+export const affiliateCodesTable = pgTable('affiliate_codes', {
+  code: varchar('code', { length: 20 }).primaryKey(),
+  ownerId: uuid('owner_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+
+  // Сколько % от своей комиссии владелец кода отдает другу в виде мгновенного кэшбэка
+  friendCommissionShareRate: numeric('friend_commission_share_rate', {
+    precision: 5,
+    scale: 2,
+  }).default('0.00'), // 0% to 50%
+
+  isActive: boolean('is_active').default(true).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+import {
+  pgTable,
+  uuid,
+  numeric,
+  timestamp,
+  index,
+  varchar,
+  boolean,
+} from 'drizzle-orm/pg-core';
+import { users } from './users.schema';
+import { gameBetsTable } from './game-bets.schema';
+
+export const affiliateEarningsLogTable = pgTable('affiliate_earnings_log', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  sourceGameBetId: uuid('source_game_bet_id')
+    .notNull()
+    .references(() => gameBetsTable.id)
+    .unique(),
+
+  // Кто и с кого заработал
+  referrerId: uuid('referrer_id')
+    .notNull()
+    .references(() => users.id),
+  refereeId: uuid('referee_id')
+    .notNull()
+    .references(() => users.id),
+
+  // Финансовый расчет
+  refereeWagerUsd: numeric('referee_wager_usd', {
+    precision: 18,
+    scale: 2,
+  }).notNull(),
+  gameHouseEdge: numeric('game_house_edge', {
+    precision: 5,
+    scale: 2,
+  }).notNull(),
+  baseCommissionUsd: numeric('base_commission_usd', {
+    precision: 18,
+    scale: 4,
+  }).notNull(),
+  friendCashbackUsd: numeric('friend_cashback_usd', {
+    precision: 18,
+    scale: 4,
+  }).notNull(),
+  referrerCommissionUsd: numeric('referrer_commission_usd', {
+    precision: 18,
+    scale: 4,
+  }).notNull(),
+
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+import {
+  pgTable,
+  uuid,
+  numeric,
+  timestamp,
+  index,
+  varchar,
+  boolean,
+} from 'drizzle-orm/pg-core';
+import { users } from './users.schema';
+import { affiliateCodesTable } from './affiliate-codes.schema';
+
+export const affiliateRelationsTable = pgTable('affiliate_relations', {
+  refereeId: uuid('referee_id')
+    .primaryKey()
+    .references(() => users.id, { onDelete: 'cascade' }), // Приглашенный
+  referrerId: uuid('referrer_id')
+    .notNull()
+    .references(() => users.id), // Пригласивший
+  codeUsed: varchar('code_used', { length: 20 })
+    .notNull()
+    .references(() => affiliateCodesTable.code),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+import { pgTable, varchar, bigint } from 'drizzle-orm/pg-core';
+
+export const appSettingsTable = pgTable('app_settings', {
+  key: varchar('key', { length: 50 }).primaryKey(), // например 'last_usdt_scan_timestamp'
+  value: bigint('value', { mode: 'number' }).notNull(), // timestamp в миллисекундах
+});
+import {
+  pgTable,
+  uuid,
+  varchar,
+  numeric,
+  timestamp,
+} from 'drizzle-orm/pg-core';
+import { walletsTable } from './wallets.schema';
+
+export const balanceLocksTable = pgTable('balance_locks', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  walletId: uuid('wallet_id')
+    .notNull()
+    .references(() => walletsTable.id),
+
+  amount: numeric('amount', { precision: 36, scale: 18 }).notNull(),
+  reason: varchar('reason', { length: 50 }).notNull(), // 'withdrawal_request', 'active_bet'
+  referenceId: uuid('reference_id').notNull(), // PaymentID or SessionID
+
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+import {
+  pgTable,
+  uuid,
+  varchar,
+  numeric,
+  integer,
+  timestamp,
+  boolean,
+  jsonb,
+  uniqueIndex,
+} from 'drizzle-orm/pg-core';
+import { users } from './users.schema';
+import { bonusCodesTable } from './bonus-codes.schema';
+import { bonusCampaignsTable } from './bonus-campaigns.schema';
+
+export const bonusActivationsLogTable = pgTable(
+  'bonus_activations_log',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id),
+    codeUsed: varchar('code_used', { length: 30 }).references(
+      () => bonusCodesTable.code,
+    ),
+    campaignId: uuid('campaign_id')
+      .notNull()
+      .references(() => bonusCampaignsTable.id),
+    bonusGranted: jsonb('bonus_granted'),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (t) => ({
+    userCampaignUniq: uniqueIndex('idx_bonus_user_campaign').on(
+      t.userId,
+      t.campaignId,
+    ),
+  }),
+);
+import {
+  pgTable,
+  uuid,
+  varchar,
+  numeric,
+  integer,
+  timestamp,
+  boolean,
+  jsonb,
+  uniqueIndex,
+} from 'drizzle-orm/pg-core';
+
+// --- КОНФИГУРАЦИЯ ---
+export const bonusCampaignsTable = pgTable('bonus_campaigns', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  name: varchar('name', { length: 100 }).notNull(), // "Welcome Bonus 2024", "Twitter Drop #55"
+  bonusType: varchar('bonus_type', { length: 20 }).notNull(), // 'CASH', 'FREE_SPINS', 'DEPOSIT_MATCH'
+  config: jsonb('config').notNull(), // { "amount_usd": 10 } OR { "game_slug": "...", "spin_count": 20 }
+  wagerMultiplier: integer('wager_multiplier').notNull().default(40),
+  requirements: jsonb('requirements'), // { "min_vip_level": 1, "kyc_level_required": "level_1" }
+  expiresAt: timestamp('expires_at'),
+  isActive: boolean('is_active').default(true).notNull(),
+});
+import {
+  pgTable,
+  uuid,
+  varchar,
+  numeric,
+  integer,
+  timestamp,
+  boolean,
+  jsonb,
+  uniqueIndex,
+} from 'drizzle-orm/pg-core';
+import { bonusCampaignsTable } from './bonus-campaigns.schema';
+
+export const bonusCodesTable = pgTable('bonus_codes', {
+  code: varchar('code', { length: 30 }).primaryKey(),
+  campaignId: uuid('campaign_id')
+    .notNull()
+    .references(() => bonusCampaignsTable.id, { onDelete: 'cascade' }),
+  maxTotalUses: integer('max_total_uses'), // null = безлимит
+  maxUsesPerUser: integer('max_uses_per_user').default(1),
+  currentTotalUses: integer('current_total_uses').default(0).notNull(),
+  isActive: boolean('is_active').default(true).notNull(),
+});
+import { pgTable, uuid, timestamp, index } from 'drizzle-orm/pg-core';
+import { participantRoleEnum } from './enums.schema';
+import { chats } from './chats.schema';
+import { users } from './users.schema';
+import { relations } from 'drizzle-orm';
+import { guestSessions } from './guest-session.schema';
+
+export const chatParticipantsTable = pgTable(
+  'chat_participants',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+
+    chatId: uuid('chat_id')
+      .notNull()
+      .references(() => chats.id, { onDelete: 'cascade' }),
+
+    userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }),
+    guestId: uuid('guest_id').references(() => guestSessions.id, {
+      onDelete: 'cascade',
+    }),
+
+    joinedAt: timestamp('joined_at').defaultNow().notNull(),
+    leftAt: timestamp('left_at'),
+  },
+  (t) => ({
+    chatIdx: index('idx_chat_participants_chat_id').on(t.chatId),
+    userIdx: index('idx_chat_participants_user_id').on(t.userId),
+    guestIdx: index('idx_chat_participants_guest_id').on(t.guestId),
+  }),
+);
+
+export const chatParticipantsRelations = relations(
+  chatParticipantsTable,
+  ({ one }) => ({
+    chat: one(chats, {
+      fields: [chatParticipantsTable.chatId],
+      references: [chats.id],
+    }),
+    user: one(users, {
+      fields: [chatParticipantsTable.userId],
+      references: [users.id],
+    }),
+    guest: one(guestSessions, {
+      fields: [chatParticipantsTable.guestId],
+      references: [guestSessions.id],
+    }),
+  }),
+);
+import { pgTable, uuid, timestamp, index } from 'drizzle-orm/pg-core';
+import { chatTypeEnum, chatStatusEnum } from './enums.schema';
+
+export const chats = pgTable(
+  'chats',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    type: chatTypeEnum('type').notNull(),
+    status: chatStatusEnum('status').default('active').notNull(),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    closedAt: timestamp('closed_at'),
+  },
+  (t) => ({
+    statusIdx: index('idx_chats_status').on(t.status),
+    typeIdx: index('idx_chats_type').on(t.type),
+  }),
+);
+import { relations } from 'drizzle-orm';
+import {
+  pgTable,
+  uuid,
+  text,
+  integer,
+  boolean,
+  numeric,
+  uniqueIndex,
+  timestamp,
+} from 'drizzle-orm/pg-core';
+import { walletsTable } from './wallets.schema';
+
+export const currenciesTable = pgTable(
+  'currencies',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+
+    // Основные данные
+    symbol: text('symbol').notNull(), // 'BTC', 'USDT', 'ETH'
+    network: text('network').notNull(), // 'Bitcoin', 'ERC20', 'TRC20'
+    name: text('name').notNull(), // 'Bitcoin', 'Tether USD'
+
+    // Живые данные
+    priceUsd: numeric('price_usd', { precision: 18, scale: 8 })
+      .notNull()
+      .default('0'),
+    lastPriceUpdate: timestamp('last_price_update'),
+
+    // Лимиты и статусы
+    isActive: boolean('is_active').default(true),
+    isDepositEnabled: boolean('is_deposit_enabled').default(true),
+    isWithdrawalEnabled: boolean('is_withdrawal_enabled').default(true),
+
+    icon: text('icon'),
+
+    // Конфигурация
+    decimals: integer('decimals').notNull().default(8),
+    minDeposit: numeric('min_deposit', { precision: 36, scale: 18 }).default(
+      '0',
+    ),
+    minWithdrawal: numeric('min_withdrawal', {
+      precision: 36,
+      scale: 18,
+    }).default('0'),
+    withdrawalFee: numeric('withdrawal_fee', {
+      precision: 36,
+      scale: 18,
+    }).default('0'),
+
+    // Блокчейн
+    contractAddress: text('contract_address'), // NULL for native
+    minConfirmations: integer('min_confirmations').default(1),
+  },
+  (t) => [
+    // Уникальная пара Символ + Сеть (чтобы не было двух USDT ERC20)
+    uniqueIndex('uniq_curr_symbol_network').on(t.symbol, t.network),
+  ],
+);
+
+export const currenciesRelations = relations(currenciesTable, ({ many }) => ({
+  wallets: many(walletsTable),
+}));
+import { currenciesTable } from './currencies.schema';
+import { users } from './users.schema';
+import {
+  uuid,
+  pgTable,
+  text,
+  timestamp,
+  varchar,
+  boolean,
+} from 'drizzle-orm/pg-core';
+
+export const depositAddressesTable = pgTable('deposit_addresses', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id').references(() => users.id),
+  currencyId: uuid('currency_id')
+    .notNull()
+    .references(() => currenciesTable.id),
+
+  address: varchar('address', { length: 128 }).notNull(),
+  derivationPath: varchar('derivation_path', { length: 255 }), //
+
+  isAssigned: boolean('is_assigned').default(true),
+
+  createdAt: timestamp('created_at').defaultNow(),
+});
+import { pgEnum } from 'drizzle-orm/pg-core';
+
+// --- Users & Access ---
+export const userRoleEnum = pgEnum('user_role', [
+  'user',
+  'admin',
+  'moderator',
+  'bot',
+]);
+export const userStatusEnum = pgEnum('user_status', [
+  'active',
+  'suspended',
+  'banned',
+  'frozen',
+]);
+export const kycStatusEnum = pgEnum('kyc_status', [
+  'none',
+  'pending',
+  'level_1',
+  'level_2',
+  'level_3',
+  'rejected',
+]);
+
+// --- Chat ---
+export const chatTypeEnum = pgEnum('chat_type', [
+  'public',
+  'support',
+  'private',
+]);
+export const chatStatusEnum = pgEnum('chat_status', [
+  'queued',
+  'active',
+  'closed',
+]);
+export const participantRoleEnum = pgEnum('participant_role', [
+  'user',
+  'operator',
+  'system',
+]);
+export const messageTypeEnum = pgEnum('message_type', [
+  'text',
+  'image',
+  'file',
+  'system',
+]);
+export const deliveryStatusEnum = pgEnum('delivery_status', [
+  'sent',
+  'delivered',
+  'read',
+]);
+
+// --- Games ---
+export const gameEventsTypeEnum = pgEnum('game_events_type', ['launch', 'bet']);
+export const gameEventsModeEnum = pgEnum('game_events_mode', ['real', 'demo']);
+export const gameRoundStatusEnum = pgEnum('game_round_status', [
+  'active',
+  'completed',
+  'cancelled',
+  'failed',
+]);
+
+// --- Finance (Critical) ---
+export const paymentsTypeEnum = pgEnum('payment_type', [
+  'deposit',
+  'withdrawal',
+]);
+export const paymentsStatusEnum = pgEnum('payment_status', [
+  'pending_approval', // Ждет админа
+  'processing', // Отправлено в сеть
+  'completed', // Успех
+  'failed', // Ошибка сети
+  'rejected', // Отклонено админом
+  'cancelled', // Отменено юзером
+]);
+
+// Polymorphic reference types
+export const ledgerRefType = pgEnum('ref_type', [
+  'game_round',
+  'payment',
+  'bonus',
+  'affiliate',
+  'manual',
+]);
+
+export const kycLevelEnum = pgEnum('kyc_level', [
+  'none',
+  'basic',
+  'verified',
+  'enhanced',
+]);
+
+// --- Finance ---
+export const currencyTypeEnum = pgEnum('currency_type', ['crypto', 'fiat']);
+export const txTypeEnum = pgEnum('tx_type', [
+  'deposit',
+  'withdrawal',
+  'bet',
+  'win',
+  'refund',
+  'adjustment',
+  'affiliate',
+  'bonus',
+  'swap',
+  'tip',
+]);
+export const txStatusEnum = pgEnum('tx_status', [
+  'pending',
+  'processing',
+  'completed',
+  'failed',
+  'cancelled',
+  'rejected',
+]);
+
+export const gameStatusEnum = pgEnum('game_status', [
+  'active',
+  'maintenance',
+  'disabled',
+]);
+export const sessionStatusEnum = pgEnum('session_status', [
+  'created',
+  'in_progress',
+  'completed',
+  'cancelled',
+]);
+
+// --- Bonuses ---
+export const bonusTypeEnum = pgEnum('bonus_type', [
+  'deposit_match',
+  'free_spins',
+  'rakeback',
+  'weekly_boost',
+]);
+export const bonusStatusEnum = pgEnum('bonus_status', [
+  'active',
+  'completed',
+  'expired',
+  'forfeited',
+]);
+
+export const transactionTypeEnum = pgEnum('transaction_type', [
+  'deposit',
+  'withdrawal',
+  'bet',
+  'win',
+  'refund', // Возврат ставки (отмена раунда)
+  'adjustment', // Ручная коррекция админом
+  'affiliate_payout',
+  'bonus_credit',
+  'tip',
+]);
+
+export const paymentStatusEnum = pgEnum('payment_status', [
+  'pending', // Ожидает подтверждений в сети (депозит)
+  'pending_approval', // Ожидает ручного подтверждения (вывод)
+  'processing', // Отправлено в сеть (вывод)
+  'completed', // Успешно завершено
+  'failed', // Ошибка (сеть, провайдер)
+  'rejected', // Отклонено админом
+  'cancelled', // Отменено пользователем
+]);
+
+// --- Gaming Logic ---
+export const gameProviderEnum = pgEnum('game_provider', [
+  'original',
+  'pragmatic_play',
+  'evolution',
+  'hacksaw',
+]);
+export const gameCategoryEnum = pgEnum('game_category', [
+  'slots',
+  'live_casino',
+  'originals',
+  'table_games',
+]);
+export const gameSessionStatusEnum = pgEnum('game_session_status', [
+  'created',
+  'active',
+  'completed',
+  'cancelled',
+]);
+
+// --- Ledger (Audit Trail) ---
+export const ledgerRefTypeEnum = pgEnum('ledger_ref_type', [
+  'game_bet',
+  'payment',
+  'bonus',
+  'adjustment',
+]);
+import {
+  pgTable,
+  uuid,
+  varchar,
+  numeric,
+  boolean,
+  timestamp,
+  jsonb,
+  index,
+} from 'drizzle-orm/pg-core';
+import { users } from './users.schema';
+import { relations } from 'drizzle-orm';
+import { walletsTable } from './wallets.schema';
+import { currenciesTable } from './currencies.schema';
+import { gamesTable } from './games.schema';
+import { gameSessionsTable } from './games-sessions.schema';
+
+export const gameBetsTable = pgTable(
+  'game_bets',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    walletId: uuid('wallet_id')
+      .notNull()
+      .references(() => walletsTable.id),
+    currencyId: uuid('currency_id')
+      .notNull()
+      .references(() => currenciesTable.id),
+
+    gameId: uuid('game_id')
+      .notNull()
+      .references(() => gamesTable.id),
+    sessionId: varchar('session_id', { length: 255 }).notNull(),
+
+    betAmount: numeric('bet_amount', { precision: 36, scale: 18 }).notNull(),
+    payoutMultiplier: numeric('payout_multiplier', { precision: 12, scale: 4 }),
+    winAmount: numeric('win_amount', { precision: 36, scale: 18 })
+      .default('0')
+      .notNull(),
+
+    // USD value for analytics & rakeback
+    betAmountUsd: numeric('bet_amount_usd', {
+      precision: 18,
+      scale: 2,
+    }).notNull(),
+
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (t) => ({
+    sessionIdx: index('idx_bets_session').on(t.sessionId),
+    userGameIdx: index('idx_bets_user_game').on(t.userId, t.gameId),
+  }),
+);
+
+export const gameBetsRelations = relations(gameBetsTable, ({ one }) => ({
+  user: one(users, { fields: [gameBetsTable.userId], references: [users.id] }),
+  session: one(gameSessionsTable, {
+    fields: [gameBetsTable.sessionId],
+    references: [gameSessionsTable.id],
+  }),
+  game: one(gamesTable, {
+    fields: [gameBetsTable.gameId],
+    references: [gamesTable.id],
+  }),
+}));
+import { pgTable, uuid } from 'drizzle-orm/pg-core';
+import { gamesTable } from './games.schema';
+import { gamesCategoriesTable } from './games-categories.schema';
+import { InferInsertModel, InferSelectModel, relations } from 'drizzle-orm';
+
+export const gamesCategoriesGamesTable = pgTable('games_categories_games', {
+  gameId: uuid('game_id')
+    .notNull()
+    .references(() => gamesTable.id, { onDelete: 'cascade' }),
+
+  gamesCategoriesId: uuid('games_categories_id')
+    .notNull()
+    .references(() => gamesCategoriesTable.id, { onDelete: 'cascade' }),
+});
+
+export const gamesCategoriesGamesRelations = relations(
+  gamesCategoriesGamesTable,
+  ({ one }) => ({
+    game: one(gamesTable, {
+      fields: [gamesCategoriesGamesTable.gameId],
+      references: [gamesTable.id],
+    }),
+    gamesCategories: one(gamesCategoriesTable, {
+      fields: [gamesCategoriesGamesTable.gamesCategoriesId],
+      references: [gamesCategoriesTable.id],
+    }),
+  }),
+);
+
+export type UserRolesType = InferSelectModel<typeof gamesCategoriesGamesTable>;
+export type NewUserRolesType = InferInsertModel<
+  typeof gamesCategoriesGamesTable
+>;
+import { text } from 'drizzle-orm/pg-core';
+import { uuid } from 'drizzle-orm/pg-core';
+import { pgTable } from 'drizzle-orm/pg-core';
+
+export const gamesCategoriesTable = pgTable('game_categories', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  name: text('name'),
+});
+import { uuid } from 'drizzle-orm/pg-core';
+import { pgTable } from 'drizzle-orm/pg-core';
+import { gameEventsModeEnum, gameEventsTypeEnum } from './enums.schema';
+import { timestamp } from 'drizzle-orm/pg-core';
+
+export const gamesEventsTable = pgTable('game_events', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  gameId: uuid('game_id').notNull(),
+  userId: uuid('user_id').notNull(),
+  type: gameEventsTypeEnum('type').notNull(),
+  mode: gameEventsModeEnum('mode').notNull(),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+import { pgTable, uuid, integer, timestamp, index } from 'drizzle-orm/pg-core';
+import { gamesTable } from './games.schema';
+
+export const gamesPopularityTable = pgTable(
+  'games_popularity',
+  {
+    gameId: uuid('game_id')
+      .primaryKey()
+      .references(() => gamesTable.id, { onDelete: 'cascade' }),
+
+    launches24h: integer('launches_24h').notNull().default(0),
+    launches7d: integer('launches_7d').notNull().default(0),
+    launches30d: integer('launches_30d').notNull().default(0),
+    totalLaunches: integer('total_launches').notNull().default(0),
+
+    realBetsCount: integer('real_bets_count').notNull().default(0),
+    demoBetsCount: integer('demo_bets_count').notNull().default(0),
+
+    uniquePlayers7d: integer('unique_players_7d').notNull().default(0),
+
+    lastPlayedAt: timestamp('last_played_at', {
+      withTimezone: true,
+    }),
+
+    popularityScore: integer('popularity_score').notNull().default(0),
+  },
+  (table) => ({
+    popularityIdx: index('games_popularity_score_idx').on(
+      table.popularityScore,
+    ),
+    lastPlayedIdx: index('games_popularity_last_played_idx').on(
+      table.lastPlayedAt,
+    ),
+  }),
+);
+import {
+  pgTable,
+  uuid,
+  varchar,
+  numeric,
+  boolean,
+  timestamp,
+  jsonb,
+  index,
+} from 'drizzle-orm/pg-core';
+import { relations } from 'drizzle-orm';
+import { gamesTable } from './games.schema';
+import { gameSessionStatusEnum } from './enums.schema';
+
+export const gameSessionsTable = pgTable('game_sessions', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  gameId: uuid('game_id')
+    .notNull()
+    .references(() => gamesTable.id),
+
+  serverSeedHash: varchar('server_seed_hash', { length: 128 }).notNull(),
+  serverSeed: varchar('server_seed', { length: 128 }), // Revealed after completion
+  clientSeed: varchar('client_seed', { length: 64 }),
+  nonce: varchar('nonce', { length: 64 }).notNull(), // Can be a large number or string
+
+  result: jsonb('result'), // e.g., { "multiplier": 15.32 } or { "cards": [...] }
+  status: gameSessionStatusEnum('status').default('created').notNull(),
+
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  completedAt: timestamp('completed_at'),
+});
+import { boolean, numeric, text } from 'drizzle-orm/pg-core';
+import { uuid } from 'drizzle-orm/pg-core';
+import { pgTable } from 'drizzle-orm/pg-core';
+
+export const gamesTable = pgTable('games', {
+  id: uuid('id').defaultRandom().primaryKey(),
+
+  // Identification
+  slug: text('slug').unique().notNull(), // 'sweet-bonanza'
+  name: text('name').notNull(),
+  provider: text('provider').notNull(), // 'pragmatic', 'evolution'
+  providerGameId: text('provider_game_id').notNull(),
+  img: text('img'),
+
+  // Финансовый контроль
+  houseEdge: numeric('house_edge', { precision: 5, scale: 2 }).default('3.00'), // 3%
+  rtp: numeric('rtp', { precision: 5, scale: 2 }).default('97.00'),
+
+  minBetUsd: numeric('min_bet_usd', { precision: 10, scale: 2 }).default(
+    '0.10',
+  ),
+  maxBetUsd: numeric('max_bet_usd', { precision: 10, scale: 2 }).default(
+    '1000.00',
+  ),
+  maxWinUsd: numeric('max_win_usd', { precision: 12, scale: 2 }), // Cap win (например $1M)
+
+  isActive: boolean('is_active').default(true),
+  isDemoEnabled: boolean('is_demo_enabled').default(true),
+});
+import { date, integer, uniqueIndex, uuid } from 'drizzle-orm/pg-core';
+import { pgTable } from 'drizzle-orm/pg-core';
+import { gamesTable } from './games.schema';
+
+export const gamesStatsDailyTable = pgTable(
+  'games_stats_daily',
+  {
+    gameId: uuid('game_id')
+      .notNull()
+      .references(() => gamesTable.id, { onDelete: 'cascade' }),
+
+    date: date('date').notNull(),
+
+    launches: integer('launches').notNull().default(0),
+    demoLaunches: integer('demo_launches').notNull().default(0),
+    realLaunches: integer('real_launches').notNull().default(0),
+
+    uniquePlayers: integer('unique_players').notNull().default(0),
+    realBets: integer('real_bets').notNull().default(0),
+  },
+  (table) => ({
+    gameDateUnique: uniqueIndex('games_stats_daily_game_date_idx').on(
+      table.gameId,
+      table.date,
+    ),
+  }),
+);
+import { pgTable, uuid, varchar, timestamp } from 'drizzle-orm/pg-core';
+
+export const guestSessions = pgTable('guest_sessions', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  ip: varchar('ip', { length: 64 }),
+  userAgent: varchar('user_agent', { length: 255 }),
+  createdAt: timestamp('created_at').defaultNow(),
+  expiresAt: timestamp('expires_at'),
+});
+import {
+  boolean,
+  index,
+  integer,
+  numeric,
+  pgEnum,
+  pgTable,
+  serial,
+  text,
+  timestamp,
+  uuid,
+  varchar,
+} from 'drizzle-orm/pg-core';
+
+import {
+  ledgerRefType,
+  messageTypeEnum,
+  transactionTypeEnum,
+} from './enums.schema';
+import { walletsTable } from './wallets.schema';
+
+export const ledgerTable = pgTable('ledger', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  walletId: uuid('wallet_id')
+    .notNull()
+    .references(() => walletsTable.id),
+
+  // Полиморфная связь (откуда пришли деньги)
+  referenceType: ledgerRefType('ref_type'),
+  referenceId: uuid('reference_id').notNull(),
+
+  type: transactionTypeEnum('type').notNull(),
+
+  amount: numeric('amount').notNull(), // +Win или -Bet
+  balanceBefore: numeric('balance_before').notNull(),
+  balanceAfter: numeric('balance_after').notNull(),
+
+  // Метаданные
+  description: text('description'), // "Win in Gates of Olympus"
+  createdAt: timestamp('created_at').defaultNow(),
+});
+import { pgTable, uuid, timestamp, index } from 'drizzle-orm/pg-core';
+import { deliveryStatusEnum } from './enums.schema';
+
+import { users } from './users.schema';
+import { relations } from 'drizzle-orm';
+import { messagesTable } from './message.schema';
+
+export const messageReceiptsTable = pgTable(
+  'message_receipts',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+
+    messageId: uuid('message_id')
+      .notNull()
+      .references(() => messagesTable.id, { onDelete: 'cascade' }),
+
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+
+    status: deliveryStatusEnum('status').notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  },
+  (t) => ({
+    uniq: index('uq_message_receipts_message_user').on(t.messageId, t.userId),
+  }),
+);
+
+export const messageReceiptsRelations = relations(
+  messageReceiptsTable,
+  ({ one }) => ({
+    message: one(messagesTable, {
+      fields: [messageReceiptsTable.messageId],
+      references: [messagesTable.id],
+    }),
+    user: one(users, {
+      fields: [messageReceiptsTable.userId],
+      references: [users.id],
+    }),
+  }),
+);
+import {
+  boolean,
+  index,
+  integer,
+  pgEnum,
+  pgTable,
+  serial,
+  text,
+  timestamp,
+  uuid,
+  varchar,
+} from 'drizzle-orm/pg-core';
+import { relations } from 'drizzle-orm';
+import { InferInsertModel } from 'drizzle-orm';
+import { InferSelectModel } from 'drizzle-orm';
+import { users } from './users.schema';
+import { chats } from './chats.schema';
+import { guestSessions } from './guest-session.schema';
+import { messageTypeEnum } from './enums.schema';
+
+export const messagesTable = pgTable(
+  'messages',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+
+    chatId: uuid('chat_id')
+      .notNull()
+      .references(() => chats.id, { onDelete: 'cascade' }),
+
+    senderUserId: uuid('sender_user_id').references(() => users.id),
+    senderGuestId: uuid('sender_guest_id').references(() => guestSessions.id),
+
+    type: messageTypeEnum('type').default('text').notNull(),
+    content: text('content').notNull(),
+
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    editedAt: timestamp('edited_at'),
+    deletedAt: timestamp('deleted_at'),
+  },
+  (t) => ({
+    chatIdx: index('idx_messages_chat_id').on(t.chatId),
+    createdIdx: index('idx_messages_created_at').on(t.createdAt),
+  }),
+);
+
+export const messagesRelations = relations(messagesTable, ({ one }) => ({
+  chat: one(chats, {
+    fields: [messagesTable.chatId],
+    references: [chats.id],
+  }),
+  senderUser: one(users, {
+    fields: [messagesTable.senderUserId],
+    references: [users.id],
+  }),
+  senderGuest: one(guestSessions, {
+    fields: [messagesTable.senderGuestId],
+    references: [guestSessions.id],
+  }),
+}));
+
+export type MessageType = InferSelectModel<typeof messagesTable>;
+export type NewMessageType = InferInsertModel<typeof messagesTable>;
+import {
+  pgTable,
+  uuid,
+  numeric,
+  text,
+  integer,
+  timestamp,
+  uniqueIndex,
+} from 'drizzle-orm/pg-core';
+import { paymentsStatusEnum, transactionTypeEnum } from './enums.schema';
+import { users } from './users.schema';
+import { walletsTable } from './wallets.schema';
+import { sql } from 'drizzle-orm';
+
+export const paymentsTable = pgTable(
+  'paymentsTable',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id),
+    walletId: uuid('wallet_id')
+      .notNull()
+      .references(() => walletsTable.id),
+
+    type: transactionTypeEnum('type').notNull(), // deposit, withdrawal
+    status: paymentsStatusEnum('status').default('pending_approval').notNull(),
+
+    // Деньги
+    amount: numeric('amount', { precision: 36, scale: 18 }).notNull(),
+    fee: numeric('fee', { precision: 36, scale: 18 }).default('0'), // Комиссия казино
+    networkFee: numeric('network_fee', { precision: 36, scale: 18 }).default(
+      '0',
+    ), // Газ (для вывода)
+
+    // Стоимость в USD на момент создания заявки (для отчетов)
+    amountUsdSnapshot: numeric('amount_usd_snapshot', {
+      precision: 18,
+      scale: 2,
+    }),
+
+    // Crypto Details
+    txHash: text('tx_hash'),
+    fromAddress: text('from_address'),
+    toAddress: text('to_address'), // Куда выводим
+    depositAddressId: uuid('deposit_address_id'), // Ссылка на адрес депозита
+    confirmations: integer('confirmations').default(0),
+
+    // Admin / Audit
+    processedBy: uuid('processed_by'), // Admin ID if manual
+    rejectionReason: text('rejection_reason'),
+
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  },
+  (t) => ({
+    // ЗАЩИТА ОТ ДВОЙНОГО ЗАЧИСЛЕНИЯ
+    // Один хеш может быть обработан как депозит только один раз
+    uniqueTx: uniqueIndex('uniq_payments_tx_hash_type')
+      .on(t.txHash, t.type)
+      .where(sql`${t.txHash} IS NOT NULL`),
+  }),
+);
+import { InferInsertModel, InferSelectModel } from 'drizzle-orm';
+import { pgTable, varchar, uuid } from 'drizzle-orm/pg-core';
+
+export const permissionsTable = pgTable('permissions', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  action: varchar('action', { length: 100 }).notNull(),
+  subject: varchar('subject', { length: 100 }).notNull(),
+  description: varchar('description', { length: 255 }),
+});
+
+export type PermissionsType = InferSelectModel<typeof permissionsTable>;
+export type NewPermissionsType = InferInsertModel<typeof permissionsTable>;
+import { pgTable, uuid } from 'drizzle-orm/pg-core';
+import { rolesTable } from './roles.schema';
+import { permissionsTable } from './permissions.schema';
+import { InferInsertModel, InferSelectModel } from 'drizzle-orm';
+
+export const rolePermissionsTable = pgTable('role_permissions', {
+  roleId: uuid('role_id').references(() => rolesTable.id, {
+    onDelete: 'cascade',
+  }),
+  permissionId: uuid('permission_id').references(() => permissionsTable.id, {
+    onDelete: 'cascade',
+  }),
+});
+
+export type RolePermissionsType = InferSelectModel<typeof rolePermissionsTable>;
+export type NewRolePermissionsType = InferInsertModel<
+  typeof rolePermissionsTable
+>;
+import { relations } from 'drizzle-orm';
+import {
+  boolean,
+  pgTable,
+  timestamp,
+  uuid,
+  varchar,
+} from 'drizzle-orm/pg-core';
+import { userRolesTable } from './user-roles.schema';
+import { InferSelectModel } from 'drizzle-orm';
+import { InferInsertModel } from 'drizzle-orm';
+
+export const rolesTable = pgTable('roles', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  name: varchar('name', { length: 100 }).notNull().unique(),
+
+  isSystem: boolean('is_system').default(false),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
+export const rolesRelations = relations(rolesTable, ({ many }) => ({
+  userRolesTable: many(userRolesTable),
+}));
+
+export type RolesType = InferSelectModel<typeof rolesTable>;
+export type NewRolesType = InferInsertModel<typeof rolesTable>;
+import { pgTable, uuid, timestamp, index } from 'drizzle-orm/pg-core';
+import { chats } from './chats.schema';
+import { users } from './users.schema';
+import { relations } from 'drizzle-orm';
+
+export const supportAssignmentsTable = pgTable(
+  'support_assignments',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+
+    chatId: uuid('chat_id')
+      .notNull()
+      .references(() => chats.id, { onDelete: 'cascade' }),
+
+    operatorId: uuid('operator_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+
+    assignedAt: timestamp('assigned_at').defaultNow().notNull(),
+    releasedAt: timestamp('released_at'),
+  },
+  (t) => ({
+    chatIdx: index('idx_support_assignments_chat_id').on(t.chatId),
+    operatorIdx: index('idx_support_assignments_operator_id').on(t.operatorId),
+  }),
+);
+
+export const supportAssignmentsRelations = relations(
+  supportAssignmentsTable,
+  ({ one }) => ({
+    chat: one(chats, {
+      fields: [supportAssignmentsTable.chatId],
+      references: [chats.id],
+    }),
+    operator: one(users, {
+      fields: [supportAssignmentsTable.operatorId],
+      references: [users.id],
+    }),
+  }),
+);
+import {
+  pgTable,
+  uuid,
+  varchar,
+  numeric,
+  integer,
+  timestamp,
+  boolean,
+  jsonb,
+  uniqueIndex,
+} from 'drizzle-orm/pg-core';
+import { users } from './users.schema';
+import { bonusCampaignsTable } from './bonus-campaigns.schema';
+
+export const userActiveBonusesTable = pgTable('user_active_bonuses', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id')
+    .notNull()
+    .references(() => users.id)
+    .unique(), // У пользователя может быть только 1 активный бонус
+  campaignId: uuid('campaign_id')
+    .notNull()
+    .references(() => bonusCampaignsTable.id),
+  initialWagerRequirementUsd: numeric('initial_wager_requirement_usd', {
+    precision: 20,
+    scale: 2,
+  }).notNull(),
+  wagerRequirementRemainingUsd: numeric('wager_requirement_remaining_usd', {
+    precision: 20,
+    scale: 2,
+  }).notNull(),
+  status: varchar('status', { length: 10 }).default('active').notNull(), // 'active', 'completed', 'expired'
+  expiresAt: timestamp('expires_at'),
+  activatedAt: timestamp('activated_at').defaultNow().notNull(),
+});
+import {
+  pgTable,
+  uuid,
+  varchar,
+  numeric,
+  integer,
+  timestamp,
+  index,
+  primaryKey,
+  jsonb,
+} from 'drizzle-orm/pg-core';
+import { users } from './users.schema';
+
+export const userPeriodicStatsTable = pgTable(
+  'user_periodic_stats',
+  {
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    wageredLast7dUsd: numeric('wagered_last_7d_usd', {
+      precision: 20,
+      scale: 2,
+    })
+      .default('0')
+      .notNull(),
+    pnlLast7dUsd: numeric('pnl_last_7d_usd', { precision: 20, scale: 2 })
+      .default('0')
+      .notNull(), // PNL казино (Bet - Win)
+    wageredLast30dUsd: numeric('wagered_last_30d_usd', {
+      precision: 20,
+      scale: 2,
+    })
+      .default('0')
+      .notNull(),
+    pnlLast30dUsd: numeric('pnl_last_30d_usd', { precision: 20, scale: 2 })
+      .default('0')
+      .notNull(),
+    updatedAt: timestamp('updated_at').defaultNow(),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.userId] }),
+  }),
+);
+import { pgTable, uniqueIndex, uuid } from 'drizzle-orm/pg-core';
+import { users } from './users.schema';
+import { rolesTable } from './roles.schema';
+import { InferInsertModel, InferSelectModel, relations } from 'drizzle-orm';
+import { primaryKey } from 'drizzle-orm/pg-core';
+
+export const userRolesTable = pgTable(
+  'user_roles',
+  {
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    roleId: uuid('role_id')
+      .notNull()
+      .references(() => rolesTable.id, { onDelete: 'cascade' }),
+  },
+  (t) => [primaryKey({ columns: [t.roleId, t.userId] })],
+);
+
+export const userRolesRelations = relations(userRolesTable, ({ one }) => ({
+  user: one(users, {
+    fields: [userRolesTable.userId],
+    references: [users.id],
+  }),
+  role: one(rolesTable, {
+    fields: [userRolesTable.roleId],
+    references: [rolesTable.id],
+  }),
+}));
+
+export type UserRolesType = InferSelectModel<typeof userRolesTable>;
+export type NewUserRolesType = InferInsertModel<typeof userRolesTable>;
+import { InferSelectModel, relations } from 'drizzle-orm';
+
+import {
+  pgTable,
+  uuid,
+  varchar,
+  timestamp,
+  boolean,
+  integer,
+  text,
+  index,
+  uniqueIndex,
+  numeric,
+} from 'drizzle-orm/pg-core';
+import { kycStatusEnum, userRoleEnum, userStatusEnum } from './enums.schema';
+import { rolesTable } from './roles.schema';
+import { userRolesTable } from './user-roles.schema';
+
+export const users = pgTable(
+  'users',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+
+    // --- 1. Identity & Auth (Исправлено: возвращены поля провайдеров) ---
+    email: varchar('email', { length: 255 }).unique().notNull(),
+    username: varchar('username', { length: 50 }).unique(), // Никнейм для чата (анонимный)
+
+    // Пароль может отсутствовать, если вход через Google/Wallet
+    passwordHash: text('password_hash'),
+
+    // OAuth поля (Google, Telegram, Metamask)
+    provider: varchar('provider', { length: 50 }).default('local').notNull(),
+    providerId: varchar('provider_id', { length: 255 }), // ID от Google/Meta
+
+    // --- 2. Profile & UX (Исправлено: возвращена картинка) ---
+    picture: text('picture'), // URL аватарки
+    firstName: varchar('first_name', { length: 100 }), // Реальное имя (для писем/KYC)
+    lastName: varchar('last_name', { length: 100 }),
+
+    // --- 3. Security (CRITICAL for Crypto Casino) ---
+    // Обязательно для защиты аккаунтов с деньгами
+    twoFactorSecret: text('2fa_secret'),
+    isTwoFactorEnabled: boolean('is_2fa_enabled').default(false),
+
+    // Refresh Token Rotation (Безопасность сессий)
+    refreshTokenHash: text('refresh_token_hash'),
+
+    // --- 4. Compliance & Risk (KYC / AML) ---
+    kycLevel: kycStatusEnum('kyc_level').default('none').notNull(), // none -> level_1 -> level_2
+    status: userStatusEnum('status').default('active').notNull(), // active, suspended, banned
+
+    // Risk Score: 0 (Good) -> 100 (Fraud).
+    // Если > 80, авто-вывод блокируется до ручной проверки.
+    riskScore: integer('risk_score').default(0),
+
+    // --- 5. Affiliate System (Stake-like) ---
+    // affiliateCode: varchar('affiliate_code', { length: 20 }).unique(), // Мой код для приглашения других
+    // referredBy: uuid('referred_by'), // Кто пригласил меня (ссылка на users.id)
+
+    // >> НОВОЕ: VIP / Loyalty State <<
+    vipLevel: integer('vip_level').default(0).notNull(),
+    totalWageredUsd: numeric('total_wagered_usd', { precision: 20, scale: 2 })
+      .default('0')
+      .notNull(),
+
+    // >> НОВОЕ: Баланс для мгновенных наград, которые нужно "забрать" <<
+    rakebackBalanceUsd: numeric('rakeback_balance_usd', {
+      precision: 18,
+      scale: 4,
+    })
+      .default('0')
+      .notNull(),
+    affiliateCommissionBalanceUsd: numeric('affiliate_commission_balance_usd', {
+      precision: 18,
+      scale: 4,
+    })
+      .default('0')
+      .notNull(),
+
+    // --- 6. Meta ---
+    isOnline: boolean('is_online').default(false),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(), // Авто-обновление через триггер или на уровне APP
+  },
+  (t) => [
+    // Индексы для скорости поиска
+    uniqueIndex('users_email_idx').on(t.email),
+    uniqueIndex('users_username_idx').on(t.username),
+    index('users_provider_idx').on(t.provider, t.providerId),
+    index('idx_users_vip_level').on(t.vipLevel), // Индекс по VIP уровню
+  ],
+);
+export const usersRelations = relations(users, ({ many }) => ({
+  userRolesTable: many(userRolesTable),
+}));
+
+export type User = typeof users.$inferSelect;
+export type NewUser = typeof users.$inferInsert;
+
+export type UserWithRoles = User & {
+  userRolesTable: {
+    role: InferSelectModel<typeof rolesTable>;
+  }[];
+};
+import {
+  pgTable,
+  uuid,
+  varchar,
+  numeric,
+  integer,
+  timestamp,
+  index,
+  primaryKey,
+  jsonb,
+} from 'drizzle-orm/pg-core';
+
+// --- КОНФИГУРАЦИЯ (Заполняется админом в админ-панели) ---
+export const vipConfigTable = pgTable('vip_config', {
+  level: integer('level').primaryKey(),
+  name: varchar('name', { length: 50 }).notNull().unique(), // e.g., "Platinum III"
+  wagerRequiredUsd: numeric('wager_required_usd', {
+    precision: 20,
+    scale: 2,
+  }).notNull(),
+
+  // Статические награды
+  levelUpBonusUsd: numeric('level_up_bonus_usd', {
+    precision: 12,
+    scale: 2,
+  }).default('0'),
+
+  // Коэффициенты для динамических наград
+  rakebackRate: numeric('rakeback_rate', { precision: 5, scale: 2 }).default(
+    '5.00',
+  ), // % от House Edge
+  weeklyBoostBaseRate: numeric('weekly_boost_base_rate', {
+    precision: 8,
+    scale: 4,
+  }).default('0.0500'), // 0.05% от вейджера за 7 дней
+  monthlyBonusBaseRate: numeric('monthly_bonus_base_rate', {
+    precision: 8,
+    scale: 4,
+  }).default('0.0250'), // 0.025% от вейджера за 30 дней
+});
+import {
+  pgTable,
+  uuid,
+  varchar,
+  numeric,
+  integer,
+  timestamp,
+  index,
+  primaryKey,
+  jsonb,
+} from 'drizzle-orm/pg-core';
+import { users } from './users.schema';
+
+export const vipRewardsLogTable = pgTable('vip_rewards_log', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  userId: uuid('user_id')
+    .notNull()
+    .references(() => users.id),
+  rewardType: varchar('reward_type', { length: 20 }).notNull(), // 'level_up', 'rakeback', 'weekly_boost', 'monthly_bonus'
+  amountUsd: numeric('amount_usd', { precision: 12, scale: 2 }).notNull(),
+  sourceData: jsonb('source_data'), // { "wagered_last_7d": 5000, "pnl": -250, "vip_level": 4 }
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+import {
+  numeric,
+  text,
+  timestamp,
+  uniqueIndex,
+  unique,
+  uuid,
+  integer,
+  check,
+} from 'drizzle-orm/pg-core';
+import { pgTable } from 'drizzle-orm/pg-core';
+import { currenciesTable } from './currencies.schema';
+import { relations, sql } from 'drizzle-orm';
+import { users } from './users.schema';
+
+export const walletsTable = pgTable(
+  'wallets',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+
+    currencyId: uuid('currency_id')
+      .notNull()
+      .references(() => currenciesTable.id),
+
+    // --- 1. Real Balance ---
+    // Доступные средства. Можно ставить, можно выводить.
+    realBalance: numeric('real_balance', { precision: 36, scale: 18 })
+      .notNull()
+      .default('0'),
+
+    // --- 2. Bonus Balance ---
+    // Средства с вейджером. Нельзя вывести, пока wager != 0.
+    bonusBalance: numeric('bonus_balance', { precision: 36, scale: 18 })
+      .notNull()
+      .default('0'),
+
+    // 3. Заблокированные средства (активные ставки или pending вывод)
+    // Деньги ЗДЕСЬ физически существуют, но недоступны пользователю.
+    lockedBalance: numeric('locked_balance', { precision: 36, scale: 18 })
+      .notNull()
+      .default('0'),
+
+    wagerRemaining: numeric('wager_remaining', { precision: 36, scale: 18 })
+      .notNull()
+      .default('0'),
+
+    // Для блокировок (Optimistic Locking)
+    version: integer('version').default(0).notNull(),
+  },
+  (t) => [
+    // Constraint: Баланс не может быть отрицательным (защита на уровне БД)
+    uniqueIndex().on(t.userId, t.currencyId),
+    check('wallets_balance_real_chk', sql`${t.realBalance} >= 0`),
+    check('wallets_balance_bonus_chk', sql`${t.bonusBalance} >= 0`),
+    check('wallets_balance_locked_chk', sql`${t.lockedBalance} >= 0`),
+  ],
+);
+
+export const walletsRelations = relations(walletsTable, ({ one }) => ({
+  user: one(users, { fields: [walletsTable.userId], references: [users.id] }),
+  currency: one(currenciesTable, {
+    fields: [walletsTable.currencyId],
+    references: [currenciesTable.id],
+  }),
+}));
+
+import { pgEnum } from 'drizzle-orm/pg-core';
+
+// --- Users & Access ---
+export const userRoleEnum = pgEnum('user_role', [
+  'user',
+  'admin',
+  'moderator',
+  'bot',
+]);
+export const userStatusEnum = pgEnum('user_status', [
+  'active',
+  'suspended',
+  'banned',
+  'frozen',
+]);
+export const kycStatusEnum = pgEnum('kyc_status', [
+  'none',
+  'pending',
+  'level_1',
+  'level_2',
+  'level_3',
+  'rejected',
+]);
+
+// --- Chat ---
+export const chatTypeEnum = pgEnum('chat_type', [
+  'public',
+  'support',
+  'private',
+]);
+export const chatStatusEnum = pgEnum('chat_status', [
+  'queued',
+  'active',
+  'closed',
+]);
+export const participantRoleEnum = pgEnum('participant_role', [
+  'user',
+  'operator',
+  'system',
+]);
+export const messageTypeEnum = pgEnum('message_type', [
+  'text',
+  'image',
+  'file',
+  'system',
+]);
+export const deliveryStatusEnum = pgEnum('delivery_status', [
+  'sent',
+  'delivered',
+  'read',
+]);
+
+// --- Games ---
+export const gameEventsTypeEnum = pgEnum('game_events_type', ['launch', 'bet']);
+export const gameEventsModeEnum = pgEnum('game_events_mode', ['real', 'demo']);
+export const gameRoundStatusEnum = pgEnum('game_round_status', [
+  'active',
+  'completed',
+  'cancelled',
+  'failed',
+]);
+
+// --- Finance (Critical) ---
+export const paymentsTypeEnum = pgEnum('payment_type', [
+  'deposit',
+  'withdrawal',
+]);
+export const paymentsStatusEnum = pgEnum('payment_status', [
+  'pending_approval', // Ждет админа
+  'processing', // Отправлено в сеть
+  'completed', // Успех
+  'failed', // Ошибка сети
+  'rejected', // Отклонено админом
+  'cancelled', // Отменено юзером
+]);
+
+// Polymorphic reference types
+export const ledgerRefType = pgEnum('ref_type', [
+  'game_round',
+  'payment',
+  'bonus',
+  'affiliate',
+  'manual',
+]);
+
+export const kycLevelEnum = pgEnum('kyc_level', [
+  'none',
+  'basic',
+  'verified',
+  'enhanced',
+]);
+
+// --- Finance ---
+export const currencyTypeEnum = pgEnum('currency_type', ['crypto', 'fiat']);
+export const txTypeEnum = pgEnum('tx_type', [
+  'deposit',
+  'withdrawal',
+  'bet',
+  'win',
+  'refund',
+  'adjustment',
+  'affiliate',
+  'bonus',
+  'swap',
+  'tip',
+]);
+export const txStatusEnum = pgEnum('tx_status', [
+  'pending',
+  'processing',
+  'completed',
+  'failed',
+  'cancelled',
+  'rejected',
+]);
+
+export const gameStatusEnum = pgEnum('game_status', [
+  'active',
+  'maintenance',
+  'disabled',
+]);
+export const sessionStatusEnum = pgEnum('session_status', [
+  'created',
+  'in_progress',
+  'completed',
+  'cancelled',
+]);
+
+// --- Bonuses ---
+export const bonusTypeEnum = pgEnum('bonus_type', [
+  'deposit_match',
+  'free_spins',
+  'rakeback',
+  'weekly_boost',
+]);
+export const bonusStatusEnum = pgEnum('bonus_status', [
+  'active',
+  'completed',
+  'expired',
+  'forfeited',
+]);
+
+export const transactionTypeEnum = pgEnum('transaction_type', [
+  'deposit',
+  'withdrawal',
+  'bet',
+  'win',
+  'refund', // Возврат ставки (отмена раунда)
+  'adjustment', // Ручная коррекция админом
+  'affiliate_payout',
+  'bonus_credit',
+  'tip',
+]);
+
+export const paymentStatusEnum = pgEnum('payment_status', [
+  'pending', // Ожидает подтверждений в сети (депозит)
+  'pending_approval', // Ожидает ручного подтверждения (вывод)
+  'processing', // Отправлено в сеть (вывод)
+  'completed', // Успешно завершено
+  'failed', // Ошибка (сеть, провайдер)
+  'rejected', // Отклонено админом
+  'cancelled', // Отменено пользователем
+]);
+
+// --- Gaming Logic ---
+export const gameProviderEnum = pgEnum('game_provider', [
+  'original',
+  'pragmatic_play',
+  'evolution',
+  'hacksaw',
+]);
+export const gameCategoryEnum = pgEnum('game_category', [
+  'slots',
+  'live_casino',
+  'originals',
+  'table_games',
+]);
+export const gameSessionStatusEnum = pgEnum('game_session_status', [
+  'created',
+  'active',
+  'completed',
+  'cancelled',
+]);
+
+// --- Ledger (Audit Trail) ---
+export const ledgerRefTypeEnum = pgEnum('ledger_ref_type', [
+  'game_bet',
+  'payment',
+  'bonus',
+  'adjustment',
+]);

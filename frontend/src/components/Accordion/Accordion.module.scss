@@ -1,0 +1,192 @@
+// Ваши заданные переменные
+$card-bg-color: #3C4B75;
+$border-color: #C7F5FC;
+$border-radius: 10px;
+
+// --- Базовые стили (Desktop First) ---
+
+.accordionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.item {
+  background-color: $card-bg-color;
+  border-radius: $border-radius;
+  border: 1px solid $border-color;
+  overflow: hidden;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.header {
+  width: 100%;
+  padding: 20px 25px; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  position: relative; 
+}
+
+.questionContent {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-grow: 1; 
+  max-width: calc(100% - 100px); 
+}
+
+.itemNumber {
+  font-size: 20px;
+  font-weight: 700;
+  color: $border-color;
+  min-width: 30px;
+  flex-shrink: 0; 
+}
+
+.questionText {
+  flex-grow: 1;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0; 
+}
+
+.itemIcon {
+  // Стили для Next.js Image
+}
+
+.toggleIcon {
+  font-size: 24px;
+  line-height: 1;
+  // Плавный переход для иконки открытия/закрытия
+  transition: transform 0.3s ease-in-out; 
+  min-width: 18px;
+  text-align: center;
+  color: $border-color;
+
+  &.open {
+    transform: rotate(45deg);
+  }
+}
+
+// --- Стили для плавного контента ---
+.content {
+  max-height: 0; 
+  overflow: hidden;
+  // Плавный переход для max-height и padding
+  transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out; 
+  color: #c0c0c0;
+  
+  padding-left: 25px;
+  padding-right: 25px;
+  // Вертикальные отступы равны 0 при закрытом состоянии
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.contentOpen {
+  max-height: 500px; // Достаточно большое значение для анимации
+  padding-bottom: 25px; // Устанавливаем нижний отступ при открытии
+}
+
+.answerText {
+    // Внутренний отступ сверху текста
+    padding-top: 15px; 
+    line-height: 1.5;
+}
+
+// =========================================================
+// --- АДАПТИВНОСТЬ (MEDIA QUERIES) ---
+// =========================================================
+
+// --- Планшеты и большие мобильные устройства (max-width: 768px) ---
+@media (max-width: 768px) {
+  
+  .header {
+    padding: 15px 20px; 
+    font-size: 15px;
+  }
+
+  .itemNumber {
+    font-size: 18px; 
+    min-width: 25px; 
+  }
+
+  .questionContent {
+    gap: 10px;
+    max-width: calc(100% - 90px); 
+  }
+
+  .iconWrapper {
+    gap: 8px;
+  }
+
+  .content {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .contentOpen {
+    padding-bottom: 20px; 
+  }
+  
+  .answerText {
+    padding-top: 10px;
+    font-size: 14px; 
+  }
+}
+
+// --- Мобильные устройства (max-width: 576px) ---
+@media (max-width: 576px) {
+  
+  .header {
+    flex-wrap: wrap; // Позволяет тексту вопроса переноситься
+    padding: 15px 15px;
+    align-items: flex-start; // Выравнивание сверху
+  }
+  
+  .questionContent {
+    // Устанавливаем ширину, чтобы оставить место справа для иконок
+    width: calc(100% - 40px);
+    order: 1;
+    
+    .questionText {
+        font-size: 14px;
+    }
+  }
+
+  .itemNumber {
+    font-size: 16px;
+    min-width: 20px;
+  }
+
+  .iconWrapper {
+    margin-left: auto; // Прижимает иконки вправо
+    order: 2;
+    flex-shrink: 0; 
+  }
+  
+  .content {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  .contentOpen {
+    padding-bottom: 15px;
+  }
+}

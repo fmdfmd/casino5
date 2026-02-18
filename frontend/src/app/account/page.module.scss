@@ -1,0 +1,511 @@
+.pageLayout {
+    min-height: 100vh;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+}
+
+.wrapper {
+    display: flex;
+}
+
+.mainContent {
+    flex: 1;
+    padding: clamp(10px, 2vw, 30px) clamp(15px, 3vw, 40px);
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden; // Чтобы карусель не растягивала страницу
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+}
+
+.navWrapper {
+    margin-bottom: 20px;
+}
+
+// --- PROFILE HERO ---
+.profileHero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 30px 0 40px;
+    padding: 24px 32px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+}
+
+.heroLeft {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.avatarBox {
+    .avatarCircle {
+        position: relative;
+        width: 80px;
+        height: 80px;
+        background: transparent;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .avatarImg {
+            object-fit: contain;
+        }
+
+        .addBtn {
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            width: 26px;
+            height: 26px;
+            background: rgba(107, 126, 158, 0.6); 
+            border: none;
+            border-radius: 50%;
+            color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(4px);
+            
+            &:hover { 
+                transform: scale(1.1); 
+                background: rgba(120, 140, 175, 0.9);
+                color: #fff;
+            }
+        }
+    }
+}
+
+.userDetails {
+    .nameRow {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        h1 { 
+            font-size: 26px; 
+            margin: 0; 
+            font-weight: 700; 
+            letter-spacing: -0.5px;
+        }
+
+        .nameInput {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid #785EDB;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 24px;
+            padding: 4px 12px;
+            font-weight: 700;
+            outline: none;
+            width: 180px;
+        }
+
+        .editBtn { 
+            background: rgba(255, 255, 255, 0.05); 
+            border: none; 
+            border-radius: 8px;
+            cursor: pointer; 
+            padding: 8px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9299A1;
+            transition: all 0.2s ease;
+
+            &:hover { 
+                background: rgba(255, 255, 255, 0.1); 
+                color: #fff; 
+            }
+        }
+    }
+
+    .userStatus {
+        margin: 6px 0 0;
+        font-size: 14px;
+        color: #9299A1;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        &::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #00FF94;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px rgba(0, 255, 148, 0.4);
+        }
+    }
+}
+
+.logoutBtn {
+    background: rgba(255, 60, 60, 0.08);
+    border: 1px solid rgba(255, 60, 60, 0.15);
+    color: #FF5C5C;
+    padding: 10px 20px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+
+    &:hover { 
+        background: rgba(255, 60, 60, 0.15); 
+        border-color: rgba(255, 60, 60, 0.3);
+        transform: translateY(-1px);
+    }
+}
+
+// --- LOYALTY SECTION ---
+.loyaltyBox { 
+    margin-bottom: 50px; 
+    width: 100%; 
+}
+
+.tiersContainer { 
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    width: 100%; 
+    margin-bottom: 30px; 
+    gap: 15px;
+}
+
+.tierCard {
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    opacity: 0.3; 
+    transition: all 0.4s ease;
+    padding: 15px;
+
+    &.activeTier { 
+        opacity: 1; 
+        transform: scale(1.05);
+    }
+
+    .rankIcon { 
+        margin-bottom: 12px; 
+        filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+    }
+
+    .rankName { 
+        font-size: 18px; 
+        font-weight: 700; 
+        margin: 0 0 4px; 
+    }
+
+    .rankLabel { 
+        font-size: 12px; 
+        color: #9299A1; 
+        margin-bottom: 6px; 
+    }
+
+    .rankValue { 
+        font-size: 16px; 
+        font-weight: 700; 
+        .blue { color: #00C2FF; } 
+    }
+}
+
+.progressWrapper { 
+    position: relative; 
+    width: 100%; 
+    margin-top: 30px; 
+    padding: 0 10px;
+}
+
+.ticksLine { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    height: 40px; 
+    gap: 2px; 
+}
+
+.tick { 
+    width: 2px; 
+    border-radius: 1px; 
+    transition: all 0.3s ease; 
+}
+
+.h_sm { height: 25%; } 
+.h_md { height: 50%; }
+.h_lg { height: 100%; width: 3px; } 
+
+.currentLevelMarker {
+    position: absolute; 
+    top: 55px; 
+    transform: translateX(-50%); 
+    font-size: 12px; 
+    font-weight: 600;
+    color: #785EDB; 
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    &::before { 
+        content: ''; 
+        position: absolute; 
+        top: -15px; 
+        left: 50%; 
+        width: 1px; 
+        height: 12px; 
+        background: #785EDB; 
+    }
+}
+
+// --- STATS GRID ---
+.statsGrid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.blockTitle {
+    font-size: 13px;
+    color: #9299A1;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 16px;
+    font-weight: 700;
+    padding-left: 5px;
+}
+
+.blockCard, .statsCard {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 24px;
+    height: calc(100% - 35px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+// Referral Section
+.refContent {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    gap: 20px;
+
+    h3 { font-size: 20px; margin: 0; font-weight: 700; }
+    p { color: #9299A1; font-size: 14px; margin: 0; line-height: 1.5; }
+}
+
+.linkContainer {
+    display: flex;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 6px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    align-items: center;
+}
+
+.refInput {
+    background: transparent;
+    border: none;
+    flex: 1;
+    color: #785EDB;
+    padding: 0 12px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
+    outline: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.copyBtn {
+    background: #785EDB;
+    color: #fff;
+    border: none;
+    height: 38px;
+    padding: 0 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+
+    &:hover { 
+        background: #6347d1; 
+        transform: scale(1.02);
+    }
+    
+    &:active { transform: scale(0.98); }
+
+    svg { 
+        flex-shrink: 0; 
+    }
+}
+
+.refStatsMini {
+    display: flex;
+    gap: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    
+    .miniItem {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        span { color: #9299A1; font-size: 12px; font-weight: 500; }
+        strong { font-size: 18px; font-weight: 700; }
+        .blue { color: #00C2FF; }
+    }
+}
+
+// Gaming Stats Section
+.statsMainGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 16px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.03);
+    border-radius: 18px;
+    transition: background 0.2s;
+
+    &:hover { background: rgba(255,255,255,0.04); }
+    
+    .statLabel { color: #9299A1; font-size: 12px; font-weight: 500; }
+    .statValue { font-size: 16px; font-weight: 700; color: #fff; }
+    .green { color: #00FF94; }
+}
+
+.historyBtn {
+    width: 100%;
+    margin-top: 20px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 14px;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover { 
+        background: rgba(255, 255, 255, 0.05); 
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+}
+
+// --- RESPONSIVE / ADAPTIVE ---
+@media (max-width: 1024px) {
+    .statsGrid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+    .profileHero { 
+        flex-direction: column; 
+        align-items: center; 
+        text-align: center;
+        padding: 30px 20px;
+    }
+    .heroLeft { flex-direction: column; gap: 15px; }
+    .nameRow { justify-content: center; }
+    .heroActions { width: 100%; margin-top: 20px; }
+    .logoutBtn { width: 100%; justify-content: center; }
+
+    // Лояльность - превращаем в карусель в одну строку
+    .tiersContainer {
+        display: flex;
+        overflow-x: auto;
+        padding: 10px 5px 20px;
+        gap: 10px;
+        scroll-snap-type: x mandatory;
+        
+        // Скрываем скроллбар для красоты (Chrome, Safari)
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        -ms-overflow-style: none; // IE
+        scrollbar-width: none; // Firefox
+    }
+
+    .tierCard {
+        min-width: 160px; // Фиксированная ширина карточки в карусели
+        flex-shrink: 0;
+        scroll-snap-align: center;
+        opacity: 0.5;
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 20px;
+
+        &.activeTier {
+            opacity: 1;
+            transform: scale(1);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    }
+
+    // Реферальная программа
+    .linkContainer {
+        flex-direction: column;
+        background: transparent;
+        border: none;
+        padding: 0;
+        gap: 8px;
+    }
+
+    .refInput {
+        width: 100%;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 14px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .copyBtn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .refStatsMini {
+        justify-content: space-around;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .statsMainGrid {
+        grid-template-columns: 1fr; // Статистика игр в 1 колонку на совсем маленьких экранах
+    }
+    
+    .userDetails .nameRow h1 {
+        font-size: 22px;
+    }
+    
+    .userDetails .nameRow .nameInput {
+        width: 150px;
+        font-size: 20px;
+    }
+}

@@ -1,0 +1,190 @@
+
+
+// Контейнер (relative)
+.container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// === Кнопка колокольчика ===
+.bellButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    z-index: 11;
+
+    img {
+        width: 32px; 
+        height: 32px;
+        object-fit: contain;
+        transition: all 0.3s ease;
+    }
+
+    @media (max-width: 1450px) {
+        img { width: 44px !important; height: 44px !important; min-width: 44px; }
+    }
+    @media (max-width: 768px) {
+        img { width: 38px !important; height: 38px !important; min-width: 38px; }
+    }
+    @media (max-width: 440px) {
+        img { width: 25px !important; height: 25px !important; min-width: 25px; }
+    }
+}
+
+// === Выпадающее окно ===
+.dropdown {
+    position: absolute;
+    top: 150%;
+    right: -10px;
+    
+    width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
+    
+    // Основной фон
+    background-color: #54679D; 
+    border: 1px solid #0C8CE9;
+    border-radius: 8px;
+    box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    
+    // ВАЖНО: Убрали общий padding, чтобы хедер прилипал к краям
+    padding: 0; 
+    
+    animation: fadeIn 0.2s ease-in-out;
+
+    &::-webkit-scrollbar { width: 4px; }
+    &::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); }
+    &::-webkit-scrollbar-thumb { background: #0C8CE9; border-radius: 4px; }
+
+    @media (max-width: 768px) {
+        width: 340px;
+        right: -60px;
+    }
+    @media (max-width: 480px) {
+        width: 300px;
+        right: -50px;
+        top: 170%;
+    }
+    @media (max-width: 360px) {
+        width: 280px;
+        right: -30px;
+    }
+}
+
+// === Шапка (Header) ===
+.dropdownHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    // ВАЖНО: Цвет фона как вы просили
+    background-color: #3B4A74; 
+    
+    // Внутренние отступы для шапки
+    padding: 16px 20px; 
+    
+    // Скругление только сверху, чтобы совпадало с окном
+    border-radius: 8px 8px 0 0; 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dropdownTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    span {
+        color: #FFFFFF;
+        font-weight: 700;
+        font-size: 16px;
+    }
+}
+
+.closeMainButton {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+
+    &:hover { opacity: 1; }
+}
+
+// === Список уведомлений ===
+.dropdownList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    
+    // ВАЖНО: Добавляем отступ списку, так как убрали его у родителя
+    padding: 20px; 
+}
+
+.notificationItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    position: relative;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+    &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+}
+
+.iconWrapper {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.contentWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.text {
+    margin: 0;
+    font-size: 14px;
+    color: #FFFFFF;
+    line-height: 1.4;
+    padding-right: 15px;
+}
+
+.time {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.closeItemButton {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    opacity: 0.5;
+    padding: 2px;
+    flex-shrink: 0;
+    transition: opacity 0.2s;
+    margin-top: 2px;
+
+    &:hover { opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

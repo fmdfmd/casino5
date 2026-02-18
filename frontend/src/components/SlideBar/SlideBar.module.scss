@@ -1,0 +1,80 @@
+
+
+.sidebar {
+    /* Сначала задаем основные стили */
+    display: flex;
+    flex-direction: column;
+    row-gap: rem(20); 
+    width: rem(280); 
+    padding-left: rem(40);
+
+    /* Стили для липкости */
+    position: sticky;
+    top: rem(20);
+    height: fit-content;
+    z-index: 10;
+    flex-shrink: 0;
+
+    /* --- ВАЖНО: Адаптив пишем В КОНЦЕ блока --- */
+    /* Теперь это правило перекроет display: flex, так как оно стоит ниже */
+    @media (max-width: 1450px) {
+        display: none !important; /* Добавил !important для гарантии, но должно работать и без него, если стоит внизу */
+    }
+}
+
+.card {
+    background: linear-gradient(180deg, rgba(116, 96, 238, 0.8) 0%, rgba(88, 76, 237, 0.6) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.4); 
+    border-radius: rem(20); 
+    padding: rem(20);
+    backdrop-filter: blur(10px); 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    row-gap: rem(12); 
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    column-gap: rem(15);
+    padding: rem(12) rem(20);
+    border-radius: rem(50); 
+    text-decoration: none;
+    transition: all 0.3s ease;
+
+    .text {
+        color: #ffffff;
+        font-size: rem(16);
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .iconWrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: rem(24);
+        height: rem(24);
+        
+        filter: brightness(0) invert(1); 
+    }
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+}
+
+.active {
+    background: linear-gradient(90deg, #7A69E6 0%, #6857D9 100%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+
+    &:hover {
+        background: linear-gradient(90deg, #7A69E6 0%, #6857D9 100%);
+        opacity: 0.9;
+    }
+}

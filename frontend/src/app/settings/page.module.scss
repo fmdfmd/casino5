@@ -1,0 +1,218 @@
+// --- ЦВЕТОВАЯ ПАЛИТРА ---
+$bg-color: #0B1A2E;
+$card-bg: #3b4a74;
+$accent-color: #3e30e9;
+$border-light: #c7f5fc;
+$text-white: #ffffff;
+$text-dim: rgba(255, 255, 255, 0.5);
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  color: $text-white;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 24px 16px; // Уменьшаем отступы по бокам
+  }
+}
+
+.pageHeader {
+  margin-bottom: 24px;
+  h1 { 
+    font-size: 28px; 
+    font-weight: 800;
+    @media (max-width: 600px) { font-size: 22px; } // Меньше заголовок на мобиле
+  }
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr; // Переход в одну колонку
+    gap: 16px;
+  }
+}
+
+.card {
+  background-color: $card-bg;
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  height: 100%;
+  box-sizing: border-box;
+
+  @media (max-width: 600px) {
+    padding: 20px 16px; // Еще компактнее на мобилках
+    border-radius: 16px;
+  }
+}
+
+.cardHeader {
+  margin-bottom: 20px;
+  h2 { 
+    font-size: 18px; 
+    font-weight: 700; 
+    margin-bottom: 6px; 
+  }
+  p { 
+    font-size: 13px; 
+    color: $text-dim; 
+    line-height: 1.5; 
+  }
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; // Расстояние между пунктами настроек
+}
+
+// --- УЛУЧШЕННЫЙ TOGGLE ROW (ГЛАВНОЕ ДЛЯ МОБИЛЫ) ---
+.toggleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; // Выравнивание по верху, чтобы switch стоял ровно
+  gap: 12px;
+  width: 100%;
+}
+
+.toggleLeft {
+  flex: 1; // Занимает всё свободное место
+  min-width: 0; // Предотвращает распирание текстом
+  
+  span {
+    display: block;
+    margin-top: 4px;
+    font-size: 13px;
+    color: $text-dim;
+    line-height: 1.4;
+    @media (max-width: 600px) { font-size: 12px; }
+  }
+}
+
+.titleWithIcon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap; // Чтобы длинные заголовки не ломали верстку
+
+  h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0;
+    cursor: pointer;
+    line-height: 1.2;
+    @media (max-width: 600px) { font-size: 14px; }
+  }
+}
+
+.questionBadge {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba($border-light, 0.2);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0; // Чтобы вопросик не сжимался
+  transition: 0.2s;
+
+  &:hover {
+    background: $accent-color;
+    transform: scale(1.1);
+  }
+}
+
+// --- УЛУЧШЕННЫЙ SWITCH ---
+.switch {
+  width: 44px;
+  height: 24px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0; // Важно: переключатель всегда фиксированной ширины
+  margin-top: 2px; // Центровка относительно первой строки текста
+
+  .slider {
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &.active {
+    background-color: $accent-color;
+    .slider {
+      transform: translateX(20px);
+    }
+  }
+}
+
+// --- РАДИО КНОПКИ ---
+.radioRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+
+  &.activeRow {
+    border-color: rgba($accent-color, 0.5);
+    background: rgba($accent-color, 0.1);
+  }
+
+  label {
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+
+.radioCircle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  &.active { border-color: $accent-color; }
+  .radioDot {
+    width: 10px;
+    height: 10px;
+    background: $accent-color;
+    border-radius: 50%;
+  }
+}

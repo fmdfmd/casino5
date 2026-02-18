@@ -1,0 +1,213 @@
+
+
+// --- Основные стили (Overlay) ---
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  touch-action: none; 
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 999999;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
+// --- КОНТЕЙНЕР МЕНЮ ---
+.menuContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  
+  // ВАЖНО: 100dvh учитывает адресную строку мобильных браузеров
+  height: 100vh;
+  height: 100dvh; 
+  max-height: 100dvh; 
+
+  // Запрещаем скролл самого контейнера
+  overflow: hidden; 
+  
+  display: flex;
+  flex-direction: column;
+  
+  padding: 10px;
+  box-sizing: border-box;
+
+  z-index: 10000000;
+  transform: translateX(-100%);
+  animation: slideIn 0.3s forwards;
+  
+  // Ширина меню
+  width: 85%;
+  max-width: 380px; 
+
+  @media (max-width: 1450px) {
+    width: 380px;
+    max-width: 75%;
+  }
+
+  @media (max-width: 600px) {
+    width: 90%;
+    max-width: 95%;
+    padding: 8px;
+  }
+}
+
+// --- БЛОК 1: Шапка меню ---
+.menuHeader {
+  background: #535BC8; 
+  border-radius: 16px;
+  padding: 15px 20px; // Чуть компактнее, чтобы оставить место пунктам
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  margin-bottom: 8px; 
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  
+  // Шапка имеет фиксированный размер и не сжимается
+  flex-shrink: 0; 
+  min-height: 60px;
+
+  @media (max-width: 1450px) { padding: 18px 24px; }
+  @media (max-width: 400px) { padding: 12px 16px; min-height: 50px; }
+}
+
+.titleWrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menuTitle {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.1;
+
+  @media (max-width: 1024px) { font-size: 22px; }
+  @media (max-width: 400px) { font-size: 18px; }
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  opacity: 0.8;
+  
+  img {
+    width: 28px;
+    height: 28px;
+    @media (max-width: 1024px) { width: 32px; height: 32px; }
+  }
+}
+
+// --- БЛОК 2: Список навигации ---
+.navList {
+  background: linear-gradient(180deg, #4047BE 0%, #795DD7 100%);
+  border-radius: 16px;
+  
+  // === КЛЮЧЕВОЕ ИЗМЕНЕНИЕ ДЛЯ ВМЕЩЕНИЯ ===
+  display: flex;
+  flex-direction: column;
+  // Убираем внутренние отступы, чтобы пункты могли занимать все место
+  padding: 4px 0; 
+  margin: 0;
+  list-style: none;
+
+  // Занимает все свободное пространство
+  flex: 1;           
+  min-height: 0;     
+  
+  // Скролл остается как "аварийный вариант", если телефон ОЧЕНЬ маленький,
+  // а пунктов ОЧЕНЬ много. Но в 99% случаев он не появится.
+  overflow-y: auto;  
+  overscroll-behavior: contain; 
+  
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+
+  &::-webkit-scrollbar { width: 3px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.3); border-radius: 4px; }
+}
+
+// --- ПУНКТЫ МЕНЮ (Flex-адаптив) ---
+.navItem {
+  display: flex;
+  align-items: center; // Центрируем текст и иконку по вертикали
+  gap: 12px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 600;
+  width: 100%;
+  box-sizing: border-box;
+  
+  transition: background 0.2s;
+  
+  // === МАГИЯ АДАПТИВА (ЧТОБЫ НЕ БЫЛО СКРОЛЛА) ===
+  // 1. Каждый пункт старается занять равную долю свободного места
+  flex-grow: 1; 
+  
+  // 2. Убираем фиксированный padding сверху/снизу. 
+  // Вместо него работает центровка flexbox.
+  padding: 0 20px; 
+  
+  // 3. Ограничители размера
+  max-height: 90px; // Чтобы на больших экранах пункты не были гигантскими
+  min-height: 48px; // Чтобы на микро-экранах совсем не сплющились
+  
+  // Если текста много, он перенесется, но не налезет друг на друга
+  line-height: 1.25; 
+
+  img {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
+
+  &:active {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  // --- Настройка шрифтов под экраны ---
+
+  // Планшеты
+  @media (max-width: 1450px) {
+    font-size: 19px;
+    padding: 0 24px;
+    img { width: 26px; height: 26px; }
+  }
+
+  // Мобильные (Стандартные)
+  @media (max-width: 600px) {
+    font-size: 18px; 
+    padding: 0 20px;
+    img { width: 28px; height: 28px; }
+  }
+
+  // Мобильные (Маленькие - iPhone SE и подобные)
+  // Тут уменьшаем шрифт и минимальную высоту, чтобы влезло
+  @media (max-width: 380px) and (max-height: 700px) {
+    min-height: 42px; // Разрешаем сжиматься сильнее
+    font-size: 16px;  // Шрифт чуть компактнее
+    padding: 0 16px;
+    gap: 10px;
+    img { width: 22px; height: 22px; }
+  }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

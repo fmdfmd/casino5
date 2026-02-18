@@ -1,0 +1,332 @@
+$primary-color: #3E30E9;
+$gradient-bg-start: #8463E9;
+$gradient-bg-end: #4248CD;
+
+// Сброс Мантин (Modal)
+.modalContent {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.modalBody {
+  padding: 0;
+}
+
+// ГЛАВНЫЙ КОНТЕЙНЕР 
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  min-height: 600px;
+
+  &.singleMode {
+    min-height: auto;
+    justify-content: center;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+    min-height: auto;
+    border-radius: 24px;
+  }
+}
+
+//  КНОПКА ЗАКРЫТИЯ 
+.closeButton {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 1000 !important;
+  width: 28px;
+  height: 28px;
+  background-color: transparent !important;
+  border: none !important;
+  color: white !important;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    stroke: white !important;
+    stroke-width: 2.5px;
+  }
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 50%;
+  }
+
+  @media (max-width: 768px) {
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+// === ЛЕВАЯ ЧАСТЬ (ФОРМА) ===
+.formSide {
+  background: linear-gradient(180deg, rgba($gradient-bg-start, 0.98) 0%, rgba($gradient-bg-end, 0.98) 100%);
+  border-radius: 32px;
+  border: rem(1) solid #C7F5FC;
+  flex: 1;
+  padding: 40px;
+  padding-right: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 24px;
+    padding-top: 30px;
+  }
+}
+
+//  ПРАВАЯ ЧАСТЬ (КАРТИНКА) 
+.imageSide {
+  flex: 1;
+  display: flex;
+
+  @media (max-width: 768px) {
+    height: 200px;
+    width: 100%;
+    padding: 0;
+  }
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: rem(1) solid #C7F5FC;
+  border-radius: 24px;
+  overflow: hidden;
+
+  img {
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+
+// === СТИЛИ ИНПУТОВ (Email, Password, Select)
+
+.input {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(199, 245, 252, 0.4);
+  height: 54px;
+  border-radius: 12px;
+  font-size: 15px;
+  padding-left: 20px;
+  caret-color: #ffffff;
+
+  color: #ffffff !important;
+
+  & input,
+  & select,
+  & textarea {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+  }
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.6) !important;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.6) !important;
+    opacity: 1;
+  }
+
+  & input::placeholder {
+    color: rgba(255, 255, 255, 0.6) !important;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.6) !important;
+    opacity: 1;
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  & input:-webkit-autofill {
+    -webkit-text-fill-color: #ffffff !important;
+    transition: background-color 5000s ease-in-out 0s;
+    caret-color: #ffffff;
+  }
+
+  &:focus,
+  &:focus-within {
+    border-color: #fff;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5);
+  }
+}
+
+
+.inputSection {
+  color: white !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    stroke: white !important;
+    color: white !important;
+  }
+
+  // Глазик пароля
+  :global(.mantine-PasswordInput-visibilityToggle) {
+    color: white !important;
+    --ai-color: white !important;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+
+.mobileBannerWrapper {
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+
+  .mobileImage {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.dropdown {
+  background-color: #2a2c4f !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(199, 245, 252, 0.2) !important;
+
+  div[data-combobox-option] {
+    color: white !important;
+
+    &:hover,
+    &[data-combobox-selected] {
+      background-color: $primary-color !important;
+      color: white !important;
+    }
+  }
+}
+
+.segmentRoot {
+  margin-top: rem(20);
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 4px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.segmentLabel {
+  color: white;
+  font-weight: 600;
+
+  &:hover {
+    color: white;
+  }
+}
+
+.segmentActive {
+  background-color: $primary-color;
+  border-radius: 8px;
+}
+
+.submitButton {
+  background-color: $primary-color;
+  border-radius: 12px;
+  height: 54px;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  color: white;
+  margin-top: 10px;
+  box-shadow: 0 4px 15px rgba(62, 48, 233, 0.3);
+
+  &:hover {
+    // background-color: lighten($primary-color, 5%);
+  }
+}
+
+.socialGroup {
+  margin: 20px 0;
+}
+
+.socialIconWrapper {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.2s;
+
+  img {
+    display: block;
+  }
+
+  &:hover {
+    background-color: $primary-color;
+    border-color: white;
+    transform: translateY(-2px);
+  }
+}
+
+.forgotLink {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  cursor: pointer;
+  margin-top: -8px;
+  margin-bottom: 5px;
+  text-align: right;
+
+  &:hover {
+    color: white;
+  }
+}
+
+.backLink {
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.title {
+  color: white;
+  margin-bottom: 8px;
+}
+
+.textDimmed {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.checkboxLabel {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  padding-left: 8px;
+
+  a {
+    color: white;
+    text-decoration: underline;
+  }
+}

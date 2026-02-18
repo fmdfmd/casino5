@@ -1,0 +1,209 @@
+
+
+/* --- ЕДИНЫЙ КОНТЕЙНЕР --- */
+.container {
+  margin-left: 20px;  
+  margin-right: 28px; 
+  max-width: 1586px;
+  width: calc(100% - 48px);
+  
+  box-sizing: border-box;
+  margin-bottom: 52px;
+
+  /* Адаптив для ноутбуков и планшетов */
+  @media (max-width: 1450px) {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  /* Мобильная версия */
+  @media (max-width: 600px) {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 30px;
+  }
+}
+
+/* Внутренние стили баннера */
+.viewport {
+  width: 100%; 
+  border-radius: 20px;
+  border: 1px solid #C7F5FC;
+  overflow: hidden;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  background-color: #0d1229;
+  position: relative;
+ 
+  height: 180px; 
+  @media (min-width: 480px) { height: 240px; }
+  @media (min-width: 768px) { height: 280px; }
+  @media (min-width: 1024px) { height: 350px; }
+}
+
+.carouselContainer {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.slide {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.imgContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.nextImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.mobileOnly { display: block; }
+.tabletOnly { display: none; }
+.desktopOnly { display: none; }
+
+@media (min-width: 481px) {
+  .mobileOnly { display: none; }
+  .tabletOnly { display: block; }
+}
+
+@media (min-width: 1024px) {
+  .tabletOnly { display: none; }
+  .desktopOnly { display: block; }
+}
+
+.contentOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  @media (min-width: 768px) { padding-left: 40px; }
+  @media (min-width: 1024px) { padding-left: 60px; }
+}
+
+.contentInner {
+  max-width: 60%;
+  @media (max-width: 480px) { max-width: 80%; }
+}
+
+.title {
+  color: #FFFFFF;
+  font-family: sans-serif; 
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1.2;
+  margin: 0 0 8px 0;
+  white-space: pre-line;
+
+  @media (min-width: 768px) { font-size: 28px; margin-bottom: 12px; }
+  @media (min-width: 1024px) { font-size: 42px; margin-bottom: 16px; }
+}
+
+.description {
+  color: #FFFFFF;
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 0 0 16px 0;
+  font-weight: 800;
+  max-width: 400px;
+
+  @media (min-width: 768px) { font-size: 14px; margin-bottom: 20px; }
+  @media (min-width: 1024px) { font-size: 16px; margin-bottom: 24px; }
+}
+
+/* --- КНОПКА CTA --- */
+.ctaButton {
+  display: inline-block;
+  background: linear-gradient(90deg, #5C46E6 0%, #7B61FF 100%);
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 100px;
+  border: 1px solid #C7F5FC;
+  transition: transform 0.2s, box-shadow 0.2s;
+  white-space: nowrap;
+
+  /* Mobile (по умолчанию) */
+  font-size: 12px;
+  padding: 8px 24px; 
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(92, 70, 230, 0.4);
+  }
+
+  /* Tablet (Планшет) */
+  @media (min-width: 768px) {
+    font-size: 14px;
+    padding: 10px 28px; /* 10px вертикально, 28px горизонтально */
+  }
+
+  /* Desktop (ПК) */
+  @media (min-width: 1024px) {
+    font-size: 16px;
+    padding: 14px 42px; /* 14px вертикально, 42px горизонтально */
+  }
+}
+
+.indicators {
+  bottom: auto;
+  top: 100%;
+  margin-top: 16px;
+  gap: 12px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  @media (max-width: 480px) {
+    margin-top: 10px;
+  }
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #D0D0D0;
+  border: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &[data-active] {
+    background-color: #C7F5FC;
+    transform: scale(1.1);
+  }
+}
+
+.carousel {
+  background: transparent;
+}

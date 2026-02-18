@@ -1,0 +1,250 @@
+@use '../../shared/styles/helpers/functions' as *;
+
+.editProfile {
+    width: 100%;
+    min-height: 100vh;
+
+    // === DESKTOP ===
+    // Центрируем по вертикали
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: rem(40) 0;
+
+    // === MOBILE FIX ===
+    @media (max-width: 768px) {
+        justify-content: flex-start; // Убираем центрирование
+        padding-top: rem(120); // Большой отступ сверху от хедера
+        padding-bottom: rem(40);
+    }
+}
+
+.container {
+    max-width: rem(900);
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 rem(24);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: rem(16);
+    margin-bottom: rem(24);
+
+    .backBtn {
+        width: rem(36);
+        height: rem(36);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 50%;
+        color: #fff;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: rgba(0, 224, 118, 0.1);
+            border-color: #00e076;
+            color: #00e076;
+        }
+    }
+
+    .title {
+        color: #fff;
+        font-size: rem(20);
+        font-weight: 700;
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: rem(24);
+}
+
+// === MAIN GRID LAYOUT ===
+.mainLayout {
+    display: grid;
+    // Левая колонка чуть шире. 
+    grid-template-columns: 1.2fr 1fr;
+    gap: rem(32);
+    // ВАЖНО: Растягиваем элементы по высоте, чтобы они были равны
+    align-items: stretch;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr; // На телефоне одна колонка
+        gap: rem(24);
+    }
+}
+
+// --- LEFT COLUMN (Inputs) ---
+.inputsColumn {
+    display: flex;
+    flex-direction: column;
+    gap: rem(14); // Расстояние между инпутами
+}
+
+// Стили плавающего лейбла
+.field {
+    position: relative;
+    width: 100%;
+
+    .input {
+        width: 100%;
+        background: rgba(24, 24, 27, 0.5); // Темный полупрозрачный фон
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: rem(12);
+        // Паддинг сверху (rem(20)) освобождает место для уехавшего текста
+        padding: rem(20) rem(16) rem(8) rem(16);
+        color: #fff;
+        font-size: rem(15);
+        font-weight: 500;
+        outline: none;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        height: rem(56); // Фиксированная высота для красоты
+
+        &:focus {
+            border-color: #00e076;
+            background: rgba(0, 224, 118, 0.03);
+        }
+
+        // Если поле заполнено или в фокусе -> поднимаем лейбл
+        &:not(:placeholder-shown),
+        &:focus {
+            &+.label {
+                top: rem(10);
+                font-size: rem(10);
+                color: #71717a;
+                font-weight: 600;
+            }
+        }
+    }
+
+    // Текст подсказки
+    .label {
+        position: absolute;
+        left: rem(16);
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(255, 255, 255, 0.3); // Прозрачный цвет, как просили
+        font-size: rem(14);
+        pointer-events: none;
+        transition: all 0.2s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+}
+
+// --- RIGHT COLUMN (Card) ---
+.prefsColumn {
+    // Колонка грида
+    display: flex;
+    flex-direction: column;
+}
+
+.characteristicsCard {
+    background: rgba(24, 24, 27, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: rem(24);
+    padding-top: rem(20);
+    border-radius: rem(16);
+    // ВАЖНО: Занимает 100% высоты родителя (который растянут гридом)
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .cardTitle {
+        color: #fff;
+        font-size: rem(15);
+        // margin-bottom: rem(20);
+        font-weight: 600;
+        opacity: 0.9;
+    }
+}
+
+.charList {
+    display: flex;
+    flex-direction: column;
+    // justify-content: space-between; // Можно включить, чтобы растянуть кнопки на всю высоту
+    gap: rem(24); // Или просто задать большие отступы
+    flex: 1; // Занимает всё доступное место в карточке
+}
+
+.charGroup {
+    display: flex;
+    flex-direction: column;
+    gap: rem(10);
+
+    .charLabel {
+        color: #52525b;
+        font-size: rem(11);
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+}
+
+.optionsRow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: rem(8);
+}
+
+.optionBtn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: rem(6);
+    cursor: pointer;
+    padding: rem(10) rem(4);
+    border-radius: rem(8);
+    transition: all 0.2s ease;
+    min-height: rem(56);
+
+    span {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: rem(13);
+        font-weight: 500;
+    }
+
+    &.active {
+        background: #00e076;
+        border-color: #00e076;
+
+        span {
+            color: #000;
+            font-weight: 700;
+        }
+
+        svg {
+            color: #000;
+        }
+    }
+
+    &:hover:not(.active) {
+        background: rgba(255, 255, 255, 0.08);
+    }
+}
+
+.saveBtn {
+    margin-top: rem(8);
+    background: #00e076;
+    color: #000;
+    border: none;
+    padding: rem(18);
+    border-radius: rem(14);
+    font-size: rem(16);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    width: 100%;
+
+    &:hover {
+        filter: brightness(1.1);
+        transform: translateY(-2px);
+    }
+}

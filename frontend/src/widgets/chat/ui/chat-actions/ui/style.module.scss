@@ -1,0 +1,21 @@
+.chatActions {
+    background: #735AD4;
+    padding: rem(5);
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    border-radius: rem(10);
+
+    &>button {
+        padding: 0;
+        display: block;
+        border: none;
+        background-color: transparent;
+
+        &:hover {
+            background-color: transparent;
+        }
+    }
+}

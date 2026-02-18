@@ -1,0 +1,303 @@
+// --- VARIABLES ---
+$bg-button: #282626;
+$bg-active: #3E30E9;
+$stroke-color: rgba(255, 255, 255, 0.2);
+$text-color: #ffffff;
+$line-color: rgba(255, 255, 255, 0.1);
+
+// --- BONUS BLOCK ---
+.getbonus {
+  border: rem(1) solid #C7F5FC;
+  border-radius: 0 0 rem(20) rem(20);
+  margin-bottom: rem(28);
+
+  @media (max-width: 840px) {
+    display: none;
+  }
+
+  @include mobile {
+    display: block;
+    margin-bottom: rem(16);
+    border-radius: 0 0 rem(12) rem(12);
+  }
+
+  &__main {
+    display: flex;
+    justify-content: space-between;
+    padding-block: rem(26);
+    padding-inline: rem(40);
+
+    @include mobile {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding-block: rem(16);
+      padding-inline: rem(15);
+      gap: rem(8);
+    }
+
+    &-title {
+      color: #FFFFFF;
+      font-size: rem(20);
+      font-weight: 500;
+      text-transform: uppercase;
+
+      @include tablet {
+        font-size: rem(14);
+      }
+
+      @include mobile {
+        font-size: rem(16);
+      }
+    }
+
+    &-registrationLink {
+      font-size: rem(20);
+      color: rgba(255, 255, 255, 0.3); // #FFFFFF4d replaced for safety if variable not defined
+      font-weight: 500;
+
+      @include tablet {
+        font-size: rem(14);
+      }
+
+      @include mobile {
+        font-size: rem(14);
+      }
+    }
+  }
+}
+
+
+// --- CONTAINER ---
+.container {
+  // Desktop Default (> 1450px)
+  margin-left: rem(20);
+  margin-right: rem(28);
+  max-width: rem(1586);
+  width: calc(100% - rem(48));
+  font-family: 'Inter', sans-serif;
+  color: $text-color;
+  box-sizing: border-box;
+  margin-bottom: 52px;
+
+  // Adaptive Stretch (<= 1450px)
+  @media (max-width: 1450px) {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    padding-inline: rem(20);
+  }
+
+  // Mobile (<= 600px)
+  @media (max-width: 600px) {
+    padding-inline: rem(15);
+    margin-bottom: rem(30);
+  }
+}
+
+// --- SECTIONS ---
+.section {
+  margin-bottom: rem(20);
+  width: 100%;
+
+  // !!! HIDE FILTER CHIPS ON MOBILE !!!
+  @media (max-width: 600px) {
+    display: none;
+  }
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: rem(16);
+  margin-bottom: rem(16);
+  font-size: rem(22);
+  font-weight: 600;
+  color: #fff;
+  opacity: 0.9;
+  white-space: nowrap;
+
+  &::after {
+    content: '';
+    flex-grow: 1;
+    height: rem(2);
+    background-color: $line-color;
+  }
+
+  @media (max-width: 768px) {
+    font-size: rem(18);
+    gap: rem(10);
+  }
+}
+
+// --- GRID LAYOUT ---
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(rem(200), 1fr));
+  gap: rem(12);
+  width: 100%;
+
+  @media (min-width: 1601px) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  @media (max-width: 1600px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  @media (max-width: 1300px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 700px) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: rem(8);
+  }
+}
+
+// --- CHIP (BUTTONS) ---
+.chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(5);
+  height: rem(49);
+  padding: 0 rem(20);
+  background-color: $bg-button;
+  border: rem(1) solid $stroke-color;
+  border-radius: rem(100);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  color: $text-color;
+  font-family: inherit;
+  outline: none;
+  white-space: nowrap;
+  width: 100%;
+  box-sizing: border-box;
+
+  span {
+    font-size: rem(16);
+    font-weight: 500;
+
+    @media (max-width: 1200px) {
+      font-size: rem(14);
+    }
+  }
+
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: rem(24);
+    height: rem(24);
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+  }
+
+  &:hover {
+    // background-color: lighten($bg-button, 5%);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  &.active {
+    background-color: $bg-active;
+    // border-color: lighten($bg-active, 5%);
+  }
+
+  @media (max-width: 700px) {
+    height: rem(36);
+    padding: 0 rem(12);
+    gap: rem(4);
+
+    span {
+      font-size: rem(12);
+    }
+
+    .icon {
+      width: rem(18);
+      height: rem(18);
+    }
+  }
+}
+
+// --- SEARCH ---
+.searchContainer {
+  width: 100%;
+  margin-top: rem(24); // Отступ на десктопе
+
+  // --- MOBILE SPACING ---
+  @media (max-width: 600px) {
+    margin-top: rem(24); // Отступ от слайдера (точек)
+    margin-bottom: rem(16); // Отступ от выпадающего списка
+  }
+}
+
+.searchWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.searchInput {
+  width: 100%;
+  height: rem(50);
+  background-color: rgba(40, 38, 38, 0.4);
+  border: rem(1) solid #ffffff;
+  border-radius: rem(25);
+  padding: 0 rem(24) 0 rem(54);
+  color: $text-color;
+  font-size: rem(16);
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  &:focus {
+    border-color: $bg-active;
+  }
+}
+
+.searchIcon {
+  position: absolute;
+  left: rem(20);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: rem(24);
+  height: rem(24);
+  opacity: 0.6;
+  pointer-events: none;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+// --- MOBILE DROPDOWN WRAPPER ---
+// Скрыт на десктопе, показывается только на телефоне
+.mobileCategoryWrapper {
+  display: none;
+
+  @media (max-width: 600px) {
+    display: block;
+    width: 100%;
+    margin-bottom: rem(24); // Отступ снизу до следующего контента
+  }
+}

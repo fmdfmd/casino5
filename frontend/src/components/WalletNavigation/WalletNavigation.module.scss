@@ -1,0 +1,57 @@
+.navContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    gap: 8px;
+  }
+
+  // Адаптив под iPhone SE (320px - 375px)
+  @media (max-width: 400px) {
+    gap: 4px; // Минимальный зазор между кнопками
+  }
+}
+
+.navLink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 12px 28px;
+  border-radius: 100px;
+  transition: all 0.2s ease-in-out;
+  white-space: nowrap;
+  opacity: 0.8;
+  background-color: rgba(255, 255, 255, 0.03);
+
+  &:hover {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  &.active {
+    background-color: #3E30E9;
+    color: #ffffff;
+    opacity: 1;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+
+  // Экстремальное уменьшение для iPhone SE
+  @media (max-width: 400px) {
+    font-size: 10px;      // Сильно уменьшаем шрифт
+    padding: 10px 6px;    // Минимум паддингов по бокам
+    letter-spacing: -0.2px; // Немного сужаем буквы, чтобы влезло
+    flex: 1;              // Заставляем кнопки растягиваться и занимать всё место поровну
+    text-align: center;
+  }
+}

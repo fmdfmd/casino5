@@ -1,0 +1,44 @@
+.getbonus {
+    border: rem(1) solid #C7F5FC; 
+    border-radius:  0 0 rem(20) rem(20);
+    margin-bottom: rem(28);
+    @media (max-width: 840px) {
+  display: none;
+    }
+    @include mobile {
+      
+    }
+
+    &__main {
+    display: flex;
+    justify-content: space-between;
+    padding-block: rem(26);
+    padding-inline: rem(40);
+
+
+  
+    &-title {
+        color: #FFFFFF;
+        font-size: rem(18);
+        font-weight: 500;
+        letter-spacing: 0%;
+        line-height: auto;
+        text-transform: uppercase;
+
+        
+      @include tablet {
+      font-size: rem(14);
+      }
+    }
+    &-registrationLink {
+        font-size: rem(18);
+        color: #FFFFFF4d;
+        font-weight: 500;
+        letter-spacing: 0%;
+        line-height: auto;
+         @include tablet {
+      font-size: rem(14);
+      }
+    }
+    }
+}

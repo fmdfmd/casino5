@@ -1,0 +1,133 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+}
+
+.modal {
+  // Твой градиент из Figma
+  background: linear-gradient(180deg, #8463e9 0%, #4248cd 100%);
+  width: 100%;
+  max-width: 480px;
+  border-radius: 32px;
+  padding: 40px 30px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: 0.2s;
+  &:hover { opacity: 1; transform: rotate(90deg); }
+}
+
+.title {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.avatarGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); // 3 колонки как на скрине
+  gap: 20px;
+  margin-bottom: 35px;
+
+  @media (max-width: 400px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+}
+
+.avatarItem {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transition: 0.2s;
+  }
+
+  &:hover {
+    transform: scale(1.05);
+    &::before { border-color: #fff; }
+  }
+
+  &.active {
+    &::before { border-color: #fff; border-width: 3px; }
+  }
+
+  @media (max-width: 480px) {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden; // Чтобы картинка была круглой
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.checkBadge {
+  position: absolute;
+  bottom: 0;
+  right: 5px;
+  background: #3e30e9; // Цвет кнопки
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  z-index: 2;
+}
+
+.saveBtn {
+  width: 100%;
+  max-width: 200px;
+  height: 52px;
+  background-color: #3e30e9; // Твой цвет кнопки
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    filter: brightness(1.1);
+  }
+}

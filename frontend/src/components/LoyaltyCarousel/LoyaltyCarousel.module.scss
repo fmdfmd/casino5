@@ -1,0 +1,42 @@
+.container {
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding: 0 15px;
+  margin-bottom: 15px;
+}
+
+
+
+.controls {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #3E30E9;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carouselRoot {
+  width: 100%;
+}
+
+.carouselSlide {
+  display: flex;
+  justify-content: center;
+  height: auto;
+}

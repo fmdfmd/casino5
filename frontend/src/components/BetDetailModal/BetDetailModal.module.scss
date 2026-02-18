@@ -1,0 +1,239 @@
+$bg-color: #3b4a74;
+$accent-blue: #3e30e9;
+$border-light: #c7f5fc;
+$text-secondary: rgba(255, 255, 255, 0.6);
+$green-payout: #00ff88;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 12px; // Уменьшил паддинг оверлея для мобил
+}
+
+.modal {
+  background-color: $bg-color;
+  width: 100%;
+  max-width: 600px; // Чуть сузил для элегантности
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow-y: auto; // На случай если контент не влезет по высоте
+  max-height: 95vh;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba($border-light, 0.1);
+
+  .headerTitle {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .closeBtn {
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.2s;
+    &:hover { background: rgba(255, 255, 255, 0.1); }
+  }
+}
+
+.mainContent {
+  padding: 24px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (max-width: 600px) {
+    padding: 20px 16px 24px; // Сильно уменьшаем паддинги на мобилке
+  }
+}
+
+.gameInfo {
+  text-align: center;
+  margin-bottom: 24px;
+
+  .gameName {
+    font-size: 32px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 8px;
+    @media (max-width: 600px) { font-size: 24px; }
+  }
+
+  .betId {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: $text-secondary;
+    font-size: 14px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 10px;
+
+    .copyBtn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      padding: 2px;
+      &:hover { opacity: 0.7; }
+    }
+  }
+
+  .dateInfo {
+    color: $text-secondary;
+    font-size: 13px;
+    margin-top: 4px;
+  }
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba($border-light, 0.15), transparent);
+  margin-bottom: 24px;
+}
+
+.statsGrid {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.15); // Добавил подложку
+  padding: 16px;
+  border-radius: 16px;
+  margin-bottom: 32px;
+
+  .statItem {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+
+    .label {
+      color: $text-secondary;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .value {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      white-space: nowrap;
+
+      &.green {
+        color: $green-payout;
+      }
+    }
+  }
+
+  .verticalDivider {
+    width: 1px;
+    background: rgba(255, 255, 255, 0.05);
+    margin: 0 10px;
+  }
+
+  @media (max-width: 500px) {
+    // На совсем маленьких экранах — 2 колонки сверху, 1 снизу или просто компактнее
+    padding: 12px;
+    .statItem .value { font-size: 15px; }
+  }
+}
+
+.playBtn {
+  width: 100%;
+  height: 56px;
+  background-color: $accent-blue;
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-bottom: 32px;
+
+  &:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+  .shareLabel {
+    color: $text-secondary;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .socialIcons {
+    display: flex;
+    gap: 12px;
+
+    .socialBtn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-2px);
+      }
+
+      img {
+        width: 20px !important;
+        height: 20px !important;
+      }
+    }
+  }
+
+  @media (max-width: 450px) {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

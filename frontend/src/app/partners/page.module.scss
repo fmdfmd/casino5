@@ -1,0 +1,410 @@
+// ==========================================
+// 1. БАЗОВЫЕ НАСТРОЙКИ
+// ==========================================
+.wrapper {
+    display: flex;
+    width: 100%;
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.mainContent {
+    flex: 1;
+    padding: 40px 60px;
+    max-width: 1500px;
+    margin: 0 auto;
+    width: 100%;
+
+    @media (max-width: 768px) {
+        padding: 20px 16px;
+    }
+}
+
+// ==========================================
+// 2. НАВИГАЦИЯ (Используется в PartnersNavigation)
+// ==========================================
+.topNav {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 40px;
+    
+    flex-wrap: nowrap; 
+    overflow-x: auto;
+    padding-bottom: 8px; 
+
+    &::-webkit-scrollbar { display: none; }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    a {
+        text-decoration: none;
+        display: inline-block;
+        flex-shrink: 0; 
+
+        &.active button {
+            background: #4c52ff;
+            color: #fff;
+        }
+    }
+
+    button {
+        background: rgba(255, 255, 255, 0.05);
+        border: none;
+        color: #8e92b2;
+        padding: 10px 24px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap; 
+
+        &.active { 
+            background: #4c52ff; 
+            color: #fff; 
+        }
+
+        &:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+    }
+}
+
+// ==========================================
+// 3. ФОРМА ПАРТНЕРА
+// ==========================================
+.formContainer {
+    max-width: 800px;
+    margin-bottom: 60px;
+    
+    .title { 
+        font-size: 2.5rem; 
+        margin-bottom: 10px; 
+        font-weight: 700; 
+        @media (max-width: 768px) { font-size: 1.8rem; }
+    }
+    .subtitle { 
+        color: #8e92b2; 
+        margin-bottom: 30px; 
+        font-size: 0.9rem; 
+        line-height: 1.5; 
+    }
+}
+
+.partnerForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .formField {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        label { 
+            font-size: 0.85rem; 
+            span { color: #ff4c4c; } 
+        }
+        input, select, textarea {
+            background: #1a1d29;
+            border: 1px solid #303549;
+            border-radius: 8px;
+            padding: 12px;
+            color: #fff;
+            outline: none;
+            width: 100%;
+            &:focus { border-color: #4c52ff; }
+        }
+        textarea { height: 120px; resize: none; }
+    }
+
+    .gridRow {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        @media (max-width: 600px) { grid-template-columns: 1fr; }
+    }
+
+    .addSource {
+        background: none;
+        border: none;
+        color: #8e92b2;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        width: fit-content;
+        span {
+            background: #4c52ff;
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .submitBtn {
+        background: #4c52ff;
+        color: #fff;
+        border: none;
+        padding: 12px 40px;
+        border-radius: 8px;
+        font-weight: 700;
+        width: fit-content;
+        cursor: pointer;
+        transition: 0.3s;
+        &:hover { background: #3b41e6; }
+    }
+}
+
+// ==========================================
+// 4. HERO SECTION
+// ==========================================
+.hero {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 40px;
+    gap: 30px;
+
+    @media (min-width: 1100px) {
+        flex-direction: row;
+        text-align: left;
+        justify-content: space-between;
+        margin-bottom: 100px;
+    }
+
+    .heroTextContainer { width: 100%; max-width: 800px; }
+
+    .heroImageWrapper {
+        @media (max-width: 1099px) { display: none; }
+        flex: 0 0 auto;
+        animation: float 6s ease-in-out infinite;
+        .moneyBag { 
+            display: block; width: 100%; max-width: 280px; height: auto; 
+            @media (min-width: 768px) { max-width: 380px; }
+            @media (min-width: 1100px) { max-width: 487px; }
+        }
+    }
+}
+
+.pageSubtitle { color: #4c52ff; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 10px; }
+.mainTitle { 
+    font-size: 1.8rem; line-height: 1.1; font-weight: 800; margin-bottom: 15px; 
+    @media (min-width: 768px) { font-size: 3rem; }
+}
+.heroSub { font-size: 1rem; color: #8e92b2; margin-bottom: 30px; }
+
+// ==========================================
+// 5. СТАТИСТИКА
+// ==========================================
+.statsCards {
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: 15px;
+    width: 100%;
+    margin-bottom: 30px;
+
+    @media (min-width: 600px) { grid-template-columns: repeat(3, 1fr); }
+
+    .statCard {
+        padding: 20px; border-radius: 24px; min-height: 150px; 
+        display: flex; flex-direction: column; justify-content: space-between; text-align: left;
+        h3 { font-size: 1.8rem; font-weight: 800; }
+        p { font-size: 0.8rem; opacity: 0.9; }
+        &.green { background: linear-gradient(180deg, #24782A 0%, #3AA245 100%); }
+        &.orange { background: linear-gradient(180deg, #DE7818 0%, #F5B63B 100%); }
+        &.blue { background: linear-gradient(180deg, #1E69C5 0%, #3281D9 100%); }
+    }
+}
+
+// ==========================================
+// 6. СЕКЦИЯ ШАГОВ (ИЗМЕНЕНО: 1 ряд по 3 на всех устройствах)
+// ==========================================
+.section {
+    width: 100%; 
+    margin-bottom: 80px; 
+    text-align: center;
+    .sectionTitle { 
+        font-size: 1.6rem; margin-bottom: 40px; font-weight: 700; 
+        @media (min-width: 768px) { font-size: 2.5rem; }
+    }
+}
+
+.stepsGrid {
+    display: grid; 
+    // ВСЕГДА 3 КОЛОНКИ
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 10px; // Уменьшенный зазор для мобильных
+    
+    @media (min-width: 768px) {
+        gap: 40px; // Возвращаем большой зазор на десктоп
+    }
+
+    .step {
+        display: flex; 
+        flex-direction: column; 
+        align-items: center;
+        text-align: center;
+
+        .stepNum { 
+            color: #4c52ff; 
+            font-size: 0.75rem; // Уменьшено для мобилок
+            font-weight: 700; 
+            margin-bottom: 15px; 
+
+            @media (min-width: 768px) {
+                font-size: 0.9rem;
+                margin-bottom: 30px;
+            }
+        }
+
+        .stepIcon {
+            width: 60px; // Уменьшено для мобилок
+            height: 60px; 
+            margin-bottom: 15px;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+
+            @media (min-width: 768px) {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 25px;
+            }
+
+            img { 
+                width: 100%; 
+                height: auto; 
+                object-fit: contain; 
+            }
+        }
+
+        h3 { 
+            font-size: 0.75rem; // Уменьшено для мобилок
+            font-weight: 500; 
+            line-height: 1.2;
+            max-width: 100%;
+
+            @media (min-width: 768px) {
+                font-size: 1.1rem;
+                max-width: 220px;
+                line-height: 1.3;
+            }
+        }
+    }
+}
+
+// ==========================================
+// 7. CTA BANNER
+// ==========================================
+.ctaBanner {
+    background: rgba(255, 255, 255, 0.04); 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    border-radius: 20px;
+    padding: 24px; display: flex; flex-direction: column; gap: 20px; align-items: center; 
+    width: 100%; margin-bottom: 80px; text-align: center;
+
+    @media (min-width: 1024px) {
+        flex-direction: row; justify-content: space-between; padding: 30px 40px; text-align: left;
+    }
+
+    .ctaInfo { 
+        display: flex; flex-direction: column; align-items: center; gap: 15px; 
+        @media (min-width: 600px) { flex-direction: row; }
+        .ctaIcon { flex-shrink: 0; width: 44px; }
+        p { font-size: 0.95rem; line-height: 1.4; span { color: #8e92b2; font-size: 0.85rem; display: block; margin-top: 4px; } } 
+    }
+}
+
+.loginBtn {
+    background: linear-gradient(90deg, #4c52ff, #9b51ff); 
+    border: none; padding: 14px 30px; border-radius: 30px;
+    color: white; font-weight: 700; cursor: pointer; transition: 0.3s;
+    width: 100%; max-width: 320px; white-space: nowrap;
+    &:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(76, 82, 255, 0.4); }
+    @media (min-width: 1024px) { width: auto; }
+}
+
+// ==========================================
+// 8. ПРЕИМУЩЕСТВА
+// ==========================================
+.benefitsGrid {
+    display: grid; 
+    grid-template-columns: 1fr; 
+    gap: 16px; 
+    text-align: left;
+    @media (min-width: 850px) { grid-template-columns: 1fr 1fr; }
+
+    .benefitItem {
+        display: flex; gap: 16px; padding: 20px; background: rgba(255, 255, 255, 0.02); border-radius: 25px;
+        .benefitIcon { flex-shrink: 0; }
+        h4 { margin-bottom: 6px; font-size: 1.1rem; }
+        p { color: #8e92b2; font-size: 0.85rem; line-height: 1.5; }
+    }
+}
+
+// ==========================================
+// 9. FAQ
+// ==========================================
+.faqSection {
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 40px;
+    text-align: left;
+    .faqMainTitle {
+        font-size: 2rem; color: #ffffff; font-weight: 800; margin-bottom: 30px; text-align: center;
+        @media (min-width: 768px) { font-size: 3rem; text-align: left; }
+    }
+}
+
+.faqItem {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 10px 0;
+    
+    .faqHeader {
+        display: flex; justify-content: space-between; align-items: center; cursor: pointer; gap: 15px; padding: 15px 0; 
+        .faqQuestionLeft { display: flex; align-items: center; gap: 15px; flex: 1; @media (min-width: 768px) { gap: 30px; } }
+        .faqNumber { font-size: 0.9rem; min-width: 25px; color: rgba(255, 255, 255, 0.4); font-weight: 600; }
+        .faqQuestionText { font-size: 1rem; font-weight: 700; color: #fff; line-height: 1.3; @media (min-width: 768px) { font-size: 1.4rem; } }
+        .faqToggleIcon { font-size: 1.5rem; color: #4c52ff; transition: transform 0.3s ease; }
+    }
+
+    &.active {
+        .faqContentWrapper { grid-template-rows: 1fr; opacity: 1; padding-bottom: 20px; }
+        .faqToggleIcon { transform: rotate(45deg); }
+    }
+}
+
+.faqContentWrapper {
+    display: grid; grid-template-rows: 0fr; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; overflow: hidden;
+    .faqAnswerText {
+        min-height: 0; padding-left: 40px; color: #8e92b2; font-size: 0.9rem; line-height: 1.6;
+        @media (min-width: 768px) { padding-left: 55px; font-size: 1rem; }
+    }
+}
+
+// ==========================================
+// 10. КНОПКИ И АНИМАЦИИ
+// ==========================================
+.bigLoginBtn {
+    @extend .loginBtn;
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; max-width: 340px; margin: 40px auto 0; padding: 18px 30px;
+    font-size: 1.1rem; border-radius: 50px; text-align: center;
+    @media (min-width: 768px) { max-width: 450px; padding: 22px 60px; margin-top: 60px; }
+    &:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(76, 82, 255, 0.5); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}

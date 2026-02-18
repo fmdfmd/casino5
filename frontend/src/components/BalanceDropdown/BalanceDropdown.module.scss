@@ -1,0 +1,211 @@
+.wrapper {
+    position: relative;
+    display: inline-block;
+    // СТАЛО: Ставим очень большой индекс, чтобы быть выше хедеров и чатов
+    z-index: 99999; 
+}
+
+.balanceButton {
+    appearance: none;
+    outline: none;
+    font-family: inherit;
+    color: #FFFFFF; 
+    border: rem(2) solid transparent;
+    border-radius: rem(100);
+    
+    background: 
+        linear-gradient(#2A3C73, #2A3C73) padding-box, 
+        linear-gradient(165deg, #C7F7FC 0%, #9C8D84 55%, #CA5CF7 100%) border-box;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    column-gap: rem(8); 
+    
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap; 
+
+    padding: rem(14) rem(42); 
+
+    &:hover {
+        opacity: 0.9;
+    }
+
+    @media (max-width: 1450px) {
+        padding: rem(12) rem(30);
+    }
+
+    @media (max-width: 768px) {
+        padding: rem(10) rem(20);
+        border-width: rem(1);
+    }
+}
+
+.balanceValue { 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: rem(8); 
+    color: #FFFFFF;
+    font-size: rem(18); 
+    font-weight: 700;
+    line-height: 1;
+
+    @media (max-width: 768px) {
+        font-size: rem(16); 
+        column-gap: rem(6);
+    }
+}
+
+.balanceText {
+    display: block;
+    @media (max-width: 768px) {
+        max-width: rem(90);       
+        overflow: hidden;
+        text-overflow: ellipsis;  
+        white-space: nowrap;
+    }
+}
+
+.currencyIcon {
+    @media (max-width: 768px) {
+        width: rem(18);
+        height: rem(18);
+    }
+}
+
+.arrowIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    width: rem(28);
+    height: rem(28);
+
+    @media (max-width: 768px) {
+        width: rem(20);
+        height: rem(20);
+    }
+}
+
+.active .arrowIcon {
+    transform: rotate(180deg);
+}
+
+// --- DROPDOWN LIST ---
+.dropdownList {
+    position: absolute;
+    top: calc(100% + rem(8)); 
+    right: 0; 
+    width: rem(300); 
+    
+    // СТАЛО: Полностью непрозрачный фон, чтобы ничего не просвечивало снизу
+    background: #2A3C73; 
+    
+    // СТАЛО: Убрали blur, так как он может быть ресурсоемким и давать "призраков" снизу, 
+    // но если очень нужен блюр — верните, но background должен быть ближе к 1.0 opacity
+    // backdrop-filter: blur(10px); 
+    
+    border-radius: rem(12);
+    border: rem(1) solid rgba(199, 247, 252, 0.1);
+    
+    // СТАЛО: Более жесткая тень, чтобы отделить от фона визуально
+    box-shadow: 0 rem(10) rem(40) rgba(0, 0, 0, 0.8);
+    
+    overflow: hidden;
+    padding: rem(5) 0;
+    display: flex;
+    flex-direction: column;
+    
+    // СТАЛО: Индекс еще выше, чем у обертки
+    z-index: 100000; 
+
+    @media (max-width: 768px) {
+        width: rem(260); 
+        right: rem(-10);
+    }
+}
+
+// --- МОБИЛЬНАЯ КНОПКА DEPOSIT ВНУТРИ СПИСКА ---
+.mobileDepositWrapper {
+    display: none; 
+    padding: rem(10) rem(20);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: rem(5);
+
+    @media (max-width: 600px) {
+        display: block;
+    }
+}
+
+.mobileDepositBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: rem(12);
+    border-radius: rem(100);
+    background: linear-gradient(90deg, #3E45BE 0%, #795DD7 100%);
+    border: rem(1) solid #C7F5FC;
+    color: #FFFFFF;
+    font-size: rem(16);
+    font-weight: 700;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+// --- ЭЛЕМЕНТЫ СПИСКА ---
+.dropdownItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: rem(12) rem(20);
+    cursor: pointer;
+    transition: background 0.2s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    
+    // СТАЛО: Гарантируем, что фон элемента тоже непрозрачный
+    background: #2A3C73; 
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+}
+
+.selected {
+    background: rgba(199, 247, 252, 0.15);
+}
+
+.itemBalance {
+    color: #FFFFFF;
+    font-size: rem(16);
+    font-weight: 500;
+    @media (max-width: 768px) {
+        font-size: rem(14);
+    }
+}
+
+.itemCurrency {
+    display: flex;
+    align-items: center;
+    column-gap: rem(8);
+}
+
+.itemCode {
+    color: #C7F5FC;
+    font-size: rem(14);
+    font-weight: 700;
+    text-transform: uppercase;
+    width: rem(40); 
+    text-align: right;
+}

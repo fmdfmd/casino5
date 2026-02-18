@@ -1,0 +1,104 @@
+@use '../helpers/functions' as *;
+@use '../helpers/media' as *;
+
+:root {
+  --bg-container-width: 1380px;
+  --small-container-width: 1147px;
+  --container-padding-x: #{rem(16)};
+  --bg-color: linear-gradient(90deg, #2A3C74 0%, #151D2E 100%);
+  --font-family-base: var(--font-proxima-nova), sans-serif;
+
+
+
+  --gradient-main: linear-gradient(90deg, #795DD7 0%, #3E45BE 100%);
+  --gradient-button: linear-gradient(90deg, #ED721D 0%, #D51B5B 100%);
+  --gradient-chat: linear-gradient(90deg, #795DD7 0%, #3E45BE 100%);
+  --gradient-home: linear-gradient(90deg, #2A3C74 0%, #151D2E 100%);
+  --gradient-up: linear-gradient(90deg, #3E45BE 0%, #795DD7 100%);
+  --gradient-vector: linear-gradient(90deg, #3E45BE 0%, #795DD7 100%);
+
+
+
+  --cyan-50: #E8FCFF;
+  --cyan-100: #C7F5FC;
+
+  --cyan-200: #A0EAF4;
+  --cyan-300: #79DEED;
+  --cyan-400: #52D3E6;
+  --cyan-500: #2BC7DE;
+  --cyan-600: #1FA3B7;
+  --cyan-700: #157D8C;
+  --cyan-800: #0C5661;
+  --cyan-900: #06323A;
+
+
+  --gray-50: #F9FAFB;
+  --gray-100: #F2F4F7;
+  --gray-200: #E4E7EC;
+  --gray-300: #D0D5DD;
+  --gray-400: #98A2B3;
+  --gray-500: #667085;
+  --gray-600: #475467;
+  --gray-700: #344054;
+  --gray-800: #1D2939;
+  --gray-900: #101828;
+
+
+  --black: #000000;
+  --white: #ffffff;
+
+  /* SEMANTIC COLORS */
+  --success-500: #22c55e;
+  --success-600: #16a34a;
+
+  --warning-500: #f59e0b;
+  --warning-600: #d97706;
+
+  --danger-500: #ef4444;
+  --danger-600: #dc2626;
+
+  --info-500: var(--cyan-500);
+  --info-600: var(--cyan-600);
+
+  /* BORDER RADIUS */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* SPACING */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+
+  /* TYPOGRAPHY */
+  --font-xs: 12px;
+  --font-sm: 14px;
+  --font-md: 16px;
+  --font-lg: 18px;
+  --font-xl: 20px;
+  --font-2xl: 24px;
+
+  --fw-thin: 100;
+  --fw-extralight: 200;
+  --fw-light: 300;
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+  --fw-black: 900;
+
+  --ff-proxima-nova: var(--font-proxima-nova), sans-serif;
+  --ff-open-sans: var(--font-open-sans), 'Open Sans', sans-serif;
+  --ff-roboto: var(--font-roboto), Roboto, sans-serif;
+  --ff-sf-pro-display: var(--font-sf-pro-display), -apple-system, BlinkMacSystemFont, sans-serif;
+  --ff-inter: var(--font-inter), Inter, sans-serif;
+  --ff-arial: var(--font-arial), Arial, sans-serif;
+  --ff-tahoma: var(--font-tahoma), Tahoma, sans-serif;
+}

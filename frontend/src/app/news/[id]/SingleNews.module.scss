@@ -1,0 +1,247 @@
+$mobile-width: 767px;
+$tablet-width: 1200px;
+
+/* --- ГЛОБАЛЬНАЯ ОБЕРТКА --- */
+.wrapper {
+  display: flex;          
+  align-items: flex-start; 
+  width: 100%;
+  margin: 0 auto;         
+  position: relative;
+  min-height: 100vh;
+}
+
+.mainContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: transparent; 
+    color: white;
+    /* На мобилках большой отступ снизу не нужен */
+    padding-bottom: 120px;
+
+    @media (max-width: $mobile-width) {
+        padding-bottom: 60px;
+    }
+}
+
+/* --- КОНТЕЙНЕР --- */
+.container {
+    width: 100%;
+    max-width: 1400px; 
+    margin: 0 auto;    
+    
+    /* Desktop: большие "дорогие" отступы */
+    padding: 60px 40px; 
+    
+    display: flex;
+    flex-direction: column;
+    
+    @media (max-width: $tablet-width) {
+        padding: 40px 30px;
+        max-width: 1000px;
+    }
+    
+    /* Mobile: компактные отступы, чтобы контент влез */
+    @media (max-width: $mobile-width) {
+        padding: 24px 20px;
+        width: 100%;
+    }
+}
+
+/* --- НАВИГАЦИЯ (BREADCRUMBS) --- */
+.topHeader {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: left;
+    line-height: 1.2;
+
+    @media (max-width: $mobile-width) {
+        font-size: 20px; /* Аккуратный размер для мобилки */
+        margin-bottom: 15px;
+    }
+}
+
+.backLink {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease;
+    opacity: 0.9;
+    
+    &:hover { 
+        color: #fbbf24; 
+        opacity: 1;
+    }
+}
+
+/* --- ДАТА --- */
+.date {
+    color: #a0aec0;
+    font-size: 18px;
+    margin-bottom: 30px;
+    text-align: left;
+    font-weight: 500;
+
+    @media (max-width: $mobile-width) {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+}
+
+/* --- КАРТИНКА --- */
+.heroImageWrapper {
+    width: 100%;
+    height: auto;
+    
+    /* Desktop: высокая, красивая картинка */
+    max-height: 700px; 
+    margin-bottom: 60px;
+    
+    border-radius: 16px; /* Чуть больше скругление на десктопе */
+    overflow: hidden;
+    background-color: #0f1225;
+   
+
+    @media (max-width: $tablet-width) {
+        max-height: 500px;
+        margin-bottom: 40px;
+    }
+
+    @media (max-width: $mobile-width) {
+        /* Mobile: Картинка должна быть пропорциональной (например 16:9), 
+           а не фиксированной высоты, чтобы не обрезалась */
+        max-height: 300px; 
+        aspect-ratio: 16/9; 
+        margin-bottom: 30px;
+        border-radius: 10px;
+    }
+}
+
+.heroImage {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+/* --- ЗАГОЛОВОК --- */
+.newsTitle {
+    /* Desktop: Огромный, читаемый заголовок */
+    font-size: 64px; 
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 40px;
+    color: white;
+    text-align: left;
+    width: 100%; 
+    max-width: 1200px; 
+
+    /* Tablet */
+    @media (max-width: $tablet-width) {
+        font-size: 42px;
+        margin-bottom: 30px;
+    }
+
+    /* Mobile */
+    @media (max-width: $mobile-width) {
+        font-size: 28px; /* Достаточно крупно, но влезает в экран */
+        line-height: 1.2;
+        margin-bottom: 20px;
+        word-wrap: break-word; /* Чтобы длинные слова не ломали верстку */
+    }
+}
+
+/* --- ТЕКСТ СТАТЬИ --- */
+.textContent {
+    /* Desktop: Крупный шрифт (премиум вид) */
+    font-size: 22px; 
+    line-height: 1.7;
+    color: #e2e8f0;
+    
+    margin-bottom: 80px; /* Отступ до блока новостей */
+    
+    text-align: left;
+    max-width: 900px; 
+
+    p {
+        margin-bottom: 35px;
+        white-space: pre-line;
+    }
+    
+    /* Tablet */
+    @media (max-width: $tablet-width) {
+        font-size: 18px;
+        max-width: 100%; /* На планшете используем всю ширину */
+    }
+
+    /* Mobile */
+    @media (max-width: $mobile-width) {
+        font-size: 16px; /* Стандартный читаемый размер */
+        line-height: 1.5;
+        margin-bottom: 40px;
+        
+        p {
+            margin-bottom: 20px;
+        }
+    }
+}
+
+/* --- СПИСОК (Буллеты) --- */
+.featureList {
+    list-style: none;
+    padding: 0;
+    margin-top: 40px;
+
+    @media (max-width: $mobile-width) {
+        margin-top: 25px;
+    }
+
+    li {
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 20px;
+        color: white;
+        font-weight: 600;
+
+        @media (max-width: $mobile-width) {
+            padding-left: 25px; /* Чуть меньше отступ на мобилке */
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            
+            /* Адаптация положения квадратика */
+            top: 13px; /* Для шрифта 22px */
+            
+            width: 8px;
+            height: 8px;
+            background-color: #fbbf24;
+            border-radius: 0; 
+
+            @media (max-width: $mobile-width) {
+                top: 8px; /* Для шрифта 16px */
+                width: 6px;
+                height: 6px;
+            }
+        }
+    }
+}
+
+/* --- БЛОК MORE NEWS --- */
+.moreNewsSection {
+    margin-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 40px;
+    width: 100%;
+
+    @media (max-width: $mobile-width) {
+        margin-top: 20px;
+        padding-top: 30px;
+    }
+}

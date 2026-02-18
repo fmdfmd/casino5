@@ -1,0 +1,85 @@
+$bg-card: #1c2a4e;
+$bg-header: #111d35;
+$accent-blue: #0ea5e9;
+
+.pageWrapper {
+  width: 100%;
+}
+
+.filterBar {
+  background-color: $bg-card;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.searchInput {
+  flex: 1;
+  max-width: 300px;
+  :global(.mantine-TextInput-input) {
+    background-color: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    height: 36px;
+    font-size: 14px;
+    &::placeholder {
+      color: #64748b;
+    }
+  }
+}
+
+.mainContainer {
+  background-color: $bg-card;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tableHeader {
+  background-color: $bg-header;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.roleRow {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.2s ease;
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+}
+
+.roleNameField {
+  width: 100%;
+  :global(.mantine-TextInput-input) {
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    text-align: center;
+    padding: 4px;
+    
+    &:focus {
+      background-color: rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid $accent-blue;
+    }
+  }
+}
+
+.permissionCheckbox {
+  :global(.mantine-Checkbox-label) {
+    color: #cbd5e1;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+}
+
+.tableFooter {
+  background-color: #2563eb;
+  color: white;
+  height: 40px;
+  font-weight: 800;
+  font-size: 12px;
+  border-radius: 0;
+  
+  &:hover {
+    background-color: #1d4ed8;
+  }
+}

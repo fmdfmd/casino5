@@ -1,0 +1,91 @@
+$bg-color: #3b4a74;
+$divider-color: #c7f5fc; 
+$text-white: #ffffff;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+}
+
+.modal {
+  background-color: $bg-color;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  animation: modalIn 0.2s ease-out;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+
+  .title {
+    color: $text-white;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .closeBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    opacity: 0.7;
+    transition: 0.2s;
+    &:hover { opacity: 1; }
+  }
+}
+
+.divider {
+  width: 100%;
+  height: 1.5px;
+  background-color: rgba($divider-color, 0.4); 
+}
+
+.content {
+  padding: 30px 24px 40px;
+  color: $text-white;
+  font-size: 18px;
+  line-height: 1.6;
+
+  // Убрали все стили text-decoration
+  p, span {
+    margin: 0;
+    font-weight: 400; // Можно сделать 500, если текст кажется слишком тонким
+  }
+}
+
+// Адаптив
+@media (max-width: 480px) {
+  .modal {
+    max-width: 100%;
+    border-radius: 12px;
+  }
+  .header {
+    padding: 14px 16px;
+    .title {
+      font-size: 18px;
+    }
+  }
+  .content {
+    font-size: 16px;
+    padding: 20px 16px 30px;
+  }
+}

@@ -1,0 +1,110 @@
+$mobile-width: 767px;
+
+.newsLink {
+    text-decoration: none;
+    display: block;
+    height: 100%; /* Обязательно: растягиваем ссылку на всю высоту ячейки сетки */
+}
+
+.news {
+    display: flex;
+    flex-direction: column; /* Выстраиваем элементы в колонку */
+    width: 100%;
+    height: 100%; /* Обязательно: растягиваем карточку на всю высоту ссылки */
+    background-color: transparent; 
+} 
+
+.newsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3E30E9; 
+    padding: 10px 16px;
+    border-radius: 10px 10px 0 0; 
+    
+    @media (max-width: $mobile-width) {
+        padding: 8px 12px;
+    }
+}
+
+.stepTitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 10px;
+
+    @media (max-width: $mobile-width) {
+        font-size: 14px;
+    }
+} 
+
+.stepTime {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+
+    @media (max-width: $mobile-width) {
+        font-size: 14px;
+    }
+} 
+
+.imageWrapper {
+     width: 100%;
+     margin-bottom: 20px;
+     background-color: #1a1d3a; 
+     
+     @media (max-width: $mobile-width) {
+        margin-bottom: 15px;
+     }
+}
+
+.image {
+    display: block;
+    object-fit: cover;
+}
+
+.description {
+     font-weight: 400;
+     font-size: 16px;
+     line-height: 1.5;
+     color: rgba(255, 255, 255, 0.6); 
+     padding: 0; 
+     
+     /* Важно: ставим нижний отступ, чтобы текст не прилипал к кнопке, 
+        но основной отступ сделает margin-top: auto у кнопки */
+     margin: 0 0 15px 0;
+     
+     display: -webkit-box;
+     -webkit-line-clamp: 3;
+     -webkit-box-orient: vertical;
+     overflow: hidden;
+
+     @media (max-width: $mobile-width) {
+        font-size: 14px;
+        -webkit-line-clamp: 4; 
+     }
+}
+
+/* --- СТИЛЬ КНОПКИ --- */
+.readMore {
+    /* МАГИЯ ЗДЕСЬ: */
+    margin-top: auto;      /* Забирает все свободное место сверху, прижимая кнопку к низу */
+    align-self: flex-end;  /* Выравнивает кнопку по правому краю контейнера */
+    
+    color: #FFF600;        /* Желтый цвет */
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: opacity 0.2s;
+    
+    &:hover {
+        opacity: 0.8;
+    }
+}

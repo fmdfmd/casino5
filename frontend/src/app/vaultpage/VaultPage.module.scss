@@ -1,0 +1,301 @@
+.wrapper {
+    display: flex;          
+    align-items: flex-start; 
+    width: 100%;
+    margin: 0 auto;         
+    position: relative;
+    min-height: 100vh;
+    // Глубокий темный фон
+}
+  
+.mainContent {
+    width: 100%;
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    padding: 60px 20px;
+    
+    @media (max-width: 768px) {
+        padding: 30px 15px;
+    }
+}
+
+.articleContainer {
+    max-width: 900px; // Чуть шире для удобного чтения
+    width: 100%;
+    color: #b1b6c6; 
+    font-family: 'Inter', sans-serif; // Желательно использовать хороший шрифт
+    line-height: 1.7;
+}
+
+// --- Хедер ---
+.headerBlock {
+  
+    margin-bottom: 50px;
+}
+
+.pageTitle {
+    color: #ffffff;
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+
+    @media (max-width: 768px) {
+        font-size: 26px;
+    }
+}
+
+.metaData {
+    font-size: 14px;
+    color: #6a7491;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.separator {
+    color: #4a5066;
+}
+
+// --- Изображение ---
+.imageWrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 60px;
+
+    .vaultImage {
+        max-width: 100%;
+        height: auto;
+        // Красивая тень и скругление
+     
+    }
+}
+
+// --- Основной Текст ---
+.textBlock {
+    section {
+        margin-bottom: 60px;
+    }
+
+    h2 {
+        color: #ffffff;
+        font-size: 26px;
+        margin-bottom: 24px;
+        font-weight: 700;
+        border-left: 4px solid #5b46f5;
+        padding-left: 16px;
+    }
+
+    h3 {
+        color: #e0e5f5;
+        font-size: 20px;
+        margin-top: 30px;
+        margin-bottom: 14px;
+        font-weight: 600;
+    }
+
+    p {
+        margin-bottom: 18px;
+        font-size: 16px;
+        color: #b1b6c6;
+    }
+
+    strong {
+        color: #fff;
+        font-weight: 600;
+    }
+}
+
+// --- Вступление и Legal Warning ---
+.introSection {
+    .leadText {
+        font-size: 18px;
+        color: #dbe0eb;
+        margin-bottom: 40px;
+    }
+}
+
+.legalWarning {
+    background: linear-gradient(180deg, rgba(91, 70, 245, 0.05) 0%, rgba(91, 70, 245, 0.1) 100%);
+    border: 1px solid rgba(91, 70, 245, 0.2);
+    padding: 30px;
+    border-radius: 12px;
+    
+    h3 {
+        color: #fff;
+        margin-top: 0;
+        margin-bottom: 16px;
+    }
+
+    p {
+        font-size: 15px;
+    }
+}
+
+.checkList {
+    list-style: none;
+    padding: 0;
+    
+    li {
+        margin-bottom: 12px;
+        color: #dbe0eb;
+        position: relative;
+        padding-left: 24px;
+        font-size: 15px;
+
+        &::before {
+            content: "✓";
+            color: #5b46f5;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+}
+
+// --- СЕТКА ВАЛЮТ (Красивые карточки) ---
+.currencyGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.currencyCard {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: transform 0.2s, background 0.2s;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-2px);
+    }
+}
+
+.currIcon {
+    font-size: 24px;
+    color: #5b46f5; // Акцентный цвет для иконок
+    background: rgba(91, 70, 245, 0.1);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.currInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.currName {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.currCode {
+    color: #6a7491;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.smallNote {
+    font-size: 13px;
+    color: #6a7491;
+    font-style: italic;
+    margin-top: 10px;
+}
+
+// --- Разделитель ---
+.divider {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    margin: 60px 0;
+}
+
+// --- Legal Text Sections ---
+.legalTextSection {
+    background: rgba(0, 0, 0, 0.2); // Чуть темнее фон для юридического текста
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+
+    h2 {
+        border-left: none; // Убираем полоску для этого заголовка
+        padding-left: 0;
+        text-align: center;
+        color: #dbe0eb;
+    }
+
+    h3 {
+        color: #fff;
+        font-size: 18px;
+    }
+}
+
+// --- Steps & Benefits ---
+.stepsList {
+    list-style-type: decimal;
+    list-style-position: inside;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    counter-reset: my-counter;
+
+    li {
+        margin-bottom: 12px;
+        color: #dbe0eb;
+        padding-left: 10px;
+        
+        strong {
+            color: #fff;
+        }
+    }
+}
+
+.benefitsList {
+    list-style: none;
+    padding: 0;
+
+    li {
+        margin-bottom: 12px;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        color: #dbe0eb;
+    }
+}
+
+// --- Заключение ---
+.finalThoughts {
+    text-align: center;
+    margin-top: 40px;
+    
+    h2 {
+        border: none;
+        padding: 0;
+    }
+    
+    p {
+        max-width: 600px;
+        margin: 0 auto 20px;
+    }
+}
+
+.signature {
+    font-family: 'Courier New', monospace;
+    color: #5b46f5 !important;
+    margin-top: 20px;
+    font-weight: bold;
+}

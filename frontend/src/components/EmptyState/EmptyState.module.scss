@@ -1,0 +1,91 @@
+@function rem($px) {
+  @return calc($px / 16) * 1rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center; 
+  justify-content: center;
+  text-align: center;
+  
+  // Умеренные отступы для баланса
+  padding: rem(30) 0;
+
+  @media (max-width: 768px) {
+    padding: rem(40) rem(20);
+  }
+}
+
+.imageBox {
+  margin-bottom: rem(20);
+  display: flex;
+  justify-content: center;
+  
+  img {
+    object-fit: contain;
+    display: block;
+    height: auto;
+
+    @media (min-width: 1024px) {
+      width: rem(210); // Оптимальный размер: и не мелкий, и не огромный
+    }
+
+    @media (max-width: 768px) {
+      width: rem(160);
+    }
+  }
+}
+
+.titleText {
+  font-size: rem(22); 
+  font-weight: 500;
+  color: #FFFFFF;
+  margin-bottom: rem(20);
+  width: 100%;
+
+  @media (min-width: 1024px) {
+    font-size: rem(24);
+  }
+}
+
+// Кнопка (вернул приятный глазу размер)
+.balanceup {
+  margin: 0 auto;
+  border-radius: rem(100);
+  border: rem(1) solid #C7F5FC;
+  padding: rem(14) rem(42); 
+  background: linear-gradient(90deg, #3E45BE 0%, #795DD7 100%);
+  color: #FFFFFF;
+  font-size: rem(18);
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    filter: brightness(1.15);
+    transform: translateY(rem(-2));
+    box-shadow: 0 4px 20px rgba(62, 69, 190, 0.3);
+  }
+
+  @media (max-width: 768px) {
+    padding: rem(12) rem(32);
+    font-size: rem(16);
+  }
+}
+
+.description {
+  margin: rem(16) auto 0;
+  font-size: rem(15);
+  color: #8a94b3;
+  max-width: rem(450);
+  line-height: 1.5;
+
+  @media (min-width: 1024px) {
+    font-size: rem(16);
+  }
+}

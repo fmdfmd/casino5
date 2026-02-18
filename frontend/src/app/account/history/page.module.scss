@@ -1,0 +1,45 @@
+@function rem($px) {
+  @return calc($px / 16) * 1rem;
+}
+
+.pageLayout {
+    min-height: 100vh;
+    color: #fff;
+   
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+.mainContent {
+    flex: 1;
+    padding: clamp(10px, 2vw, 30px) clamp(15px, 3vw, 40px);
+    display: flex;
+    justify-content: center;
+}
+
+.depositContainer {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column; 
+      gap: 20px; 
+}
+
+.sectionBlock {
+    display: flex;
+    flex-direction: column;
+    gap: rem(5); // Чтобы EmptyState был ближе к своему заголовку
+}
+
+.headerArea {
+    .title {
+        font-size: clamp(24px, 4vw, 40px); // Чуть уменьшил максимум, чтобы влезло два блока
+        font-weight: 850;
+      
+        letter-spacing: -1px;
+        color: #FFFFFF;
+    }
+}

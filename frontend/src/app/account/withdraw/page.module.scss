@@ -1,0 +1,213 @@
+.pageLayout {
+    min-height: 100vh;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+.mainContent {
+    flex: 1;
+padding: clamp(10px, 2vw, 30px) clamp(15px, 3vw, 40px);
+    display: flex;
+    justify-content: center;
+}
+
+.depositContainer {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column; 
+    gap: 30px;
+}
+
+.headerArea {
+    .title {
+        font-size: clamp(28px, 4vw, 48px);
+        font-weight: 850;
+        margin-bottom: 8px;
+        letter-spacing: -1px;
+    }
+
+    .subtitle {
+        font-size: clamp(14px, 1.5vw, 18px);
+        color: rgba(255, 255, 255, 0.5);
+    }
+}
+
+.contentColumns {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+
+    @media (max-width: 900px) {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.leftSection {
+    flex: 1.5;
+    min-width: 0; 
+}
+
+.methodsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+
+    @media (max-width: 768px) {
+        display: flex;
+        overflow-x: auto;
+        padding: 5px 0 20px 0;
+        margin: 0 -15px;
+        padding-left: 15px;
+        gap: 12px;
+        scroll-snap-type: x mandatory;
+        &::-webkit-scrollbar { display: none; }
+        mask-image: linear-gradient(to right, black 85%, transparent 100%);
+    }
+}
+
+.methodCard {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: clamp(20px, 3vw, 35px) 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    @media (max-width: 768px) {
+        flex: 0 0 110px;
+        min-width: 110px;
+        padding: 15px 5px;
+        scroll-snap-align: start;
+        border-radius: 16px;
+    }
+
+    .methodIcon { 
+        font-size: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @media (max-width: 768px) { font-size: 32px; }
+    }
+
+    .methodName {
+        font-size: 13px;
+        font-weight: 700;
+        text-align: center;
+        white-space: nowrap; 
+        @media (max-width: 768px) { font-size: 11px; }
+    }
+
+    &:hover { background: rgba(255, 255, 255, 0.08); }
+
+    &.active {
+        background: rgba(124, 77, 255, 0.15);
+        border-color: #7c4dff;
+        box-shadow: 0 10px 30px rgba(124, 77, 255, 0.2);
+    }
+}
+
+.rightSection {
+    flex: 1;
+    min-width: 320px;
+    @media (max-width: 768px) { min-width: 100%; }
+}
+
+.paymentDetails {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: clamp(20px, 3vw, 30px);
+    position: sticky;
+    top: 20px;
+
+    .detailsHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        h3 { font-size: 20px; font-weight: 800; }
+        .badge {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+    }
+}
+
+.fiatForm, .cryptoForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .label {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.5);
+    }
+}
+
+.inputWrapper {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    input {
+        width: 100%;
+        background: transparent;
+        border: none;
+        color: #fff;
+        font-size: 16px; // Уменьшил чуть-чуть для текста
+        font-weight: 700;
+        outline: none;
+    }
+    .currencySymbol { color: #7c4dff; font-weight: 800; }
+}
+
+.presets {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    button {
+        background: rgba(255, 255, 255, 0.05);
+        border: none;
+        padding: 10px;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 12px;
+        cursor: pointer;
+        &.activePreset { background: #5865f2; }
+    }
+}
+
+.submitBtn {
+    background: #7c4dff;
+    color: #fff;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+    &:hover { transform: translateY(-2px); opacity: 0.9; }
+}
+
+// Убрал стили для адреса и QR так как на Withdraw они не нужны

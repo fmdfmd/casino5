@@ -1,0 +1,142 @@
+// Если функция rem не определена в проекте, используем px. 
+// Я заменил на px для гарантированной работы, вы можете вернуть rem(число), если функция работает.
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    color: #fff;
+    min-height: 100vh;
+}
+
+.mainContent {
+    flex: 1;
+    padding: 40px 60px;
+    max-width: 1500px;
+    margin: 0 auto;
+    width: 100%;
+
+    @media (max-width: 768px) {
+        padding: 20px 16px;
+    }
+}
+
+.navContainer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+  
+}
+
+.faqSection {
+    width: 100%;
+    max-width: 1000px;
+
+    .title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 40px; // Отступ от заголовка до аккордеона
+        text-align: left;
+        color: #fff;
+
+        @media (max-width: 768px) {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+        }
+    }
+}
+
+.accordionWrapper {
+    width: 100%;
+    // Стили контейнера аккордеона
+    border: 1px solid rgba(199, 245, 252, 0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+// Стили внутренних элементов аккордеона 
+// (Они применятся, если ваш компонент Accordion использует эти классы)
+
+.item {
+    border-bottom: 1px solid rgba(199, 245, 252, 0.2);
+    transition: background 0.3s;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &.itemActive {
+        background: rgba(199, 245, 252, 0.04);
+    }
+}
+
+.header {
+    width: 100%;
+    padding: 20px 24px;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    color: #fff;
+    transition: 0.3s;
+
+    &:hover {
+        background: rgba(199, 245, 252, 0.05);
+    }
+}
+
+.questionContent {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.itemNumber {
+    font-size: 0.9rem;
+    color: #8e92b2;
+    font-weight: 600;
+}
+
+.questionText {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: left;
+    letter-spacing: 0.5px;
+}
+
+.toggleIcon {
+    font-size: 1.4rem;
+    color: #C7F5FC;
+    font-weight: 300;
+}
+
+.content {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    padding: 0 24px;
+}
+
+.contentOpen {
+    max-height: 1000px; 
+    opacity: 1;
+    padding-bottom: 24px;
+}
+
+.answerText {
+    padding-left: 40px; 
+    color: #8e92b2;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 850px;
+
+    ul {
+        margin-top: 10px;
+        padding-left: 20px;
+        li { margin-bottom: 5px; }
+    }
+}

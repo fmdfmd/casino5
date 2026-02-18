@@ -1,0 +1,102 @@
+$bg-deep: #0a1124;        
+$bg-card: #16213e;        
+$accent-blue: #3b82f6;
+
+.pageWrapper {
+ 
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.filterSection {
+  background-color: #111d35;
+  border-bottom: 2px solid rgba(59, 130, 246, 0.2);
+}
+
+.segmentedWrapper {
+  width: 100%;
+  @media (min-width: 1024px) { width: auto; }
+}
+
+.segmentedControl {
+  background-color: #0a1124;
+  border-radius: 8px;
+  display: flex;
+  padding: 4px;
+  width: 100%;
+}
+
+.segBtn, .segBtnActive {
+  border: none;
+  height: 40px;
+  flex: 1; 
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (min-width: 1024px) {
+    flex: none;
+    min-width: 95px;
+  }
+}
+
+.segBtn {
+  background: transparent;
+  color: #64748b;
+  &:hover { color: #fff; background: rgba(255,255,255,0.03); }
+}
+
+.segBtnActive {
+  background-color: #1c2a4e;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.customTooltipContainer {
+  background-color: #0a1124;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 14px;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.tooltipDot {
+  width: 8px; height: 8px; border-radius: 50%;
+}
+
+.mainCard {
+  background-color: $bg-card;
+  border: 1px solid rgba(255,255,255,0.03);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.activityCard {
+  background-color: $bg-card;
+  border: 1px solid rgba(255,255,255,0.03);
+}
+
+.tableFooter {
+  background: linear-gradient(90deg, #1e3a8a 0%, #3b82f6 100%);
+}
+
+.calendarDropdown {
+  background-color: white !important;
+  color: #1e293b;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+  border: none;
+}
+
+.customDatePicker {
+  :global(.mantine-DatePicker-day[data-selected]) {
+    background-color: $accent-blue !important;
+  }
+}

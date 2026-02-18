@@ -1,0 +1,82 @@
+// page.module.scss
+
+.wrapper {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  min-height: 100vh;
+  // Фон всей страницы
+
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  gap: 30px;
+  width: 100%;
+  max-width: 1400px; 
+  margin: 0 auto;
+
+  // Уменьшаем отступы на мобилке
+  @media (max-width: 768px) {
+    padding: 15px;
+    gap: 20px;
+  }
+}
+
+// --- Верхняя секция (Промокод + Виджет) ---
+.topSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr; // Desktop: 2 колонки
+  gap: 20px;
+  width: 100%;
+  align-items: stretch; 
+
+  // Tablet & Mobile: Складываем в одну колонку
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.promoWrapper, .widgetWrapper {
+  width: 100%;
+  height: 100%;
+}
+
+// --- Секция бонусов ---
+.bonusesSection {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.sectionTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 5px;
+
+  @media (max-width: 480px) {
+    font-size: 20px; // Чуть меньше заголовок на телефоне
+  }
+}
+
+// --- СЕТКА БОНУСОВ (ГЛАВНОЕ ИЗМЕНЕНИЕ) ---
+.bonusesGrid {
+  display: grid;
+  // Desktop: Автоматическая сетка (минимум 260px)
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  width: 100%;
+
+  // Mobile (как на скриншоте): ПРИНУДИТЕЛЬНО 2 КОЛОНКИ
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr 1fr; // Две равные колонки
+    gap: 10px; // Меньше расстояние между карточками
+  }
+}

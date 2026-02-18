@@ -1,0 +1,61 @@
+.navContainer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start; // Прижато к левому краю
+    margin-bottom: 30px;   
+      // Немного уменьшили отступ снизу
+      // Немного уменьшили отступ снизу
+
+}
+
+.topNav {
+    display: flex;
+    gap: 8px;                    // Уменьшили расстояние между кнопками
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 100%;
+
+    a {
+        text-decoration: none;
+        display: inline-block;
+        
+        &.active button {
+            background: #3E30E9;
+            color: #fff;
+        }
+    }
+
+    button {
+        width: 120px;             // Уменьшили ширину со 163px до 120px
+        background: rgba(255, 255, 255, 0.05);
+        border: none;
+        color: #8e92b2;
+        padding: 8px 0;           // Уменьшили вертикальный отступ
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 0.85rem;       // Немного уменьшили шрифт
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+
+        &.active { 
+            background: #4c52ff; 
+            color: #fff; 
+        }
+
+        &:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        // --- АДАПТИВ ДЛЯ МОБИЛОК ---
+        @media (max-width: 768px) {
+            width: auto;          // На мобилках кнопки подстраиваются под текст
+            padding: 8px 16px;    // Добавляем боковые отступы
+            font-size: 0.8rem;
+        }
+    }
+}

@@ -1,0 +1,32 @@
+$bg-deep: #0c1427;
+$header-bg: #2A3970;
+
+.footer {
+    background-color: $header-bg;
+    padding: 25px 45px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    flex-shrink: 0;
+
+    @media (max-width: 768px) {
+        padding: 20px;
+    }
+}
+
+.footerContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1600px;
+    margin: 0 auto;
+    width: 100%;
+
+    @media (max-width: 600px) {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}
+
+.dot {
+    color: rgba(255, 255, 255, 0.3);
+}

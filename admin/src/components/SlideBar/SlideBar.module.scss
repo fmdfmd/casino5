@@ -1,0 +1,237 @@
+$sidebar-bg: #2A3970;
+$active-gradient: linear-gradient(90deg, #0E8BEA 0%, #084E84 100%);
+$logout-red: #E50914;
+
+.sidebar {
+  background-color: $sidebar-bg;
+  width: 350px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  z-index: 100;
+  border-right: 2px solid rgba(0, 0, 0, 0.15);
+
+  /* Фикс горизонтального скролла */
+  overflow-x: hidden !important;
+
+  @media (max-width: 1200px) {
+    width: 280px;
+  }
+
+  @media (max-width: 992px) {
+    position: fixed;
+    left: -100%;
+    width: 300px;
+    transition: left 0.4s ease;
+
+    &.mobileOpened {
+      left: 0;
+      box-shadow: 20px 0 60px rgba(0, 0, 0, 0.6);
+    }
+  }
+}
+
+.collapsed {
+  width: 90px;
+
+  .logo,
+  .linkText,
+  .adminTextContainer,
+  .divider,
+  .adminInfo,
+  .logoutBtn span {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .burger {
+    margin: 0 auto;
+  }
+
+  .link {
+    justify-content: center;
+    padding: 12px 0;
+
+    svg {
+      margin: 0;
+    }
+  }
+
+  .logoutBtn {
+    justify-content: center;
+    padding: 15px 0;
+    margin: 15px 10px;
+  }
+
+  @media (max-width: 992px) {
+    width: 0;
+  }
+}
+
+.logo {
+  color: white;
+  font-size: 28px;
+  font-weight: 800;
+  white-space: nowrap;
+  letter-spacing: -0.5px;
+
+  span {
+    color: #4dabf7;
+    margin-left: 4px;
+  }
+}
+
+.burger {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 10px;
+  display: flex;
+  color: white;
+  transition: all 0.2s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+  }
+}
+
+/* Ссылка на профиль */
+.profileLink {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex: 1;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  overflow: hidden;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+
+    .linkText:first-child {
+      color: #4dabf7;
+    }
+  }
+}
+
+.adminInfo {
+  overflow: hidden;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+
+.notifBtn {
+  background: #132E4C;
+  border: 1px solid #0E8BEA;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: all 0.2s;
+  flex-shrink: 0;
+
+  &:hover {
+    background: #1a3d66;
+    transform: translateY(-2px);
+  }
+}
+
+.scrollArea {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden !important;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+  }
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  overflow: hidden;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+
+    &:not(.activeLink) {
+      padding-left: 22px;
+    }
+  }
+}
+
+.activeLink {
+  background: $active-gradient !important;
+  color: #fff !important;
+  box-shadow: 0 6px 15px rgba(14, 139, 234, 0.3);
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 25%;
+    height: 50%;
+    width: 4px;
+    background: #fff;
+    border-radius: 0 4px 4px 0;
+  }
+}
+
+.linkText {
+  font-size: 15px;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+.logoutBtn {
+  background: $logout-red;
+  margin: 15px;
+  padding: 14px 20px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+
+  &:hover {
+    // background: darken($logout-red, 8%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba($logout-red, 0.4);
+  }
+}

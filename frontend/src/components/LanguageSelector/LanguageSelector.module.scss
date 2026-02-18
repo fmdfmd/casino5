@@ -1,0 +1,152 @@
+
+
+.container {
+  position: relative;
+  user-select: none;
+  
+  /* Desktop */
+  display: inline-block;
+  width: auto;
+
+  /* Mobile/Tablet: РАСТЯГИВАЕМ НА ВЕСЬ ЭКРАН (родительский контейнер) */
+  @media (max-width: 1024px) {
+    display: block;
+    width: 100%; 
+  }
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  color: #ffff;
+  font-family: inherit;
+  font-size: rem(16);
+  transition: all 0.3s ease;
+  box-sizing: border-box; // Важно, чтобы padding не увеличивал width > 100%
+
+  /* --- DESKTOP --- */
+  background: transparent;
+  border: none;
+  padding: rem(5);
+  width: auto;
+  height: auto;
+  border-radius: rem(4);
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  /* --- MOBILE & TABLET --- */
+  @media (max-width: 1024px) {
+    width: 100%; // Кнопка занимает 100% ширины контейнера
+    height: rem(54); // Такая же высота как у кнопки Login
+    background-color: rgba(33, 35, 66, 0.4); 
+    border: rem(1) solid rgba(255, 255, 255, 0.2);
+    border-radius: rem(100);
+    padding: 0 rem(20);
+    opacity: 1;
+
+    &:hover {
+      background-color: rgba(33, 35, 66, 0.6);
+      border-color: rgba(255, 255, 255, 0.5);
+      opacity: 1;
+    }
+
+    &.active {
+      background-color: rgba(33, 35, 66, 0.8);
+    }
+  }
+}
+
+.contentLeft {
+  display: flex;
+  align-items: center;
+  gap: rem(10);
+  
+  @media (min-width: 1025px) {
+    gap: rem(6);
+  }
+}
+
+.langCode {
+  font-weight: 500;
+  font-size: rem(16);
+}
+
+.flag {
+  border-radius: rem(4);
+  object-fit: cover;
+  width: rem(28);
+  height: rem(20);
+}
+
+.arrow {
+  transition: transform 0.3s ease;
+  opacity: 1;
+  
+  @media (min-width: 1025px) {
+    margin-left: rem(8);
+  }
+
+  &.rotated {
+    transform: rotate(180deg);
+  }
+}
+
+/* ВЫПАДАЮЩИЙ СПИСОК */
+.dropdown {
+  position: absolute;
+  left: 0;
+  background-color: #2a2d55;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: rem(16);
+  padding: rem(8); 
+  list-style: none;
+  z-index: 100;
+  box-shadow: 0 rem(-4) rem(20) rgba(0, 0, 0, 0.4); 
+  overflow: hidden;
+
+  /* Desktop: ВВЕРХ */
+  bottom: 100%; 
+  margin-bottom: rem(8);
+  min-width: rem(120);
+  width: max-content;
+
+  /* Mobile: ВНИЗ, ширина 100% */
+  @media (max-width: 1024px) {
+     bottom: auto;
+     top: 100%;
+     margin-bottom: 0;
+     margin-top: rem(8);
+     width: 100%;
+  }
+
+  &Item {
+    display: flex;
+    align-items: center;
+    gap: rem(12);
+    padding: rem(10) rem(12);
+    
+    color: #fff;
+    cursor: pointer;
+    border-radius: rem(8);
+    transition: background 0.2s;
+    font-size: rem(14); 
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    &[aria-selected="true"] {
+        background-color: rgba(255, 255, 255, 0.05);
+        color: #C7F5FC;
+    }
+  }
+
+  &Flag {
+    border-radius: rem(2);
+    object-fit: cover;
+  }
+}

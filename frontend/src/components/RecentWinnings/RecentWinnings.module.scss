@@ -1,0 +1,288 @@
+// Переменные
+$bg-row-odd: #3C4B76;      
+$bg-transparent: transparent; 
+$bg-row-hover: #2b3046;    
+
+$color-text-main: #ffffff;
+$color-text-dim: #8e94a8;  
+$color-primary: #3E30E9;   
+$color-green: #08DB09;     
+$color-red: #FC3039;       
+
+// Брейкпоинты (Обновил mobile-width, чтобы соответствовал второму коду)
+$tablet-width: 1024px;
+$mobile-width: 767px; 
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// --- ЕДИНЫЙ КОНТЕЙНЕР ---
+.container {
+  /* Специфические отступы для десктопа */
+  margin-left: 20px;  
+  margin-right: 28px; 
+  max-width: 1586px;
+  width: calc(100% - 48px);
+  
+  box-sizing: border-box;
+  margin-bottom: 52px;
+  font-family: 'Inter', sans-serif; 
+
+  /* Адаптив для ноутбуков и планшетов */
+  @media (max-width: 1450px) {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  /* Мобильная версия */
+  @media (max-width: 600px) {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 30px;
+  }
+}
+
+// --- ЗАГОЛОВОК (Исправлен на основе второго кода) ---
+.title {
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap; 
+  
+  font-size: 36px; 
+  font-weight: 700;
+  color: $color-text-main;
+  
+  margin: 0;
+  margin-bottom: 24px; // Оставляем отступ снизу до таблицы/табов
+
+  /* Адаптив с планшета (как во втором коде) */
+  @media (max-width: $tablet-width) {
+    font-size: 28px;
+  }
+
+  /* Адаптив с мобильного (как во втором коде) */
+  @media (max-width: $mobile-width) {
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+}
+
+// --- Табы ---
+.tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  
+  // На мобильных даем скролл, если табы не влезают
+  @media (max-width: $mobile-width) {
+    overflow-x: auto;
+    padding-bottom: 5px; 
+    &::-webkit-scrollbar {
+        display: none; 
+    }
+  }
+}
+
+.tabButton {
+  background: transparent;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  color: $color-text-dim;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  white-space: nowrap;
+
+  &:hover {
+    color: $color-text-main;
+    background-color: rgba($color-primary, 0.1);
+  }
+
+  &.active {
+    background-color: $color-primary;
+    color: $color-text-main;
+    box-shadow: 0 4px 14px rgba($color-primary, 0.4);
+  }
+}
+
+// --- Таблица ---
+
+.table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden; 
+  background-color: transparent;
+}
+
+// --- GRID LAYOUTS ---
+
+// 1. Desktop: 6 колонок
+$grid-desktop: 1.2fr 1fr 0.8fr 1fr 0.8fr 1fr;
+
+// 2. Tablet: 5 колонок
+$grid-tablet: 1.2fr 1fr 1fr 0.8fr 1fr;
+
+// 3. Mobile: 2 колонки
+$grid-mobile: 1fr 1fr;
+
+.headerRow,
+.row {
+  display: grid;
+  grid-template-columns: $grid-desktop; 
+  align-items: center;
+  padding: 14px 20px;
+  gap: 10px;
+
+  // Tablet
+  @media (max-width: $tablet-width) {
+    grid-template-columns: $grid-tablet;
+    padding: 12px 15px;
+  }
+
+  // Mobile
+  @media (max-width: $mobile-width) {
+    grid-template-columns: $grid-mobile;
+    padding: 10px 12px;
+  }
+}
+
+// Шапка таблицы
+.headerRow {
+  background: $bg-transparent; 
+  border-bottom: 1px solid rgba($color-text-dim, 0.1); 
+  
+  .cell {
+    color: $color-text-dim;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+}
+
+// Строки с данными
+.row {
+  transition: background-color 0.2s; 
+  cursor: default;
+
+  // Чередование цветов
+  &:nth-child(odd) {
+    background-color: $bg-row-odd; 
+  }
+  &:nth-child(even) {
+    background-color: $bg-transparent; 
+  }
+
+  &:hover {
+    background-color: $bg-row-hover; 
+  }
+}
+
+// Ячейка
+.cell {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  white-space: nowrap; 
+  overflow: hidden;
+  
+  &.alignRight {
+    justify-content: flex-end;
+  }
+}
+
+// --- Управление видимостью колонок ---
+
+.colTime {
+  @media (max-width: $tablet-width) {
+    display: none; 
+  }
+}
+
+.colUser, 
+.colBet, 
+.colCoeff {
+  @media (max-width: $mobile-width) {
+    display: none; 
+  }
+}
+
+// --- Типографика контента ---
+
+.gameName {
+  color: $color-text-main;
+  font-weight: 600;
+}
+
+.hiddenUser {
+  color: $color-text-dim;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: $color-text-dim;
+    opacity: 0.5;
+  }
+}
+
+.time {
+  color: $color-text-dim;
+}
+
+.coefficient {
+  color: $color-text-main;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.amountWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: $color-text-main; 
+
+  &.win { color: $color-green; }
+  &.loss { color: $color-red; }
+  
+  @media (max-width: $mobile-width) {
+    font-size: 13px;
+    gap: 4px;
+  }
+}
+
+.amountValue {
+    white-space: nowrap;
+}
+
+.currencyIcon {
+  @include flex-center;
+  width: 20px;
+  height: 20px;
+  
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}

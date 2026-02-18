@@ -1,0 +1,93 @@
+$header-bg: #2A3970;
+$border-color: rgba(255, 255, 255, 0.06);
+
+.header {
+  background-color: $header-bg;
+  padding: 0 45px;
+  height: 130px; // Немного уменьшил высоту для компактности
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid $border-color;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+
+  @media (max-width: 992px) {
+    height: 70px;
+    padding: 0 15px;
+  }
+}
+
+.title {
+  color: #fff;
+  font-size: 36px;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+
+  @media (max-width: 992px) {
+    font-size: 18px;
+    max-width: 130px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.breadcrumbs {
+  margin-bottom: 4px;
+  :global(.mantine-Breadcrumbs-separator) {
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 12px;
+  }
+}
+
+.breadcrumbLink {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+  
+  &:hover { color: #4dabf7; }
+}
+
+.currentPath {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.dateTime {
+  background: rgba(15, 23, 42, 0.3);
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  white-space: nowrap;
+
+  @media (max-width: 992px) {
+    padding: 0;
+    background: transparent;
+    border: none;
+  }
+}
+
+.clockIcon {
+  @media (max-width: 500px) {
+    display: none;
+  }
+}
+
+.avatar {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.2s ease;
+  
+  &:active {
+    transform: scale(0.95);
+  }
+}

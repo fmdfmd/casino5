@@ -1,0 +1,162 @@
+/* Глобальные переменные (или локальные) */
+$tablet-width: 1024px;
+$mobile-width: 767px;
+
+.card {
+  position: relative;
+  /* САМОЕ ВАЖНОЕ: */
+  width: 100%;
+  /* Занимаем всю ширину колонки карусели */
+  max-width: 300px;
+  /* Ограничение, чтобы на 4k не стало гигантским, если карусель одна */
+  height: auto;
+  /* Высота подстроится сама */
+
+  /* Магия пропорций: Ширина / Высота (240 / 300 = 0.8) */
+  aspect-ratio: 0.8;
+  /* Для старых браузеров можно использовать aspect-ratio: 4/5; */
+
+  margin: 0 auto;
+  /* Центрируем, если родитель шире max-width */
+  overflow: visible;
+  height: 100%
+}
+
+.linkWrapper {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 26px;
+  overflow: hidden;
+  transform: translateZ(0);
+
+  /* Уменьшаем скругление только на совсем маленьких экранах */
+  @media (max-width: $mobile-width) {
+    border-radius: 16px;
+  }
+}
+
+.image {
+  object-fit: cover;
+  /* width/height не нужны, так как работает fill + aspect-ratio родителя */
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* --- ОВЕРЛЕЙ --- */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.card:hover .overlay {
+  opacity: 1;
+}
+
+/* --- Кнопка Play (Центр) --- */
+/* Тут используем адаптив для содержимого, чтобы кнопка не была огромной на маленькой карточке */
+.playButton {
+  background-color: #7FE282;
+  padding: 12px 18px;
+  border-radius: 63px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: scale(0.9);
+  transition: transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
+  /* Если карточка становится меньше (на мобилках), уменьшаем кнопку */
+  @media (max-width: $tablet-width) {
+    padding: 10px 16px;
+    gap: 8px;
+  }
+
+  @media (max-width: $mobile-width) {
+    padding: 8px 12px;
+    gap: 6px;
+  }
+}
+
+.card:hover .playButton {
+  transform: scale(1);
+}
+
+.playText {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  @media (max-width: $mobile-width) {
+    font-size: 12px;
+  }
+}
+
+/* --- Иконка Сердца (Левый верхний угол) --- */
+.heartIcon {
+  position: absolute;
+  top: 8%;
+  /* Используем % вместо px, чтобы отступ зависел от размера карты */
+  left: 8%;
+  width: 10%;
+  /* Ширина относительно ширины карточки */
+  min-width: 20px;
+  /* Но не меньше 20px */
+  max-width: 28px;
+  /* И не больше 28px */
+  aspect-ratio: 1/1;
+  z-index: 5;
+  cursor: pointer;
+}
+
+/* --- Кнопка Инфо (Правый верхний угол) --- */
+.infoButton {
+  position: absolute;
+  top: 4%;
+  /* % вместо px */
+  right: 4%;
+
+  /* Делаем размер кнопки относительным ширине карточки, но в разумных пределах */
+  width: 12%;
+  min-width: 24px;
+  max-width: 32px;
+  aspect-ratio: 1/1;
+
+  border-radius: 50%;
+  background-color: #3E30E9;
+  border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.iconImage {
+  pointer-events: none;
+  width: 60%;
+  /* Иконка внутри кнопки занимает 60% ее размера */
+  height: 60%;
+}

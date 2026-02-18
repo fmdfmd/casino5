@@ -1,0 +1,111 @@
+$tablet-width: 1024px;
+$mobile-width: 767px;
+
+.section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* --- ЕДИНЫЙ КОНТЕЙНЕР --- */
+.container {
+  /* Специфические отступы для десктопа */
+  margin-left: 20px;
+  margin-right: 28px;
+  max-width: 1586px;
+  width: calc(100% - 48px);
+  /* 100% минус отступы */
+
+  box-sizing: border-box;
+  margin-bottom: 52px;
+  /* Единый отступ снизу */
+
+  /* Адаптив для ноутбуков и планшетов: сбрасываем смещение и центрируем */
+  @media (max-width: 1450px) {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  /* Мобильная версия */
+  @media (max-width: 600px) {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 30px;
+  }
+}
+
+.headerWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  @media (max-width: $mobile-width) {
+    margin-bottom: 15px;
+  }
+}
+
+.sectionTitle {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+  font-size: 36px;
+  font-weight: 700;
+  color: #ffffff;
+
+  @media (max-width: $tablet-width) {
+    font-size: 28px;
+  }
+
+  @media (max-width: $mobile-width) {
+    font-size: 22px;
+  }
+}
+
+.controlsGroup {
+  display: flex;
+  gap: 12px;
+}
+
+.navButton {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background-color: #3E30E9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  padding: 0;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  @media (max-width: $mobile-width) {
+    width: 24px;
+    height: 24px;
+
+    img {
+      width: 10px;
+      height: 10px;
+    }
+  }
+}
+
+/* Стили для карусели */
+.carouselRoot {
+  width: 100%;
+}
+
+.carouselSlide {
+  display: flex;
+  justify-content: center;
+
+}

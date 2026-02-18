@@ -1,0 +1,240 @@
+.wrapper {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  min-height: 100vh;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.topNav {
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.backLink {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    &:hover { opacity: 0.8; }
+}
+
+.notFound {
+    color: #fff;
+    padding: 100px;
+    text-align: center;
+    font-size: 20px;
+}
+
+// === ОБЩИЕ ПЕРЕМЕННЫЕ (для удобства) ===
+// Мы не используем @extend для аккордеонов, чтобы избежать конфликтов padding
+
+// 1. Карточка с картинкой
+.detailCard {
+    background-color: #3B4A74;
+    border: 1px solid #C7F5FC;
+    border-radius: 16px;
+    width: 100%;
+    margin-bottom: 20px;
+    overflow: hidden;
+    padding: 40px; 
+    background: linear-gradient(180deg, rgba(59, 74, 116, 0.4) 0%, rgba(59, 74, 116, 0.9) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.heroImageWrapper {
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
+}
+
+.titleSection {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.tournamentTitle {
+    font-size: 36px;
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.prizeLabel { color: #aeb4d1; font-size: 16px; }
+.prizeValue { color: #fcc419; font-size: 40px; font-weight: 700; }
+
+// 2. Блок правил
+.rulesCard {
+    background-color: #3B4A74;
+    border: 1px solid #C7F5FC;
+    border-radius: 16px;
+    width: 100%;
+    margin-bottom: 20px;
+    overflow: hidden;
+    padding: 25px; 
+    text-align: center;
+    color: #fff;
+}
+.rulesBlock { margin-bottom: 20px; }
+.ruleRow {
+    margin-bottom: 15px;
+    strong { display: block; color: #fff; margin-bottom: 5px; }
+    p { margin: 0; color: #e0e0e0; font-size: 14px; line-height: 1.5; }
+}
+.smallNote { font-size: 12px; color: #aeb4d1; margin-top: 15px; }
+
+.loginButton {
+    background-color: #3E30E9;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 12px 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    &:hover { background-color: #5548ff; }
+}
+
+// === АККОРДЕОНЫ (Изолированные стили) ===
+.accordionCard {
+    background-color: #3B4A74;
+    border: 1px solid #C7F5FC;
+    border-radius: 16px;
+    width: 100%;
+    margin-bottom: 20px;
+    overflow: hidden;
+    
+    display: flex;
+    flex-direction: column;
+    
+    // СБРОС ОТСТУПОВ: Это критически важно для центрирования
+    padding: 0 !important; 
+    
+    // Плавная анимация изменения высоты всей карточки
+    transition: all 0.3s ease;
+}
+
+// Класс для закрытого состояния
+.closed {
+    // Жестко фиксируем высоту равной высоте хедера
+    height: 70px !important;
+    min-height: 70px !important;
+}
+
+.cardHeader {
+    // ФИКСИРОВАННАЯ ВЫСОТА
+    height: 70px;
+    width: 100%;
+    
+    // FLEX CENTERING
+    display: flex;
+    align-items: center;     // Вертикально по центру
+    justify-content: center; // Горизонтально по центру
+    gap: 15px;
+    
+    // Запрет на сжатие (чтобы текст не уезжал вверх)
+    flex-shrink: 0; 
+    
+    margin: 0;
+    padding: 0; // Никаких отступов внутри хедера
+    
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #fff;
+    cursor: pointer;
+    user-select: none;
+    
+    border-bottom: 1px solid transparent; 
+    transition: background-color 0.2s, border-color 0.2s;
+
+    &:hover { background-color: rgba(255, 255, 255, 0.05); }
+}
+
+.headerOpen {
+    border-bottom: 1px solid #C7F5FC; 
+}
+
+// Иконка
+.iconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; // Чтобы иконка тоже центрировалась по высоте
+}
+
+.chevron {
+    transition: transform 0.3s ease;
+    display: block; 
+}
+.chevronOpen { transform: rotate(180deg); }
+
+// Контент внутри (Анимация)
+.collapsibleContent {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease-out, opacity 0.3s ease-out;
+    opacity: 0;
+}
+
+.contentOpen {
+    grid-template-rows: 1fr;
+    opacity: 1;
+}
+
+.innerContent, .leaderboardWrapper {
+    overflow: hidden;
+    min-height: 0;
+}
+
+.innerContent {
+    padding: 20px 25px;
+    color: #dcdcdc;
+    font-size: 13px;
+    line-height: 1.6;
+    p { margin-bottom: 8px; }
+}
+
+.leaderboardWrapper { display: flex; flex-direction: column; }
+.tableHeader {
+    display: flex;
+    padding: 15px 25px;
+    border-bottom: 1px solid rgba(199, 245, 252, 0.3); 
+    color: #aeb4d1;
+    font-size: 14px;
+    span:nth-child(1) { width: 15%; }
+    span:nth-child(2) { flex: 1; }
+    span:nth-child(3) { width: 20%; text-align: right; }
+}
+.leaderboardList { padding-bottom: 10px; }
+.row {
+    display: flex;
+    align-items: center;
+    padding: 12px 25px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 14px;
+    color: #fff;
+    &:last-child { border-bottom: none; }
+}
+.topRow { background: rgba(255, 255, 255, 0.05); }
+.placeCell { width: 15%; font-weight: 600; font-size: 16px; }
+.nameCell { flex: 1; }
+.prizeCell { width: 20%; text-align: right; font-weight: 500; }
+.emptyState { padding: 20px; text-align: center; color: #aeb4d1; }
+
+@media (max-width: 768px) {
+    .mainContent { padding: 20px 15px; }
+    .tournamentTitle { font-size: 28px; }
+}

@@ -1,0 +1,153 @@
+// Палитра WinVibe
+$bg-site: #0F172A;         
+$card-bg: #1A253A;         
+$input-bg: #0F172A;        
+$active-blue: #0EA5E9;     
+$border: rgba(255, 255, 255, 0.08);
+$text-dimmed: #94A3B8;
+
+.pageWrapper {
+  background-color: transparent; 
+  min-height: 100vh;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+.sectionPaper {
+  background-color: $card-bg;
+  border: 1px solid $border;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+}
+
+.darkInput {
+  :global(.mantine-TextInput-input) {
+    background-color: $input-bg !important;
+    border: 1px solid $border !important;
+    color: #FFFFFF !important; 
+    height: 42px;
+    border-radius: 8px;
+    font-size: 14px;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.3) !important;
+    }
+
+    &:focus {
+      border-color: $active-blue !important;
+    }
+  }
+}
+
+.mainTable {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead tr th {
+    background-color: rgba(255, 255, 255, 0.02);
+    color: $text-dimmed;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 14px 16px;
+    border-bottom: 1px solid $border;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  tbody tr td {
+    padding: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    vertical-align: middle;
+    text-align: left;
+    color: #E2E8F0;
+    white-space: nowrap;
+  }
+}
+
+// ЧАТ - ГЛАВНЫЙ КОНТЕЙНЕР
+.chatFlexContainer {
+  display: flex;
+  height: 700px; 
+  background-color: $card-bg;
+  border: 1px solid $border;
+  border-radius: 12px;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    height: 800px; // Увеличиваем высоту для стека
+  }
+}
+
+.chatSidebar {
+  width: 320px;
+  border-right: 1px solid $border;
+  background-color: rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 250px; // Ограничиваем список чатов на мобильном
+    border-right: none;
+    border-bottom: 1px solid $border;
+  }
+}
+
+.sidebarScroll {
+  flex: 1;
+  @media (max-width: 768px) {
+    height: 100%;
+  }
+}
+
+.chatMain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; // Предотвращает раздувание флекс-контейнера
+}
+
+.chatItem {
+  padding: 16px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  transition: all 0.2s;
+  &:hover { background: rgba(255, 255, 255, 0.02); }
+}
+
+.activeChatItem {
+  background: linear-gradient(90deg, rgba(14, 165, 233, 0.15) 0%, rgba(14, 165, 233, 0) 100%) !important;
+  border-left: 3px solid $active-blue;
+}
+
+.msgIn {
+  align-self: flex-start;
+  background: #2D3748;
+  padding: 12px 16px;
+  border-radius: 14px 14px 14px 2px;
+  max-width: 85%;
+  font-size: 14px;
+  color: #E2E8F0;
+}
+
+.msgOut {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #0EA5E9 0%, #2563EB 100%);
+  padding: 12px 16px;
+  border-radius: 14px 14px 2px 14px;
+  max-width: 85%;
+  font-size: 14px;
+  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2);
+  color: #fff;
+}
+
+.wordsBox {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  flex-wrap: wrap; // Чтобы бейджи не вылетали
+}

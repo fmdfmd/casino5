@@ -1,0 +1,118 @@
+.wrapper {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.mainContent {
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+}
+
+/* --- ЕДИНЫЙ КОНТЕЙНЕР (Твой код) --- */
+.container {
+    /* Специфические отступы для десктопа */
+    margin-left: 20px;
+    margin-right: 28px;
+    max-width: 1586px;
+    width: calc(100% - 48px);
+    /* 100% минус отступы */
+
+    box-sizing: border-box;
+    margin-bottom: 52px;
+    /* Единый отступ снизу */
+
+    /* Добавил flex для правильного отображения окна и панели */
+    display: flex;
+    flex-direction: column;
+
+    /* Адаптив для ноутбуков и планшетов */
+    @media (max-width: 1450px) {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    /* Мобильная версия */
+    @media (max-width: 600px) {
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-bottom: 30px;
+    }
+}
+
+/* --- Стили окна игры --- */
+.gameWindow {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    /* 16:9 */
+    background-color: #15162a;
+    border-radius: 16px 16px 0 0;
+    overflow: hidden;
+}
+
+.bgImage {
+    opacity: 0.5;
+    object-fit: cover;
+}
+
+.gameContent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.playBtn {
+    padding: 15px 50px;
+    background: linear-gradient(90deg, #6c5dd3 0%, #5b40ff 100%);
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.2s;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+/* --- Панель управления --- */
+.controlsBar {
+    background-color: #24263b;
+    height: 60px;
+    width: 100%;
+    border-radius: 0 0 16px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 25px;
+    color: white;
+}
+
+.gameTitle {
+    font-weight: bold;
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.provider {
+    color: #888;
+    font-size: 14px;
+}

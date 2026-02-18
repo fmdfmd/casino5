@@ -1,0 +1,68 @@
+.pageWrapper {
+  min-height: 100vh;
+  
+  color: #f1f5f9;
+}
+
+.card {
+  background-color: #1e293b; // Slate 800
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.customInput {
+  label {
+    color: #94a3b8;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  input {
+    background-color: #0f172a !important; // Глубокий синий, не серый
+    border: 1px solid rgba(59, 130, 246, 0.2) !important;
+    color: #fff !important;
+    border-radius: 10px;
+    height: 44px;
+    transition: all 0.2s ease;
+
+    &:focus {
+      border-color: #3b82f6 !important;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+  }
+}
+
+.userRow {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.2s;
+  
+  &[data-blocked="true"] {
+    background-color: rgba(239, 68, 68, 0.03);
+    .userName { color: #94a3b8; }
+  }
+
+  &:hover {
+    background-color: rgba(59, 130, 246, 0.04);
+  }
+}
+
+.statusOnline {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #10b981;
+  border: 2px solid #1e293b;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
+
+.auditItem {
+  background: rgba(15, 23, 42, 0.6);
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+// Адаптивная настройка для мобилок
+@media (max-width: 768px) {
+  .card { padding: 16px !important; }
+}

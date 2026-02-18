@@ -1,0 +1,95 @@
+.iconContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+
+  @media (max-width: 480px) {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+.redGlow {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: #ef4444;
+  filter: blur(35px);
+  opacity: 0.2;
+}
+
+.modalTitle {
+  color: #fff;
+  font-weight: 800;
+  font-size: 26px;
+  letter-spacing: -0.5px;
+  text-align: center;
+
+  @media (max-width: 480px) {
+    font-size: 20px;
+  }
+}
+
+.modalText {
+  color: #94a3b8;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.5;
+  max-width: 280px;
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+    max-width: 100%;
+  }
+}
+
+// Кастомные кнопки
+.btnCancel, .btnLogout {
+  height: 52px;
+  font-size: 16px;
+  border-radius: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%; // На мобилках кнопки на всю ширину
+  transition: all 0.2s ease;
+
+  @media (max-width: 480px) {
+    height: 48px;
+    font-size: 15px;
+  }
+}
+
+.btnCancel {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-weight: 700;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.btnLogout {
+  background-color: #ef4444;
+  border: none;
+  color: white;
+  font-weight: 800;
+  box-shadow: 0 10px 25px rgba(239, 68, 68, 0.25);
+
+  &:hover {
+    background-color: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(239, 68, 68, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,272 @@
+
+
+$tablet-width: 1024px;
+$mobile-width: 600px;
+
+.footer {
+  background: linear-gradient(180deg, rgba(116, 96, 238, 0.8) 0%, rgba(88, 76, 237, 0.6) 100%);
+  margin-top: rem(50);
+  @include mobile {
+   margin-top: rem(10);
+  }
+  width: 100%;
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding-top: rem(42);
+    padding-bottom: rem(70);
+
+    /* АДАПТИВ ОБЩИЙ */
+    @media (max-width: $tablet-width) {
+      flex-direction: column;
+      align-items: flex-start; 
+      gap: rem(40);
+      padding-top: rem(30);
+    }
+  }
+
+  // --- ЛЕВАЯ ЧАСТЬ ---
+  &__wrapper-left {
+    display: flex;
+    flex-direction: column;
+    row-gap: rem(28);
+    width: 100%;
+    max-width: rem(400); 
+    align-items: flex-start;
+
+    /* На планшете растягиваем блок на 100%, центрируем контент (лого, валюты) */
+    @media (max-width: $tablet-width) {
+      max-width: 100%;
+      align-items: center; 
+      text-align: center;
+    }
+  }
+
+  &__wrapper-logoBlock {
+    display: flex;
+    flex-direction: column;
+    gap: rem(8);
+    align-items: flex-start; 
+    
+    /* Логотип по центру на планшете */
+    @media (max-width: $tablet-width) {
+       align-items: center; 
+       width: 100%;
+    }
+  }
+
+  &__wrapper-innerLogo {
+    width: rem(100);
+    height: rem(108);
+  }
+
+  &__wrapper-copyright {
+      font-size: rem(14);
+      color: #fff;
+      font-weight: 400;
+      opacity: 0.8;
+      margin-top: rem(8);
+  }
+
+  &__wrapper-inner {
+    width: rem(100);
+    height: rem(108);
+  }
+
+  /* Валюты */
+  &__wrapper-innerСurrencyList {
+    display: flex;
+    column-gap: rem(24);
+    
+    /* Валюты по центру на планшете */
+    @media (max-width: $tablet-width) {
+      justify-content: center; 
+      width: 100%;
+      flex-wrap: wrap;
+      gap: rem(15);
+    }
+  }
+
+  &__wrapper-innerСurrencyItem {
+    display: flex;
+    flex-direction: column;
+    row-gap: rem(9);
+    align-items: center;
+  }
+
+  &__wrapper-innerСurrencyItemCrupto {
+    width: rem(38);
+    height: rem(38);
+  }
+
+  &__wrapper-innerСurrencyItemName {
+    font-size: rem(18);
+    font-weight: 700;
+    color: #ffff;
+    
+    @media (max-width: $mobile-width) {
+      font-size: rem(14);
+    }
+  }
+
+  /* Блок кнопок: Логин + Язык */
+  &__wrapper-innerLoginandTranslat {
+    display: flex;
+    flex-direction: column;
+    gap: rem(16);
+    width: 100%; 
+    
+    /* На десктопе (больше 1024px) - в ряд */
+    @media (min-width: 1025px) {
+        flex-direction: row; 
+        align-items: center;
+        width: auto; 
+    }
+
+    /* На планшете и мобильном - колонка, ширина 100% */
+    @media (max-width: $tablet-width) {
+        flex-direction: column;
+        width: 100%;
+        align-items: stretch; /* Чтобы дети растянулись */
+    }
+  }
+
+  &__wrapper-innerLogin {
+    width: 100%; 
+    border-radius: rem(100);
+    border: rem(1) solid #C7F5FC;
+    padding: rem(14) rem(42); 
+    background: linear-gradient(90deg, #3E45BE 0%, #795DD7 100%);
+    color: #FFFFFF;
+    font-size: rem(18);
+    font-weight: 400;
+    cursor: pointer;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    box-sizing: border-box; 
+    
+    /* На десктопе сжимаем кнопку до контента */
+    @media (min-width: 1025px) {
+        width: auto;
+    }
+    
+    /* На планшете - 100% ширины */
+    @media (max-width: $tablet-width) {
+        width: 100%;
+        max-width: none;
+    }
+  }
+  
+  &__wrapper-langContainer {
+      width: 100%; 
+      
+      @media (min-width: 1025px) {
+          width: auto; 
+      }
+      
+      @media (max-width: $tablet-width) {
+          display: flex;
+          justify-content: center; /* Флаг по центру под кнопкой */
+      }
+  }
+
+  &__wrapper-innerLoginText {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  // --- ПРАВАЯ ЧАСТЬ ---
+  &__wrapper-right {
+    display: flex;
+    column-gap: rem(100);
+
+    /* На планшете выравниваем контент правой части ВЛЕВО */
+    @media (max-width: $tablet-width) {
+      flex-direction: column;
+      align-items: flex-start; 
+      gap: rem(40);
+      width: 100%;
+    }
+  }
+
+  &__wrapper-linksContainer {
+      display: flex;
+      gap: rem(100);
+
+      @media (max-width: $tablet-width) {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          width: 100%;
+          gap: rem(30);
+          text-align: left; /* Текст ссылок слева */
+      }
+      
+      @media (max-width: $mobile-width) {
+           padding-left: 0; 
+      }
+  }
+
+  &__wrapper-rightPathnameList {
+    display: flex;
+    flex-direction: column;
+    row-gap: rem(10);
+  }
+
+  &__wrapper-rightPathnameItem {
+    color: #ffff;
+    font-size: rem(16);
+    font-weight: 400;
+    text-decoration: none;
+  }
+
+  /* СОЦСЕТИ */
+  &__wrapper-rightPathnameListSocials {
+    display: flex;
+    flex-direction: column;
+    row-gap: rem(20);
+    
+    @media (max-width: $tablet-width) {
+      flex-direction: row;
+      gap: rem(24);
+      /* ВАЖНО: Выравнивание ВЛЕВО на планшетах */
+      justify-content: flex-start; 
+      width: 100%;
+    }
+  }
+  
+  &__wrapper-socialIcon {
+      width: rem(67);
+      height: rem(58);
+      
+      @media (max-width: $tablet-width) {
+          width: rem(40);
+          height: rem(40);
+      }
+  }
+}
+
+// --- КОНТЕЙНЕР ---
+.container {
+  margin-left: auto;   
+  margin-right: auto;  
+  width: 100%;         
+  max-width: rem(1586); 
+  
+  padding-left: rem(100);  
+  padding-right: rem(100); // Отступ справа для десктопа
+  
+  box-sizing: border-box;
+
+  @media (max-width: $tablet-width) {
+      padding-left: rem(40);
+      padding-right: rem(40);
+  }
+  
+  @media (max-width: $mobile-width) {
+      padding-left: rem(20); 
+      padding-right: rem(20);
+  }
+}
