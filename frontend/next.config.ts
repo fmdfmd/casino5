@@ -27,7 +27,7 @@ const nextConfig: NextConfig = {
 			},
 			{
 				protocol: 'http',
-				hostname: 'localhost:8000',
+				hostname: process.env.NEXT_PUBLIC_API_URL!,
 				pathname: '/currenciesIcons',
 			},
 			{

@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { api } from '../lib/api/axios';
 
+export const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL!;
+
 let socket: Socket | null = null;
 let isRefreshing = false;
 
@@ -16,7 +18,7 @@ export const useSocket = (path?: string) => {
 
 	useEffect(() => {
 		if (!socket) {
-			socket = io('http://localhost:8000', {
+			socket = io(BACKEND_URL, {
 				transports: ['websocket'],
 				withCredentials: true,
 				autoConnect: false,

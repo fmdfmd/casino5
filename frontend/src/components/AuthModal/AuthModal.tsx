@@ -24,7 +24,7 @@ import { useForm } from '@mantine/form';
 import { useDispatch } from 'react-redux';
 
 import classes from './AuthModal.module.scss';
-import { api } from '@/shared/lib/api/axios';
+import { api, API_URL } from '@/shared/lib/api/axios';
 import { loginUser } from '@/features/auth/model/authSlice';
 import { useAppDispatch } from '@/shared/lib/redux/hooks';
 
@@ -48,7 +48,7 @@ export default function AuthModal({
 	onSwitchMode,
 }: AuthModalProps) {
 	const [view, setView] = useState<ViewState>(
-		currentMode === 'signup' ? 'registration' : 'login'
+		currentMode === 'signup' ? 'registration' : 'login',
 	);
 	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(false);
@@ -93,7 +93,7 @@ export default function AuthModal({
 					loginUser({
 						email: form.values.email,
 						password: form.values.password,
-					})
+					}),
 				);
 			} else if (view === 'registration') {
 				await api.post('/auth/register', {
@@ -112,7 +112,7 @@ export default function AuthModal({
 	};
 
 	const socialLogin = (provider: string) => {
-		window.location.href = `http://localhost:8000/auth/${provider}`;
+		window.location.href = `${API_URL}/auth/${provider}`;
 	};
 
 	const handleTabChange = (value: string) => {

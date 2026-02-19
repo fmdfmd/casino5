@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { api } from '../lib/api/axios';
+import { api, API_URL } from '../lib/api/axios';
 
 let socket: Socket | null = null;
 
@@ -17,7 +17,7 @@ export const useSocket = () => {
 
 	useEffect(() => {
 		if (!socket) {
-			socket = io('http://localhost:8000', {
+			socket = io(API_URL, {
 				transports: ['websocket'],
 				withCredentials: true,
 				autoConnect: false,

@@ -325,7 +325,7 @@ import {
 	ActionIcon,
 	Loader,
 } from '@mantine/core';
-import { useSocket } from '@/shared/hooks/useSocket'; // Убедитесь, что путь верный
+import { BACKEND_URL, useSocket } from '@/shared/hooks/useSocket'; // Убедитесь, что путь верный
 
 // Типы
 interface ChatSession {
@@ -345,7 +345,7 @@ interface Message {
 	chatId: string;
 }
 
-const SOCKET_URL = 'http://localhost:8000';
+const SOCKET_URL = BACKEND_URL;
 
 export default function AdminChat() {
 	// Получаем токен (можно вынести в контекст, но пока так)
@@ -381,13 +381,13 @@ export default function AdminChat() {
 							...existing,
 							lastMessage: payload.message.content,
 							lastMessageAt: new Date().toISOString(),
-					  }
+						}
 					: {
 							id: payload.chatId,
 							guestId: payload.message.guestId || 'Guest',
 							lastMessage: payload.message.content,
 							lastMessageAt: new Date().toISOString(),
-					  };
+						};
 
 				// Перемещаем обновленный чат наверх
 				return [updatedChat, ...prev.filter((c) => c.id !== payload.chatId)];

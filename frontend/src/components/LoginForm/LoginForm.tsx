@@ -14,7 +14,7 @@ import { useForm } from '@mantine/form';
 import { IconAlertCircle } from '@tabler/icons-react';
 import Image from 'next/image';
 
-import { api } from '@/shared/lib/api/axios';
+import { api, API_URL } from '@/shared/lib/api/axios';
 import classes from '../AuthModal/AuthModal.module.scss';
 
 interface LoginFormProps {
@@ -54,7 +54,7 @@ export function LoginForm({ onSuccess, onForgotPassword }: LoginFormProps) {
 	};
 
 	const socialLogin = (provider: string) => {
-		window.location.href = `http://localhost:8000/auth/${provider}`;
+		window.location.href = `${API_URL}/auth/${provider}`;
 	};
 
 	return (

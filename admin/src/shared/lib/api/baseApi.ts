@@ -1,3 +1,5 @@
+import { BACKEND_URL } from '@/shared/hooks/useSocket';
+
 export type ApiConfig = {
 	baseURL: string;
 	timeout: number;
@@ -36,7 +38,7 @@ export class ApiHttpError extends Error {
 		status: number,
 		payload?: ApiErrorPayload,
 		url?: string,
-		method?: string
+		method?: string,
 	) {
 		super(message);
 		this.name = 'ApiHttpError';
@@ -52,7 +54,7 @@ class BaseApiService {
 
 	constructor() {
 		this.config = {
-			baseURL: (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000')
+			baseURL: (BACKEND_URL || 'http://localhost:8000')
 				.toString()
 				.replace(/\/$/, ''),
 			timeout: 15000,
@@ -74,7 +76,7 @@ class BaseApiService {
 
 	/** Merge default headers with custom ones and attach Authorization if present */
 	private createHeaders(
-		custom?: Record<string, string>
+		custom?: Record<string, string>,
 	): Record<string, string> {
 		const headers = { ...this.config.headers, ...(custom || {}) };
 		const token = this.getAuthToken();
@@ -85,11 +87,11 @@ class BaseApiService {
 	/** Core fetch request wrapper that throws ApiHttpError on non-2xx */
 	private async request<T>(
 		endpoint: string,
-		options: RequestInit = {}
+		options: RequestInit = {},
 	): Promise<ApiResponse<T>> {
 		const url = `${this.config.baseURL}${endpoint}`;
 		const headers = this.createHeaders(
-			options.headers as Record<string, string>
+			options.headers as Record<string, string>,
 		);
 
 		const controller = new AbortController();
@@ -140,7 +142,7 @@ class BaseApiService {
 					res.status,
 					parsedBody,
 					url,
-					options.method || 'GET'
+					options.method || 'GET',
 				);
 			}
 
@@ -156,7 +158,7 @@ class BaseApiService {
 					408,
 					undefined,
 					url,
-					options.method || 'GET'
+					options.method || 'GET',
 				);
 			}
 			if (e instanceof ApiHttpError) throw e;
@@ -165,7 +167,7 @@ class BaseApiService {
 				0,
 				undefined,
 				url,
-				options.method || 'GET'
+				options.method || 'GET',
 			);
 		}
 	}
@@ -173,7 +175,7 @@ class BaseApiService {
 	/** GET with query params */
 	async get<T>(
 		endpoint: string,
-		params?: Record<string, string | number | boolean>
+		params?: Record<string, string | number | boolean>,
 	): Promise<ApiResponse<T>> {
 		const url = new URL(`${this.config.baseURL}${endpoint}`);
 		if (params) {
@@ -224,7 +226,7 @@ class BaseApiService {
 	async upload<T>(
 		endpoint: string,
 		file: File | Blob,
-		onProgress?: (progress: UploadProgress) => void
+		onProgress?: (progress: UploadProgress) => void,
 	): Promise<ApiResponse<T>>;
 
 	// Overload: explicit field name + optional extra fields
@@ -233,7 +235,7 @@ class BaseApiService {
 		file: File | Blob,
 		fieldName: string,
 		onProgress?: (progress: UploadProgress) => void,
-		extraFormFields?: Record<string, string | number | boolean>
+		extraFormFields?: Record<string, string | number | boolean>,
 	): Promise<ApiResponse<T>>;
 
 	// Implementation
@@ -242,7 +244,7 @@ class BaseApiService {
 		file: File | Blob,
 		fieldNameOrCb?: string | ((progress: UploadProgress) => void),
 		onProgressMaybe?: (progress: UploadProgress) => void,
-		extraFormFields?: Record<string, string | number | boolean>
+		extraFormFields?: Record<string, string | number | boolean>,
 	): Promise<ApiResponse<T>> {
 		const fieldName =
 			typeof fieldNameOrCb === 'string' ? fieldNameOrCb : 'file';
@@ -253,7 +255,7 @@ class BaseApiService {
 		form.append(fieldName, file);
 		if (extraFormFields) {
 			Object.entries(extraFormFields).forEach(([k, v]) =>
-				form.append(k, String(v))
+				form.append(k, String(v)),
 			);
 		}
 

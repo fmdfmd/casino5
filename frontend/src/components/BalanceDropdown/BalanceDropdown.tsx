@@ -16,6 +16,7 @@ import {
 
 import Big from 'big.js';
 import { getMyWallets } from '@/entities/wallet/api/walletApi';
+import { API_URL } from '@/shared/lib/api/axios';
 
 const BalanceDropdown: React.FC = () => {
 	const wallets = useAppSelector(walletsSelectors.selectAll);
@@ -58,7 +59,7 @@ const BalanceDropdown: React.FC = () => {
 						{totalBalance} {currency.symbol}
 					</span>
 					<Image
-						src={`http://localhost:8000/currenciesIcons${currency.icon}`}
+						src={`${API_URL}/currenciesIcons${currency.icon}`}
 						alt={currency.id}
 						width={20}
 						height={20}
@@ -97,7 +98,7 @@ const BalanceDropdown: React.FC = () => {
 								</span>
 								<div className={styles.itemCurrency}>
 									<Image
-										src={`http://localhost:8000/currenciesIcons${c?.icon}`}
+										src={`${API_URL}/currenciesIcons${c?.icon}`}
 										alt={c?.id}
 										width={20}
 										height={20}

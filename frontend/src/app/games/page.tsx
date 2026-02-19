@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Card, Image, SimpleGrid, Text, Loader, Center } from '@mantine/core';
 import { useRouter } from 'next/navigation';
+import { API_URL } from '@/shared/lib/api/axios';
 
 type Game = {
 	id: string;
@@ -18,7 +19,7 @@ export default function GamesLobbyPage() {
 	const router = useRouter();
 
 	useEffect(() => {
-		axios.get('http://localhost:8000/games/list').then((res) => {
+		axios.get(`${API_URL}/games/list`).then((res) => {
 			const raw = res.data.data;
 			console.log(raw, 'raw');
 			const flat: Game[] = Object.values(raw).flat();
