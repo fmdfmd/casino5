@@ -1,4 +1,3 @@
-// src/admin/controllers/admin-games.controller.ts
 import { Controller, Get, Patch, Body, Param, Put } from '@nestjs/common';
 import { AdminService } from './admin.service';
 
