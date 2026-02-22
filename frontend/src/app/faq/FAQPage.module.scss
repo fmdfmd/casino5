@@ -1,11 +1,9 @@
-
-
 .faqWrapper {
-  display: flex;          
-  align-items: flex-start; // Выравнивание элементов вверху
-  width: 100%;
-  margin: 0 auto;         
-  position: relative;
+    display: flex;
+    align-items: flex-start; // Выравнивание элементов вверху
+    width: 100%;
+    position: relative;
+    margin-top: 100px;
 }
 
 .faqContent {
@@ -13,7 +11,7 @@
     display: flex;
     flex-direction: column;
     width: 100%; // Гарантирует, что контент займет всю ширину после SlideBar
-    padding: 20px 40px; 
+    padding: 20px 40px;
 }
 
 .pageTitle {
@@ -21,5 +19,5 @@
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 30px;
-    align-self: flex-start; 
+    align-self: flex-start;
 }

@@ -37,9 +37,10 @@ $danger-red: #e50914;
 
 .avatarWrapper {
   position: relative;
+
   .avatar {
     border: 5px solid rgba(255, 255, 255, 0.03);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -56,7 +57,9 @@ $danger-red: #e50914;
 }
 
 .input {
-  :global(.mantine-TextInput-label), :global(.mantine-PasswordInput-label) {
+
+  :global(.mantine-TextInput-label),
+  :global(.mantine-PasswordInput-label) {
     color: #94a3b8;
     font-weight: 800;
     font-size: 11px;
@@ -64,12 +67,14 @@ $danger-red: #e50914;
     margin-bottom: 6px;
     letter-spacing: 0.5px;
   }
-  :global(.mantine-TextInput-input), :global(.mantine-PasswordInput-input) {
+
+  :global(.mantine-TextInput-input),
+  :global(.mantine-PasswordInput-input) {
     background-color: $bg-darker !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     color: white !important;
     height: 44px;
-    
+
     &:focus {
       border-color: $accent-blue !important;
     }
@@ -121,19 +126,19 @@ $danger-red: #e50914;
 
 /* СТИЛИ МОДАЛКИ (ФИКСЫ ИКОНКИ) */
 .warningIconWrapper {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .redGlow {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-color: #ef4444;
-    filter: blur(35px);
-    opacity: 0.3;
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background-color: #ef4444;
+  filter: blur(35px);
+  opacity: 0.3;
 }
