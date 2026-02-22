@@ -25,7 +25,7 @@ import { useDispatch } from 'react-redux';
 
 import classes from './AuthModal.module.scss';
 import { api, API_URL } from '@/shared/lib/api/axios';
-import { loginUser } from '@/features/auth/model/authSlice';
+import { loginUser, registerUser } from '@/features/auth/model/authSlice';
 import { useAppDispatch } from '@/shared/lib/redux/hooks';
 
 // Define the Mode type matching your Provider
@@ -96,11 +96,12 @@ export default function AuthModal({
 					}),
 				);
 			} else if (view === 'registration') {
-				await api.post('/auth/register', {
-					email: form.values.email,
-					password: form.values.password,
-					currency: form.values.currency,
-				});
+				dispatch(
+					registerUser({
+						email: form.values.email,
+						password: form.values.password,
+					}),
+				);
 			}
 
 			onClose();
@@ -233,7 +234,7 @@ export default function AuthModal({
 										</div>
 									)}
 
-									{view === 'registration' && (
+									{/* {view === 'registration' && (
 										<Select
 											placeholder='Currency'
 											defaultValue='USD'
@@ -248,7 +249,7 @@ export default function AuthModal({
 											rightSectionWidth={40}
 											allowDeselect={false}
 										/>
-									)}
+									)} */}
 
 									<Group
 										justify='center'

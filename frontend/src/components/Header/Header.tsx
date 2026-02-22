@@ -1,18 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './Header.module.scss';
 import BalanceDropdown from '../BalanceDropdown/BalanceDropdown';
 import BuregMenu from '../BuregMenu/BuregMenu';
 import NotificationsDropdown from '../NotificationsDropdown/NotificationsDropdown';
-import { useSelector } from 'react-redux';
 import { useAppDispatch, useAppSelector } from '@/shared/lib/redux/hooks';
 import { useAuthModal } from '../AuthModal/provider/AuthModalProvider';
-
-import { api } from '@/shared/lib/api/axios';
-import { fetchMe } from '@/features/auth/model/authSlice';
 
 const USER_ACTIONS = [
 	{

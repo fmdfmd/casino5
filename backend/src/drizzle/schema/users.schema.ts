@@ -15,6 +15,7 @@ import {
 import { kycStatusEnum, userRoleEnum, userStatusEnum } from './enums.schema';
 import { rolesTable } from './roles.schema';
 import { userRolesTable } from './user-roles.schema';
+import { walletsTable } from './wallets.schema';
 
 export const users = pgTable(
   'users',
@@ -92,6 +93,7 @@ export const users = pgTable(
 );
 export const usersRelations = relations(users, ({ many }) => ({
   userRolesTable: many(userRolesTable),
+  walletsTable: many(walletsTable),
 }));
 
 export type User = typeof users.$inferSelect;

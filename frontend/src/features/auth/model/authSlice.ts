@@ -24,11 +24,10 @@ const initialState: AuthState = {
 
 export const loginUser = createAsyncThunk(
 	'auth/login',
-	async (data, { rejectWithValue, dispatch }) => {
+	async (data: any, { rejectWithValue, dispatch }) => {
 		try {
 			const response = await api.post('/auth/login', data);
 			// const response = await authApi.login(data);
-			console.log(response.data.user, 'response-loginUser');
 
 			dispatch(setUser(response.data));
 
@@ -41,17 +40,15 @@ export const loginUser = createAsyncThunk(
 			}
 			return rejectWithValue('Login failed');
 		}
-	}
+	},
 );
 
 export const registerUser = createAsyncThunk(
 	'auth/register',
-	async (data, { rejectWithValue, dispatch }) => {
+	async (data: any, { rejectWithValue, dispatch }) => {
 		try {
-			// const response = await authApi.register(data);
 			const response = await api.post('/auth/register', data);
-
-			dispatch(setUser(response.data.user));
+			dispatch(setUser(response.data));
 
 			return {
 				accessToken: response.data.access_token,
@@ -59,7 +56,7 @@ export const registerUser = createAsyncThunk(
 		} catch (err) {
 			return rejectWithValue('Registration failed');
 		}
-	}
+	},
 );
 
 export const fetchMe = createAsyncThunk(
@@ -72,7 +69,7 @@ export const fetchMe = createAsyncThunk(
 		} catch {
 			return rejectWithValue(null);
 		}
-	}
+	},
 );
 
 export const logoutUser = createAsyncThunk(
@@ -86,7 +83,7 @@ export const logoutUser = createAsyncThunk(
 			// В любом случае сбрасываем состояние на клиенте
 			dispatch(logout());
 		}
-	}
+	},
 );
 
 const authSlice = createSlice({

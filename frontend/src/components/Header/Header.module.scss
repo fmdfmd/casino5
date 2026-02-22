@@ -9,6 +9,8 @@
     border-radius: 0 0 24px 24px;
     position: relative;
     margin-bottom: rem(40);
+    position: fixed;
+    z-index: 999;
 
     @media (max-width: 768px) {
         border-radius: 0 0 16px 16px;
