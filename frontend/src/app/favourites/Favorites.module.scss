@@ -1,34 +1,35 @@
 .wrapper {
-  display: flex;          
-  align-items: flex-start; 
-  width: 100%;
-  margin: 0 auto;         
-  position: relative;
-  min-height: 100vh;
+    margin-top: 100px;
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    min-height: 100vh;
 }
 
 .mainContent {
-    display: block; 
+    display: block;
     width: 100%;
-    flex-grow: 1; 
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
 
 .container {
-  width: 100%;
-  max-width: 1586px; 
-  margin: 0 auto;    // Центрируем контейнер
-  padding: 0 30px;   
-  
-  box-sizing: border-box;
-  margin-bottom: 52px;
+    width: 100%;
+    max-width: 1586px;
+    margin: 0 auto; // Центрируем контейнер
+    padding: 0 30px;
 
-  @media (max-width: 600px) {
-    padding-left: 12px; // Уменьшил отступы по краям на телефоне, чтобы влезла сетка
-    padding-right: 12px;
-    margin-bottom: 30px;
-  }
+    box-sizing: border-box;
+    margin-bottom: 52px;
+
+    @media (max-width: 600px) {
+        padding-left: 12px; // Уменьшил отступы по краям на телефоне, чтобы влезла сетка
+        padding-right: 12px;
+        margin-bottom: 30px;
+    }
 }
 
 .pageTitle {
@@ -39,9 +40,9 @@
     margin-top: 30px;
     text-transform: uppercase;
     font-family: sans-serif;
-    
+
     @include tablet {
-        font-size: 24px; 
+        font-size: 24px;
     }
 }
 
@@ -53,8 +54,9 @@
     margin-top: 60px;
     text-transform: uppercase;
     font-family: sans-serif;
+
     @include tablet {
-        font-size: 20px; 
+        font-size: 20px;
     }
 }
 
@@ -62,30 +64,30 @@
 .grid {
     display: grid;
     width: 100%;
-    
+
     // 1. МОБИЛЬНЫЕ (по умолчанию)
     // Делаем карточки компактными (от 130px), чтобы на телефоне их было 2 в ряд
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); 
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 12px; // Маленький отступ на телефонах
 
     // 2. ПЛАНШЕТЫ (от 600px)
     // Чуть крупнее
     @media (min-width: 600px) {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
         gap: 16px;
     }
 
     // 3. НОУТБУКИ (от 1200px)
     // Возвращаем крупные карточки (5 штук в ряд)
     @media (min-width: 1200px) {
-        grid-template-columns: repeat(5, 1fr); 
+        grid-template-columns: repeat(5, 1fr);
         gap: 20px;
     }
-    
+
     // 4. БОЛЬШИЕ МОНИТОРЫ (от 1600px)
     // 6 штук в ряд, карточки большие и четкие
     @media (min-width: 1600px) {
-        grid-template-columns: repeat(6, 1fr); 
+        grid-template-columns: repeat(6, 1fr);
         gap: 24px;
     }
 }
@@ -93,7 +95,7 @@
 .cardWrapper {
     width: 100%;
     // Убираем ограничение ширины, чтобы на десктопе они были крупными
-    max-width: 100%; 
+    max-width: 100%;
 }
 
 // ... Остальные стили без изменений

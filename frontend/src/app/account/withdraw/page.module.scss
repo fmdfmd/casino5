@@ -5,13 +5,14 @@
 }
 
 .wrapper {
+    margin-top: 100px;
     display: flex;
     width: 100%;
 }
 
 .mainContent {
     flex: 1;
-padding: clamp(10px, 2vw, 30px) clamp(15px, 3vw, 40px);
+    padding: clamp(10px, 2vw, 30px) clamp(15px, 3vw, 40px);
     display: flex;
     justify-content: center;
 }
@@ -20,7 +21,7 @@ padding: clamp(10px, 2vw, 30px) clamp(15px, 3vw, 40px);
     width: 100%;
     max-width: 1200px;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     gap: 30px;
 }
 
@@ -51,7 +52,7 @@ padding: clamp(10px, 2vw, 30px) clamp(15px, 3vw, 40px);
 
 .leftSection {
     flex: 1.5;
-    min-width: 0; 
+    min-width: 0;
 }
 
 .methodsGrid {
@@ -67,7 +68,11 @@ padding: clamp(10px, 2vw, 30px) clamp(15px, 3vw, 40px);
         padding-left: 15px;
         gap: 12px;
         scroll-snap-type: x mandatory;
-        &::-webkit-scrollbar { display: none; }
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
         mask-image: linear-gradient(to right, black 85%, transparent 100%);
     }
 }
@@ -94,23 +99,31 @@ padding: clamp(10px, 2vw, 30px) clamp(15px, 3vw, 40px);
         border-radius: 16px;
     }
 
-    .methodIcon { 
+    .methodIcon {
         font-size: 36px;
         display: flex;
         align-items: center;
         justify-content: center;
-        @media (max-width: 768px) { font-size: 32px; }
+
+        @media (max-width: 768px) {
+            font-size: 32px;
+        }
     }
 
     .methodName {
         font-size: 13px;
         font-weight: 700;
         text-align: center;
-        white-space: nowrap; 
-        @media (max-width: 768px) { font-size: 11px; }
+        white-space: nowrap;
+
+        @media (max-width: 768px) {
+            font-size: 11px;
+        }
     }
 
-    &:hover { background: rgba(255, 255, 255, 0.08); }
+    &:hover {
+        background: rgba(255, 255, 255, 0.08);
+    }
 
     &.active {
         background: rgba(124, 77, 255, 0.15);
@@ -122,7 +135,10 @@ padding: clamp(10px, 2vw, 30px) clamp(15px, 3vw, 40px);
 .rightSection {
     flex: 1;
     min-width: 320px;
-    @media (max-width: 768px) { min-width: 100%; }
+
+    @media (max-width: 768px) {
+        min-width: 100%;
+    }
 }
 
 .paymentDetails {
@@ -139,7 +155,12 @@ padding: clamp(10px, 2vw, 30px) clamp(15px, 3vw, 40px);
         justify-content: space-between;
         align-items: center;
         margin-bottom: 25px;
-        h3 { font-size: 20px; font-weight: 800; }
+
+        h3 {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
         .badge {
             background: rgba(34, 197, 94, 0.15);
             color: #4ade80;
@@ -151,7 +172,8 @@ padding: clamp(10px, 2vw, 30px) clamp(15px, 3vw, 40px);
     }
 }
 
-.fiatForm, .cryptoForm {
+.fiatForm,
+.cryptoForm {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -169,6 +191,7 @@ padding: clamp(10px, 2vw, 30px) clamp(15px, 3vw, 40px);
     padding: 12px 15px;
     display: flex;
     align-items: center;
+
     input {
         width: 100%;
         background: transparent;
@@ -178,13 +201,18 @@ padding: clamp(10px, 2vw, 30px) clamp(15px, 3vw, 40px);
         font-weight: 700;
         outline: none;
     }
-    .currencySymbol { color: #7c4dff; font-weight: 800; }
+
+    .currencySymbol {
+        color: #7c4dff;
+        font-weight: 800;
+    }
 }
 
 .presets {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 8px;
+
     button {
         background: rgba(255, 255, 255, 0.05);
         border: none;
@@ -193,7 +221,10 @@ padding: clamp(10px, 2vw, 30px) clamp(15px, 3vw, 40px);
         color: #fff;
         font-size: 12px;
         cursor: pointer;
-        &.activePreset { background: #5865f2; }
+
+        &.activePreset {
+            background: #5865f2;
+        }
     }
 }
 
@@ -207,7 +238,11 @@ padding: clamp(10px, 2vw, 30px) clamp(15px, 3vw, 40px);
     font-weight: 700;
     cursor: pointer;
     transition: 0.2s;
-    &:hover { transform: translateY(-2px); opacity: 0.9; }
+
+    &:hover {
+        transform: translateY(-2px);
+        opacity: 0.9;
+    }
 }
 
 // Убрал стили для адреса и QR так как на Withdraw они не нужны

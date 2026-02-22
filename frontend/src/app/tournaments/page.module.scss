@@ -1,4 +1,5 @@
 .wrapper {
+  margin-top: 100px;
   display: flex;
   align-items: flex-start;
   width: 100%;
@@ -35,7 +36,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  
+
   @media (max-width: 1024px) {
     gap: 10px;
   }
@@ -46,18 +47,18 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  
+
   // Элементы по краям
-  justify-content: space-between; 
-  
+  justify-content: space-between;
+
   // ИЗМЕНЕНИЕ: Увеличил отступы слева и справа
   // 20px сверху/снизу, 50px слева/справа
-  padding: 20px 50px; 
-  
+  padding: 20px 50px;
+
   border: 1px solid #C7F5FC;
   border-radius: 16px;
   background: transparent;
-  
+
   position: relative;
   transition: transform 0.3s ease;
 
@@ -73,13 +74,16 @@
     gap: 20px;
     padding: 20px;
     background: linear-gradient(180deg, rgba(59, 74, 116, 0.4) 0%, rgba(59, 74, 116, 0.1) 100%);
-    
-    &:hover { transform: none; box-shadow: none; }
+
+    &:hover {
+      transform: none;
+      box-shadow: none;
+    }
   }
 }
 
 .imageWrapper {
-  flex: 0 0 auto; 
+  flex: 0 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -91,17 +95,17 @@
 }
 
 .cardImage {
-  filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
   height: auto;
   width: 250px; // Вернул чуть больше размер, если нужно
   object-fit: contain;
 }
 
 .infoWrapper {
-  flex: 0 0 auto; 
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
-  align-items: center; 
+  align-items: center;
   justify-content: center;
   gap: 10px;
 
@@ -146,7 +150,7 @@
   margin-bottom: 5px;
 
   @media (max-width: 1024px) {
-    display: none; 
+    display: none;
   }
 }
 
@@ -161,7 +165,7 @@
   transition: opacity 0.2s;
   text-transform: uppercase;
   font-size: 14px;
-  
+
   &:hover {
     opacity: 0.9;
   }
@@ -169,13 +173,13 @@
 
 // === ТАЙМЕР МОБИЛЬНЫЙ ===
 .timerMobile {
-  display: none; 
+  display: none;
 
   @media (max-width: 1024px) {
-    display: block; 
+    display: block;
     width: 100%;
-    background-color: #3B4A74; 
-    border: 1px solid #C7F5FC; 
+    background-color: #3B4A74;
+    border: 1px solid #C7F5FC;
     border-radius: 16px;
     padding: 15px;
   }

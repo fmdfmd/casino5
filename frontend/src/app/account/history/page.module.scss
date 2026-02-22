@@ -1,14 +1,15 @@
 @function rem($px) {
-  @return calc($px / 16) * 1rem;
+    @return calc($px / 16) * 1rem;
 }
 
 .pageLayout {
     min-height: 100vh;
     color: #fff;
-   
+
 }
 
 .wrapper {
+    margin-top: 100px;
     display: flex;
     width: 100%;
 }
@@ -24,8 +25,8 @@
     width: 100%;
     max-width: 1200px;
     display: flex;
-    flex-direction: column; 
-      gap: 20px; 
+    flex-direction: column;
+    gap: 20px;
 }
 
 .sectionBlock {
@@ -38,7 +39,7 @@
     .title {
         font-size: clamp(24px, 4vw, 40px); // Чуть уменьшил максимум, чтобы влезло два блока
         font-weight: 850;
-      
+
         letter-spacing: -1px;
         color: #FFFFFF;
     }

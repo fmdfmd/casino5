@@ -1,6 +1,7 @@
 // page.module.scss
 
 .wrapper {
+  margin-top: 100px;
   display: flex;
   align-items: flex-start;
   width: 100%;
@@ -18,7 +19,7 @@
   padding: 40px;
   gap: 30px;
   width: 100%;
-  max-width: 1400px; 
+  max-width: 1400px;
   margin: 0 auto;
 
   // Уменьшаем отступы на мобилке
@@ -34,7 +35,7 @@
   grid-template-columns: 1fr 1fr; // Desktop: 2 колонки
   gap: 20px;
   width: 100%;
-  align-items: stretch; 
+  align-items: stretch;
 
   // Tablet & Mobile: Складываем в одну колонку
   @media (max-width: 1024px) {
@@ -42,7 +43,8 @@
   }
 }
 
-.promoWrapper, .widgetWrapper {
+.promoWrapper,
+.widgetWrapper {
   width: 100%;
   height: 100%;
 }

@@ -2,6 +2,7 @@
 // Я заменил на px для гарантированной работы, вы можете вернуть rem(число), если функция работает.
 
 .wrapper {
+    margin-top: 100px;
     display: flex;
     width: 100%;
     color: #fff;
@@ -24,7 +25,7 @@
     width: 100%;
     display: flex;
     justify-content: flex-start;
-  
+
 }
 
 .faqSection {
@@ -122,13 +123,13 @@
 }
 
 .contentOpen {
-    max-height: 1000px; 
+    max-height: 1000px;
     opacity: 1;
     padding-bottom: 24px;
 }
 
 .answerText {
-    padding-left: 40px; 
+    padding-left: 40px;
     color: #8e92b2;
     font-size: 0.95rem;
     line-height: 1.6;
@@ -137,6 +138,9 @@
     ul {
         margin-top: 10px;
         padding-left: 20px;
-        li { margin-bottom: 5px; }
+
+        li {
+            margin-bottom: 5px;
+        }
     }
 }

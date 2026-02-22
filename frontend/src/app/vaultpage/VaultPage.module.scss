@@ -1,21 +1,22 @@
 .wrapper {
-    display: flex;          
-    align-items: flex-start; 
+    margin-top: 100px;
+    display: flex;
+    align-items: flex-start;
     width: 100%;
-    margin: 0 auto;         
+    margin: 0 auto;
     position: relative;
     min-height: 100vh;
     // Глубокий темный фон
 }
-  
+
 .mainContent {
     width: 100%;
-    flex-grow: 1; 
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
     padding: 60px 20px;
-    
+
     @media (max-width: 768px) {
         padding: 30px 15px;
     }
@@ -24,14 +25,14 @@
 .articleContainer {
     max-width: 900px; // Чуть шире для удобного чтения
     width: 100%;
-    color: #b1b6c6; 
+    color: #b1b6c6;
     font-family: 'Inter', sans-serif; // Желательно использовать хороший шрифт
     line-height: 1.7;
 }
 
 // --- Хедер ---
 .headerBlock {
-  
+
     margin-bottom: 50px;
 }
 
@@ -69,7 +70,7 @@
         max-width: 100%;
         height: auto;
         // Красивая тень и скругление
-     
+
     }
 }
 
@@ -122,7 +123,7 @@
     border: 1px solid rgba(91, 70, 245, 0.2);
     padding: 30px;
     border-radius: 12px;
-    
+
     h3 {
         color: #fff;
         margin-top: 0;
@@ -137,7 +138,7 @@
 .checkList {
     list-style: none;
     padding: 0;
-    
+
     li {
         margin-bottom: 12px;
         color: #dbe0eb;
@@ -257,7 +258,7 @@
         margin-bottom: 12px;
         color: #dbe0eb;
         padding-left: 10px;
-        
+
         strong {
             color: #fff;
         }
@@ -281,12 +282,12 @@
 .finalThoughts {
     text-align: center;
     margin-top: 40px;
-    
+
     h2 {
         border: none;
         padding: 0;
     }
-    
+
     p {
         max-width: 600px;
         margin: 0 auto 20px;

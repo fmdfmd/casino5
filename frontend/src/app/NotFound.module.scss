@@ -1,9 +1,10 @@
 // Импортируем общие настройки, если нужно, но здесь сделаем изолированно
 .wrapper {
-  display: flex;          
-  align-items: flex-start; 
+  margin-top: 100px;
+  display: flex;
+  align-items: flex-start;
   width: 100%;
-  margin: 0 auto;         
+  margin: 0 auto;
   position: relative;
   min-height: 100vh;
   // Темно-синий фон (если он не задан глобально в body)
@@ -12,13 +13,13 @@
 
 .mainContent {
 
-  margin-top: 20px; 
+  margin-top: 20px;
   width: 100%;
-  flex-grow: 1; 
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;     
-  justify-content: center; 
+  align-items: center;
+  justify-content: center;
   min-height: 60vh;
   padding: 0 20px; // Безопасные отступы по бокам для мобилок
 
@@ -35,7 +36,7 @@
   text-align: center;
   max-width: 1000px;
   width: 100%;
-  
+
   // Добавляем анимацию появления контента
   animation: fadeIn 0.8s ease-out;
 }
@@ -43,7 +44,7 @@
 .imageWrapper {
   margin-bottom: 40px; // Чуть больше воздуха под картинкой
   position: relative;
-  min-height: 200px; 
+  min-height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -98,20 +99,20 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  
+
   // ДЕКСТОП: Большая, массивная кнопка
-  padding: 20px 60px; 
+  padding: 20px 60px;
   font-size: 20px;
   font-weight: 700;
   border-radius: 50px; // Полностью круглая форма
   letter-spacing: 0.5px; // Немного разрядки для стиля
-  
+
   text-decoration: none;
   color: #ffffff;
   background: linear-gradient(90deg, #5b46f5 0%, #7d6bf7 100%);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 10px 30px rgba(91, 70, 245, 0.4); // Глубокая тень
-  
+
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   cursor: pointer;
 
@@ -134,7 +135,7 @@
     font-size: 16px;
     width: auto; // Или 100% если нужно на всю ширину
     box-shadow: 0 5px 20px rgba(91, 70, 245, 0.3);
-    
+
     &:hover {
       transform: translateY(-2px); // Меньше движения на тач-экранах
     }
@@ -143,12 +144,27 @@
 
 // --- Анимации ---
 @keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-  100% { transform: translateY(0px); }
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

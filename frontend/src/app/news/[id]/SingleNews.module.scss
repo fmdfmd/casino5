@@ -3,19 +3,20 @@ $tablet-width: 1200px;
 
 /* --- ГЛОБАЛЬНАЯ ОБЕРТКА --- */
 .wrapper {
-  display: flex;          
-  align-items: flex-start; 
-  width: 100%;
-  margin: 0 auto;         
-  position: relative;
-  min-height: 100vh;
+    margin-top: 100px;
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    min-height: 100vh;
 }
 
 .mainContent {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: transparent; 
+    background-color: transparent;
     color: white;
     /* На мобилках большой отступ снизу не нужен */
     padding-bottom: 120px;
@@ -28,20 +29,20 @@ $tablet-width: 1200px;
 /* --- КОНТЕЙНЕР --- */
 .container {
     width: 100%;
-    max-width: 1400px; 
-    margin: 0 auto;    
-    
+    max-width: 1400px;
+    margin: 0 auto;
+
     /* Desktop: большие "дорогие" отступы */
-    padding: 60px 40px; 
-    
+    padding: 60px 40px;
+
     display: flex;
     flex-direction: column;
-    
+
     @media (max-width: $tablet-width) {
         padding: 40px 30px;
         max-width: 1000px;
     }
-    
+
     /* Mobile: компактные отступы, чтобы контент влез */
     @media (max-width: $mobile-width) {
         padding: 24px 20px;
@@ -59,7 +60,8 @@ $tablet-width: 1200px;
     line-height: 1.2;
 
     @media (max-width: $mobile-width) {
-        font-size: 20px; /* Аккуратный размер для мобилки */
+        font-size: 20px;
+        /* Аккуратный размер для мобилки */
         margin-bottom: 15px;
     }
 }
@@ -69,9 +71,9 @@ $tablet-width: 1200px;
     color: white;
     transition: color 0.3s ease;
     opacity: 0.9;
-    
-    &:hover { 
-        color: #fbbf24; 
+
+    &:hover {
+        color: #fbbf24;
         opacity: 1;
     }
 }
@@ -94,15 +96,16 @@ $tablet-width: 1200px;
 .heroImageWrapper {
     width: 100%;
     height: auto;
-    
+
     /* Desktop: высокая, красивая картинка */
-    max-height: 700px; 
+    max-height: 700px;
     margin-bottom: 60px;
-    
-    border-radius: 16px; /* Чуть больше скругление на десктопе */
+
+    border-radius: 16px;
+    /* Чуть больше скругление на десктопе */
     overflow: hidden;
     background-color: #0f1225;
-   
+
 
     @media (max-width: $tablet-width) {
         max-height: 500px;
@@ -112,8 +115,8 @@ $tablet-width: 1200px;
     @media (max-width: $mobile-width) {
         /* Mobile: Картинка должна быть пропорциональной (например 16:9), 
            а не фиксированной высоты, чтобы не обрезалась */
-        max-height: 300px; 
-        aspect-ratio: 16/9; 
+        max-height: 300px;
+        aspect-ratio: 16/9;
         margin-bottom: 30px;
         border-radius: 10px;
     }
@@ -129,14 +132,14 @@ $tablet-width: 1200px;
 /* --- ЗАГОЛОВОК --- */
 .newsTitle {
     /* Desktop: Огромный, читаемый заголовок */
-    font-size: 64px; 
+    font-size: 64px;
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 40px;
     color: white;
     text-align: left;
-    width: 100%; 
-    max-width: 1200px; 
+    width: 100%;
+    max-width: 1200px;
 
     /* Tablet */
     @media (max-width: $tablet-width) {
@@ -146,42 +149,47 @@ $tablet-width: 1200px;
 
     /* Mobile */
     @media (max-width: $mobile-width) {
-        font-size: 28px; /* Достаточно крупно, но влезает в экран */
+        font-size: 28px;
+        /* Достаточно крупно, но влезает в экран */
         line-height: 1.2;
         margin-bottom: 20px;
-        word-wrap: break-word; /* Чтобы длинные слова не ломали верстку */
+        word-wrap: break-word;
+        /* Чтобы длинные слова не ломали верстку */
     }
 }
 
 /* --- ТЕКСТ СТАТЬИ --- */
 .textContent {
     /* Desktop: Крупный шрифт (премиум вид) */
-    font-size: 22px; 
+    font-size: 22px;
     line-height: 1.7;
     color: #e2e8f0;
-    
-    margin-bottom: 80px; /* Отступ до блока новостей */
-    
+
+    margin-bottom: 80px;
+    /* Отступ до блока новостей */
+
     text-align: left;
-    max-width: 900px; 
+    max-width: 900px;
 
     p {
         margin-bottom: 35px;
         white-space: pre-line;
     }
-    
+
     /* Tablet */
     @media (max-width: $tablet-width) {
         font-size: 18px;
-        max-width: 100%; /* На планшете используем всю ширину */
+        max-width: 100%;
+        /* На планшете используем всю ширину */
     }
 
     /* Mobile */
     @media (max-width: $mobile-width) {
-        font-size: 16px; /* Стандартный читаемый размер */
+        font-size: 16px;
+        /* Стандартный читаемый размер */
         line-height: 1.5;
         margin-bottom: 40px;
-        
+
         p {
             margin-bottom: 20px;
         }
@@ -206,7 +214,8 @@ $tablet-width: 1200px;
         font-weight: 600;
 
         @media (max-width: $mobile-width) {
-            padding-left: 25px; /* Чуть меньше отступ на мобилке */
+            padding-left: 25px;
+            /* Чуть меньше отступ на мобилке */
             margin-bottom: 15px;
             font-size: 16px;
         }
@@ -215,17 +224,19 @@ $tablet-width: 1200px;
             content: '';
             position: absolute;
             left: 0;
-            
+
             /* Адаптация положения квадратика */
-            top: 13px; /* Для шрифта 22px */
-            
+            top: 13px;
+            /* Для шрифта 22px */
+
             width: 8px;
             height: 8px;
             background-color: #fbbf24;
-            border-radius: 0; 
+            border-radius: 0;
 
             @media (max-width: $mobile-width) {
-                top: 8px; /* Для шрифта 16px */
+                top: 8px;
+                /* Для шрифта 16px */
                 width: 6px;
                 height: 6px;
             }

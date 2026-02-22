@@ -7,6 +7,7 @@ $text-white: #ffffff;
 $text-dim: rgba(255, 255, 255, 0.5);
 
 .wrapper {
+  margin-top: 100px;
   display: flex;
   width: 100%;
   min-height: 100vh;
@@ -28,10 +29,16 @@ $text-dim: rgba(255, 255, 255, 0.5);
 
 .pageHeader {
   margin-bottom: 24px;
-  h1 { 
-    font-size: 28px; 
+
+  h1 {
+    font-size: 28px;
     font-weight: 800;
-    @media (max-width: 600px) { font-size: 22px; } // Меньше заголовок на мобиле
+
+    @media (max-width: 600px) {
+      font-size: 22px;
+    }
+
+    // Меньше заголовок на мобиле
   }
 }
 
@@ -63,15 +70,17 @@ $text-dim: rgba(255, 255, 255, 0.5);
 
 .cardHeader {
   margin-bottom: 20px;
-  h2 { 
-    font-size: 18px; 
-    font-weight: 700; 
-    margin-bottom: 6px; 
+
+  h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
   }
-  p { 
-    font-size: 13px; 
-    color: $text-dim; 
-    line-height: 1.5; 
+
+  p {
+    font-size: 13px;
+    color: $text-dim;
+    line-height: 1.5;
   }
 }
 
@@ -93,14 +102,17 @@ $text-dim: rgba(255, 255, 255, 0.5);
 .toggleLeft {
   flex: 1; // Занимает всё свободное место
   min-width: 0; // Предотвращает распирание текстом
-  
+
   span {
     display: block;
     margin-top: 4px;
     font-size: 13px;
     color: $text-dim;
     line-height: 1.4;
-    @media (max-width: 600px) { font-size: 12px; }
+
+    @media (max-width: 600px) {
+      font-size: 12px;
+    }
   }
 }
 
@@ -116,7 +128,10 @@ $text-dim: rgba(255, 255, 255, 0.5);
     margin: 0;
     cursor: pointer;
     line-height: 1.2;
-    @media (max-width: 600px) { font-size: 14px; }
+
+    @media (max-width: 600px) {
+      font-size: 14px;
+    }
   }
 }
 
@@ -166,6 +181,7 @@ $text-dim: rgba(255, 255, 255, 0.5);
 
   &.active {
     background-color: $accent-color;
+
     .slider {
       transform: translateX(20px);
     }
@@ -208,7 +224,10 @@ $text-dim: rgba(255, 255, 255, 0.5);
   justify-content: center;
   flex-shrink: 0;
 
-  &.active { border-color: $accent-color; }
+  &.active {
+    border-color: $accent-color;
+  }
+
   .radioDot {
     width: 10px;
     height: 10px;

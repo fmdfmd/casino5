@@ -1,4 +1,5 @@
 .wrapper {
+    margin-top: 100px;
     display: flex;
     width: 100%;
     color: #fff;
@@ -20,40 +21,40 @@
 .navContainer {
     width: 100%;
     display: flex;
-    justify-content: flex-start; 
-  
+    justify-content: flex-start;
+
 }
 
 .formContainer {
     width: 100%;
-    max-width: 850px; 
-    text-align: left; 
-    
-    .title { 
-        font-size: 2.5rem; 
-        margin-bottom: 15px; 
-        font-weight: 700; 
-        text-align: left; 
+    max-width: 850px;
+    text-align: left;
+
+    .title {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        font-weight: 700;
+        text-align: left;
 
         @media (max-width: 768px) {
             font-size: 1.8rem;
         }
     }
 
-    .subtitle { 
-        color: #8e92b2; 
-        margin-bottom: 45px; 
-        font-size: 1rem; 
+    .subtitle {
+        color: #8e92b2;
+        margin-bottom: 45px;
+        font-size: 1rem;
         line-height: 1.6;
-        text-align: left; 
-        max-width: 750px; 
+        text-align: left;
+        max-width: 750px;
     }
 }
 
 .partnerForm {
     display: flex;
     flex-direction: column;
-    gap: 25px; 
+    gap: 25px;
     width: 100%;
 
     .formField {
@@ -61,18 +62,23 @@
         flex-direction: column;
         gap: 10px;
 
-        label { 
-            font-size: 0.9rem; 
+        label {
+            font-size: 0.9rem;
             font-weight: 500;
             color: #C7F5FC;
-            span { color: #ff4c4c; } 
+
+            span {
+                color: #ff4c4c;
+            }
         }
 
-        input, select, textarea {
-            background: rgba(199, 245, 252, 0.03); 
-            border: 1px solid rgba(199, 245, 252, 0.2); 
-            border-radius: 10px; 
-            padding: 16px 14px; 
+        input,
+        select,
+        textarea {
+            background: rgba(199, 245, 252, 0.03);
+            border: 1px solid rgba(199, 245, 252, 0.2);
+            border-radius: 10px;
+            padding: 16px 14px;
             color: #fff;
             outline: none;
             font-size: 1rem;
@@ -83,8 +89,8 @@
                 border-color: rgba(199, 245, 252, 0.4);
             }
 
-            &:focus { 
-                border-color: #C7F5FC; 
+            &:focus {
+                border-color: #C7F5FC;
                 background: rgba(199, 245, 252, 0.06);
                 box-shadow: 0 0 0 3px rgba(199, 245, 252, 0.1);
             }
@@ -100,11 +106,11 @@
             -webkit-appearance: none;
             -moz-appearance: none;
             cursor: pointer;
-            
+
             // Статичная SVG стрелка
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23C7F5FC' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 16px center; 
+            background-position: right 16px center;
             background-size: 18px;
             padding-right: 45px;
 
@@ -124,9 +130,9 @@
             }
         }
 
-        textarea { 
-            height: 140px; 
-            resize: none; 
+        textarea {
+            height: 140px;
+            resize: none;
         }
     }
 
@@ -144,7 +150,7 @@
     .addSource {
         background: none;
         border: none;
-        color: #C7F5FC; 
+        color: #C7F5FC;
         display: flex;
         align-items: center;
         gap: 12px;
@@ -157,21 +163,22 @@
         span {
             background: #4c52ff;
             color: #fff;
-            width: 28px;  
-            height: 28px; 
-            border-radius: 50%; 
-            display: inline-flex; 
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             font-size: 1.4rem;
             line-height: 1;
             flex-shrink: 0;
-            padding-bottom: 2px; 
+            padding-bottom: 2px;
             transition: background 0.3s ease;
         }
 
         &:hover {
             opacity: 0.9;
+
             span {
                 background: #3b41e6;
             }
@@ -182,18 +189,18 @@
         background: #4c52ff;
         color: #fff;
         border: none;
-        padding: 16px 70px; 
+        padding: 16px 70px;
         border-radius: 8px;
         font-weight: 700;
         font-size: 1rem;
         width: fit-content;
         cursor: pointer;
-        align-self: flex-start; 
+        align-self: flex-start;
         margin-top: 15px;
         transition: all 0.3s ease;
 
-        &:hover { 
-            background: #3b41e6; 
+        &:hover {
+            background: #3b41e6;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(76, 82, 255, 0.4);
         }
