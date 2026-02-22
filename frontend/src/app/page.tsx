@@ -1,5 +1,4 @@
 'use client';
-import HeaderUpGetbonus from '@/components/HeaderUp/HeaderUpGetbonus';
 import styles from './page.module.scss';
 import Chat from '@/widgets/chat/ui';
 import Header from '@/components/Header/Header';
