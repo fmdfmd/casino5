@@ -18,12 +18,11 @@
 
 .supportChat {
     // Colors (Consistent with PublicChat)
-    --bg-color: #3B4A74;
     --accent-color: #C7F5FC;
     --accent-text: #3B4A74;
     --text-white: #ffffff;
     --bubble-other: rgba(255, 255, 255, 0.1);
-    max-height: rem(720);
+    max-height: rem(688);
 
     // Layout: Full Height, Right Side, Max Width 343px
     position: fixed;
@@ -33,7 +32,7 @@
     max-width: 343px;
     z-index: 9999;
 
-    background-color: var(--bg-color);
+    background: linear-gradient(90deg, #795DD7 0%, #3E45BE 100%);
     border-left: 1px solid rgba(199, 245, 252, 0.15);
     box-shadow: -5px 0 30px rgba(0, 0, 0, 0.4);
 

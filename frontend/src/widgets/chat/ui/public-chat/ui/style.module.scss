@@ -1,123 +1,3 @@
-// // Updated: public-chat/style.module.scss (added styles for messages)
-// .publicChat {
-//     background-color: #3B4A74;
-//     height: 100%;
-//     position: fixed;
-//     right: 0;
-//     bottom: 0;
-//     max-width: rem(375);
-//     z-index: 10;
-//     border-radius: rem(12);
-//     border: 1px solid #C7F5FC;
-//     padding: rem(15) rem(15) rem(15) rem(15);
-//     width: 100%;
-//     display: flex;
-//     flex-direction: column;
-// }
-
-// .publicChatHeader {
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: center;
-//     margin-bottom: rem(15);
-// }
-
-// .publicChatHeaderLeft {
-//     display: flex;
-//     align-items: center;
-//     gap: rem(10);
-// }
-
-// .test-img {
-//     border-radius: rem(8);
-// }
-
-// .publicChatHeaderRight {
-//     max-width: rem(74);
-// }
-
-// .publicChatUserName {
-//     color: var(--white);
-// }
-
-// .publicChatLanguage {
-//     background: transparent;
-//     border: none;
-//     color: transparent !important;
-//     caret-color: transparent !important;
-// }
-
-// .publicChatMessages {
-//     flex: 1;
-//     overflow-y: auto;
-//     padding: rem(10) 0;
-//     display: flex;
-//     flex-direction: column;
-//     gap: rem(10);
-// }
-
-// .publicChatMessage {
-//     display: flex;
-//     align-items: flex-start;
-//     gap: rem(10);
-//     max-width: 80%;
-// }
-
-// .publicChatMessageUser {
-//     align-self: flex-end;
-//     flex-direction: row-reverse;
-// }
-
-// .publicChatMessageContent {
-//     background-color: #C7F5FC;
-//     padding: rem(8) rem(12);
-//     border-radius: rem(12);
-//     color: #3B4A74;
-//     font-size: rem(14);
-// }
-
-// .publicChatMessageSender {
-//     font-size: rem(12);
-//     color: var(--white);
-//     margin-bottom: rem(4);
-// }
-
-// .publicChatInputWrapper {
-//     display: flex;
-//     gap: rem(10);
-//     padding-top: rem(10);
-//     border-top: 1px solid #C7F5FC;
-// }
-
-// .publicChatInput {
-//     flex: 1;
-//     background: rgba(255, 255, 255, 0.1);
-//     border: 1px solid #C7F5FC;
-//     border-radius: rem(20);
-//     padding: rem(8) rem(12);
-//     color: var(--white);
-
-//     &::placeholder {
-//         color: rgba(255, 255, 255, 0.7);
-//     }
-// }
-
-// .publicChatSendButton {
-//     background-color: #C7F5FC;
-//     border: none;
-//     border-radius: rem(20);
-//     padding: rem(8) rem(16);
-//     cursor: pointer;
-// }
-
-// .publicChatAuthPrompt {
-//     text-align: center;
-//     color: var(--white);
-//     font-size: rem(14);
-//     padding: rem(20);
-// }
-
-// Миксин для скроллбара
 @mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)) {
     &::-webkit-scrollbar {
         width: $size;
@@ -138,7 +18,6 @@
 
 .publicChat {
     // Основные цвета из вашего ТЗ
-    --bg-color: #3B4A74;
     --accent-color: #C7F5FC;
     --text-dark: #3B4A74;
     --text-white: #ffffff;
@@ -151,8 +30,7 @@
     width: 100%;
     max-width: 343px; // ТРЕБОВАНИЕ: Макс ширина 343px
     z-index: 9999;
-
-    background-color: var(--bg-color);
+    background: linear-gradient(90deg, #795DD7 0%, #3E45BE 100%);
     box-shadow: -4px 0 20px rgba(0, 0, 0, 0.4); // Тень слева
     border-left: 1px solid rgba(199, 245, 252, 0.1);
 
