@@ -47,7 +47,7 @@ export default function PartnersPage() {
 
 	return (
 		<>
-			<HeaderUpGetbonus />
+			{/* <HeaderUpGetbonus /> */}
 			<Header />
 
 			<div className={styles.wrapper}>

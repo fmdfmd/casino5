@@ -72,7 +72,7 @@ export default function ProfileDashboardPage() {
 
 	return (
 		<div className={styles.pageLayout}>
-			<HeaderUpGetbonus />
+			{/* <HeaderUpGetbonus /> */}
 			<Header />
 
 			<div className={styles.wrapper}>
@@ -191,7 +191,7 @@ export default function ProfileDashboardPage() {
 									{Array.from({ length: totalTicks }).map((_, i) => {
 										const isPeak = peakIndices.includes(i);
 										const isNearPeak = peakIndices.some(
-											(p) => Math.abs(p - i) === 1
+											(p) => Math.abs(p - i) === 1,
 										);
 										let heightClass = styles.h_sm;
 										if (isPeak) heightClass = styles.h_lg;

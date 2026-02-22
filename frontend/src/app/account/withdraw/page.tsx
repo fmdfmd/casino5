@@ -54,7 +54,7 @@
 
 //     return (
 //         <div className={styles.pageLayout}>
-//             <HeaderUpGetbonus />
+//             {/* <HeaderUpGetbonus /> */}
 //             <Header />
 
 //             <div className={styles.wrapper}>
@@ -329,7 +329,7 @@ export default function WithdrawPage() {
 
 	return (
 		<div className={styles.pageLayout}>
-			<HeaderUpGetbonus />
+			{/* <HeaderUpGetbonus /> */}
 			<Header />
 
 			<div className={styles.wrapper}>

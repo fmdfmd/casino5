@@ -93,7 +93,7 @@ const levelsData = [
 export default function LoyaltyPage() {
 	return (
 		<>
-			<HeaderUpGetbonus />
+			{/* <HeaderUpGetbonus /> */}
 			<Header />
 
 			<div className={styles.wrapper}>

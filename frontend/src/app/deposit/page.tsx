@@ -118,7 +118,7 @@ export default function DepositPage() {
 
 	return (
 		<div className={styles.pageLayout}>
-			<HeaderUpGetbonus />
+			{/* <HeaderUpGetbonus /> */}
 			<Header />
 
 			<div className={styles.wrapper}>

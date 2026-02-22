@@ -50,7 +50,7 @@ export default function SlotPage() {
 
 	return (
 		<>
-			<HeaderUpGetbonus />
+			{/* <HeaderUpGetbonus /> */}
 			<Header />
 
 			<div className={styles.wrapper}>
