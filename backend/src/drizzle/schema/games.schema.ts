@@ -1,6 +1,8 @@
+import { relations } from 'drizzle-orm';
 import { boolean, numeric, text } from 'drizzle-orm/pg-core';
 import { uuid } from 'drizzle-orm/pg-core';
 import { pgTable } from 'drizzle-orm/pg-core';
+import { gamesCategoriesGamesTable } from './games-categories-games.schema';
 
 export const gamesTable = pgTable('games', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -27,3 +29,7 @@ export const gamesTable = pgTable('games', {
   isActive: boolean('is_active').default(true),
   isDemoEnabled: boolean('is_demo_enabled').default(true),
 });
+
+export const gamesRelations = relations(gamesTable, ({ many }) => ({
+  categoriesLinks: many(gamesCategoriesGamesTable),
+}));

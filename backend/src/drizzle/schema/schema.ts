@@ -45,10 +45,13 @@ export {
   gamesCategoriesGamesRelations,
   gamesCategoriesGamesTable,
 } from './games-categories-games.schema';
-export { gamesCategoriesTable } from './games-categories.schema';
+export {
+  gamesCategoriesTable,
+  gamesCategoriesRelations,
+} from './games-categories.schema';
 export { gamesEventsTable } from './games-events.schema';
 export { gamesPopularityTable } from './games-popularity.schema';
-export { gamesTable } from './games.schema';
+export { gamesTable, gamesRelations } from './games.schema';
 export { gamesStatsDailyTable } from './games_stats_daily.schema';
 export { walletsTable, walletsRelations } from './wallets.schema';
 export { ledgerTable, ledgerRelations } from './ledger.schema';

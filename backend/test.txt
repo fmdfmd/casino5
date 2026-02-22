@@ -1,35 +1,20 @@
-      // const res = await fetch('https://tbs2api.lvslot.net/API/', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-
-      //   body: JSON.stringify({
-      //     hall: '3209653',
-      //     key: 'Lx01o1xIJsI8DsHct1e0lwqsi',
-      //     cmd: 'getGamesList',
-      //   }),
-      // });
-
-      // const amatic = (await res?.json()).content['amatic'];
-
-      // const arr: any[] = [];
-      // amatic.map((game) => {
-      //   if (game.demo === '1') {
-      //     arr.push(game);
-      //   }
-      // });
-
-      // const newArr = arr.slice(0, 15);
-
-      // newArr.map(async ({ id, name, img }) => {
-      //   await this.db.insert(gamesTable).values({
-      //     name: name,
-      //     providerGameId: id,
-      //     provider: 'amatic',
-      //     img: img,
-      //     slug: name,
-      //   });
-      // });
-
-      // return (await res.json()).content;
+   const res = await fetch(this.configService.get('PROVIDER_URL')!, {
+        body: JSON.stringify({
+          hall: this.configService.get('PROVIDER_HALL_ID'),
+          key: this.configService.get('PROVIDER_HALL_KEY'),
+          cmd: 'getGamesList',
+        }),
+        method: 'POST',
+      });
+      const data = (await res.json()).content['amatic'];
+      const dataDemo1 = data.filter((game) => game.demo === '1');
+      dataDemo1.map(async (game) => {
+        await this.db.insert(gamesTable).values({
+          name: game.name,
+          provider: game.title,
+          slug: game.name,
+          providerGameId: game.id,
+          img: game.img,
+        });
+      });
+      return data;

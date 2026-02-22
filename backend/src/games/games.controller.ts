@@ -16,12 +16,16 @@ import type { DrizzleDB } from 'src/drizzle/types/drizzle';
 import { gamesTable } from 'src/drizzle/schema/games.schema';
 import { SkipResponseInterceptor } from 'src/shared/decorators/skip-response.decorator';
 import { AccessTokenGuard } from 'src/auth/guards/jwt.guard';
-import { eq } from 'drizzle-orm';
+import { eq, desc, sql } from 'drizzle-orm';
+import { ConfigService } from '@nestjs/config';
+import { gamesPopularityTable } from 'src/drizzle/schema/games-popularity.schema';
+import { gameBetsTable } from 'src/drizzle/schema/game-bets.schema';
 @Controller('games')
 export class GamesController {
   constructor(
     private readonly gamesService: GamesService,
     @Inject(DRIZZLE) private readonly db: DrizzleDB,
+    private readonly configService: ConfigService,
   ) {}
 
   /**
@@ -47,11 +51,53 @@ export class GamesController {
       // Возвращаем только активные игры
       return await this.db.query.gamesTable.findMany({
         where: eq(gamesTable.isActive, true),
+        limit: 15,
       });
     } catch (err) {
       console.error('Fetch games error:', err);
       return [];
     }
+  }
+
+  @Get('lobby')
+  @UseGuards(AccessTokenGuard) // Опционально, можно сделать кастомный Guard, который пропускает без токена
+  async getLobby(@Req() req) {
+    const userId = req?.user?.sub || null;
+
+    // 1. Популярные игры (глобально + админский буст)
+    const popularGames = await this.db
+      .select({
+        id: gamesTable.id,
+        name: gamesTable.name,
+        slug: gamesTable.slug,
+        img: gamesTable.img,
+        provider: gamesTable.provider,
+      })
+      .from(gamesTable)
+      .leftJoin(
+        gamesPopularityTable,
+        eq(gamesTable.id, gamesPopularityTable.gameId),
+      )
+      .where(eq(gamesTable.isActive, true))
+      .orderBy(desc(gamesPopularityTable.popularityScore))
+      .limit(15);
+
+    let personalizedGames: any = [];
+
+    // 2. Персонализированные игры (во что юзер играет больше всего и тратит деньги)
+    if (userId) {
+      personalizedGames = await this.db.execute(sql`
+        SELECT g.id, g.name, g.slug, g.img, g.provider, SUM(b.bet_amount_usd) as total_spent
+        FROM ${gameBetsTable} b
+        JOIN ${gamesTable} g ON b.game_id = g.id
+        WHERE b.user_id = ${userId} AND g.is_active = true
+        GROUP BY g.id
+        ORDER BY total_spent DESC
+        LIMIT 10
+      `);
+    }
+
+    return { popularGames, personalizedGames: personalizedGames.rows || [] };
   }
 
   /**

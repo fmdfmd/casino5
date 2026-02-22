@@ -5,9 +5,10 @@ import { DrizzleModule } from 'src/drizzle/drizzle.module';
 import { UsersModule } from 'src/users/users.module';
 import { AdminGateway } from './admin.gateway';
 import { UsersRepository } from 'src/users/users.repository';
+import { AdminGamesController } from './admin-games.controller';
 
 @Module({
-  controllers: [AdminFinanceController],
+  controllers: [AdminFinanceController, AdminGamesController],
   providers: [AdminService, AdminGateway, UsersRepository],
   imports: [DrizzleModule, UsersModule],
 })

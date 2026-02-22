@@ -81,6 +81,7 @@ export const ledgerRefType = pgEnum('ref_type', [
   'bonus',
   'affiliate',
   'manual',
+  'adjustment',
 ]);
 
 export const kycLevelEnum = pgEnum('kyc_level', [

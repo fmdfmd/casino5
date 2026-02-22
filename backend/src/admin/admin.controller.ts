@@ -1,164 +1,3 @@
-// import {
-//   Controller,
-//   Get,
-//   Post,
-//   Body,
-//   Param,
-//   UseGuards,
-//   Query,
-//   BadRequestException,
-//   Inject,
-// } from '@nestjs/common';
-// import { DRIZZLE } from 'src/drizzle/drizzle.module';
-// import type { DrizzleDB } from 'src/drizzle/types/drizzle';
-// import { eq, desc, sql } from 'drizzle-orm';
-// import { paymentsTable } from 'src/drizzle/schema/payments.schema';
-// import { ledgerTable } from 'src/drizzle/schema/ledger.schema';
-// import { walletsTable } from 'src/drizzle/schema/wallets.schema';
-// import { AdminGateway } from './admin.gateway';
-// // Импортируйте AccessTokenGuard и AdminGuard (если есть)
-
-// @Controller('admin/finance')
-// // @UseGuards(AccessTokenGuard, AdminGuard) // Важно! Защитите этот роут
-// export class AdminFinanceController {
-//   constructor(
-//     @Inject(DRIZZLE) private readonly db: DrizzleDB,
-//     private readonly adminGateway: AdminGateway,
-//   ) {}
-
-//   // 1. Получение истории всех операций (Лента)
-//   @Get('history')
-//   async getHistory(@Query('limit') limit = 50) {
-//     return await this.db.query.ledgerTable.findMany({
-//       limit: Number(limit),
-//       orderBy: [desc(ledgerTable.createdAt)],
-//       with: {
-//         wallet: {
-//           with: {
-//             user: true, // Чтобы видеть email/username
-//             currency: true, // Символ валюты
-//           },
-//         },
-//       },
-//     });
-//   }
-
-//   // 2. Получение ожидающих выводов
-//   @Get('withdrawals/pending')
-//   async getPendingWithdrawals() {
-//     return await this.db.query.paymentsTable.findMany({
-//       where: eq(paymentsTable.status, 'pending_approval'),
-//       orderBy: [desc(paymentsTable.createdAt)],
-//       with: {
-//         user: true,
-//         wallet: { with: { currency: true } },
-//       },
-//     });
-//   }
-
-//     @Post('withdrawals/:id/approve')
-//   async approveWithdrawal(
-//     @Param('id') id: string,
-//     @Body('txHash') txHash: string,
-//   ) {
-//     if (!txHash) throw new BadRequestException('Transaction Hash is required');
-
-//     return await this.db.transaction(async (tx) => {
-//       // 1. Получаем платеж
-//       const payment = await tx.query.paymentsTable.findFirst({
-//         where: eq(paymentsTable.id, id),
-//       });
-
-//       if (!payment || payment.status !== 'pending_approval') {
-//         throw new BadRequestException('Payment not valid');
-//       }
-
-//       // 2. Обновляем статус платежа
-//       await tx
-//         .update(paymentsTable)
-//         .set({
-//           status: 'completed',
-//           txHash: txHash,
-//           updatedAt: new Date(),
-//         })
-//         .where(eq(paymentsTable.id, id));
-
-//       // 3. Снимаем блокировку средств (lockedBalance)
-//       await tx
-//         .update(walletsTable)
-//         .set({
-//           lockedBalance: sql`${walletsTable.lockedBalance} - ${payment.amount}`,
-//         })
-//         .where(eq(walletsTable.id, payment.walletId));
-
-//       // 4. Создаем запись в Ledger (Истории), чтобы она появилась во вкладке History
-//       const [ledgerEntry] = await tx.insert(ledgerTable).values({
-//         walletId: payment.walletId,
-//         type: 'withdrawal',
-//         amount: -payment.amount, // Отрицательное число для вывода
-//         description: `Manual withdrawal: ${txHash}`,
-//         referenceId: payment.id,
-
-//       }).returning();
-
-//       // 5. Отправляем сокеты
-//       // Обновляем заявку (чтобы она исчезла из Pending)
-//       const updatedPayment = { ...payment, status: 'completed', txHash };
-//       this.adminGateway.sendTransactionUpdate(updatedPayment);
-
-//       // Добавляем запись в ленту истории (чтобы появилась в History)
-//       // Нужно подтянуть данные пользователя для красивого отображения в ленте
-//       const fullLedgerEntry = await tx.query.ledgerTable.findFirst({
-//          where: eq(ledgerTable.id, ledgerEntry.id),
-//          with: { wallet: { with: { user: true, currency: true } } }
-//       });
-
-//       if(fullLedgerEntry) {
-//           this.adminGateway.sendTransaction(fullLedgerEntry);
-//       }
-
-//       return { success: true };
-//     });
-//   }
-
-//   // 4. Отклонение
-//   @Post('withdrawals/:id/reject')
-//   async rejectWithdrawal(@Param('id') id: string) {
-//     return await this.db.transaction(async (tx) => {
-//       const payment = await tx.query.paymentsTable.findFirst({
-//         where: eq(paymentsTable.id, id),
-//       });
-
-//       if (!payment || payment.status !== 'pending_approval') {
-//         throw new BadRequestException('Invalid payment');
-//       }
-
-//       // Возвращаем статус
-//       await tx.update(paymentsTable)
-//         .set({ status: 'rejected', updatedAt: new Date() })
-//         .where(eq(paymentsTable.id, id));
-
-//       // Возвращаем деньги на баланс (locked -> balance)
-//       // Логика: locked уменьшаем, balance увеличиваем (возврат)
-//       // *Примечание: Зависит от того, вычли ли вы balance при создании заявки.
-//       // Обычно: при создании balance -= amount, locked += amount.
-//       // При отмене: locked -= amount, balance += amount.
-
-//       await tx.update(walletsTable)
-//         .set({
-//            lockedBalance: sql`${walletsTable.lockedBalance} - ${payment.amount}`,
-//            balance: sql`${walletsTable.balance} + ${payment.amount}`
-//         })
-//         .where(eq(walletsTable.id, payment.walletId));
-
-//       // Отправляем сокет об обновлении (чтобы исчезло из Pending)
-//       this.adminGateway.sendTransactionUpdate({ ...payment, status: 'rejected' });
-
-//       return { success: true };
-//     });
-//   }
-// }
-
 import {
   Controller,
   Get,
@@ -171,6 +10,8 @@ import {
   Inject,
   NotFoundException,
   Req,
+  Patch,
+  Put,
 } from '@nestjs/common';
 import { DRIZZLE } from 'src/drizzle/drizzle.module';
 import type { DrizzleDB } from 'src/drizzle/types/drizzle';
@@ -180,6 +21,9 @@ import { ledgerTable } from 'src/drizzle/schema/ledger.schema';
 import { walletsTable } from 'src/drizzle/schema/wallets.schema';
 import { AdminGateway } from './admin.gateway'; // Ваш WebSocket Gateway
 import { AccessTokenGuard } from 'src/auth/guards/jwt.guard';
+import { gamesTable } from 'src/drizzle/schema/games.schema';
+import { gamesPopularityTable } from 'src/drizzle/schema/games-popularity.schema';
+import { AdminService } from './admin.service';
 
 @Controller('admin/finance')
 @UseGuards(AccessTokenGuard)
@@ -187,6 +31,7 @@ export class AdminFinanceController {
   constructor(
     @Inject(DRIZZLE) private readonly db: DrizzleDB,
     private readonly adminGateway: AdminGateway,
+    private readonly adminService: AdminService,
   ) {}
 
   // --- 1. Лента истории (Все подтвержденные операции) ---
@@ -362,5 +207,49 @@ export class AdminFinanceController {
 
       return { success: true };
     });
+  }
+
+  @Get()
+  async getAllGamesAdmin() {
+    return await this.db
+      .select({
+        id: gamesTable.id,
+        name: gamesTable.name,
+        isActive: gamesTable.isActive,
+        popularityScore: gamesPopularityTable.popularityScore,
+      })
+      .from(gamesTable)
+      .leftJoin(
+        gamesPopularityTable,
+        eq(gamesTable.id, gamesPopularityTable.gameId),
+      );
+  }
+
+  @Patch(':id/status')
+  async toggleGameStatus(
+    @Param('id') id: string,
+    @Body('isActive') isActive: boolean,
+  ) {
+    await this.db
+      .update(gamesTable)
+      .set({ isActive })
+      .where(eq(gamesTable.id, id));
+    return { success: true };
+  }
+
+  @Patch(':id/popularity')
+  async boostPopularity(
+    @Param('id') id: string,
+    @Body('boostAmount') boostAmount: number,
+  ) {
+    // Устанавливаем или добавляем огромный буст (например +10000), чтобы игра стала топ-1
+    await this.db
+      .insert(gamesPopularityTable)
+      .values({ gameId: id, popularityScore: boostAmount })
+      .onConflictDoUpdate({
+        target: gamesPopularityTable.gameId,
+        set: { popularityScore: boostAmount }, // Перезаписываем скор
+      });
+    return { success: true };
   }
 }

@@ -10,6 +10,8 @@ import { slotsData } from '@/data/slots';
 import { api } from '@/shared/lib/api/axios';
 import { useRouter } from 'next/navigation';
 import { Center, Loader } from '@mantine/core';
+import { useAppDispatch, useAppSelector } from '@/shared/lib/redux/hooks';
+import { fetchLobby } from '@/entities/games/model/slice';
 
 type Game = {
 	id: string;
@@ -30,7 +32,11 @@ export default function SlotsCarousel() {
 	const [games, setGames] = useState<Game[]>([]);
 	const [loading, setLoading] = useState(true);
 	const router = useRouter();
+	const { popular, personalized } = useAppSelector((state: any) => state.games);
+	const appDispatch = useAppDispatch();
 
+	console.log(popular, 'popular');
+	console.log(personalized, 'personalized');
 	useEffect(() => {
 		api.get('games/list').then((res) => {
 			const raw = res.data;
@@ -39,6 +45,8 @@ export default function SlotsCarousel() {
 			setGames(flat);
 			setLoading(false);
 		});
+
+		appDispatch(fetchLobby());
 	}, []);
 
 	if (loading) {

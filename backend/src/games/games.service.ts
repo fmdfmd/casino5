@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { eq, sql, and } from 'drizzle-orm';
+import { eq, sql, and, gte } from 'drizzle-orm';
 import { DRIZZLE } from 'src/drizzle/drizzle.module';
 import { gameBetsTable } from 'src/drizzle/schema/game-bets.schema';
 import { gamesTable } from 'src/drizzle/schema/games.schema';
@@ -15,6 +15,11 @@ import { AdminGateway } from 'src/admin/admin.gateway';
 import { ChatGateway } from 'src/chat/chat.gateway';
 import { AffiliateService } from 'src/affiliate/affiliate.service';
 import { VipService } from 'src/vip/vip.service';
+import { gamesPopularityTable } from 'src/drizzle/schema/games-popularity.schema';
+import { gamesEventsTable } from 'src/drizzle/schema/games-events.schema';
+import { gamesStatsDailyTable } from 'src/drizzle/schema/games_stats_daily.schema';
+import { gamesCategoriesGamesTable } from 'src/drizzle/schema/games-categories-games.schema';
+import { gamesCategoriesTable } from 'src/drizzle/schema/games-categories.schema';
 
 @Injectable()
 export class GamesService {
@@ -50,6 +55,57 @@ export class GamesService {
     });
 
     if (!game) throw new Error('Game not found');
+
+    await this.db.insert(gamesEventsTable).values({
+      gameId: game.id,
+      userId,
+      type: 'launch',
+      mode: demo ? 'demo' : 'real',
+    });
+
+    await this.db
+      .insert(gamesPopularityTable)
+      .values({
+        gameId: game.id,
+        launches24h: 1,
+        totalLaunches: 1,
+        demoBetsCount: demo ? 1 : 0,
+        popularityScore: 1,
+      })
+      .onConflictDoUpdate({
+        target: gamesPopularityTable.gameId,
+        set: {
+          launches24h: sql`${gamesPopularityTable.launches24h} + 1`,
+          totalLaunches: sql`${gamesPopularityTable.totalLaunches} + 1`,
+          lastPlayedAt: new Date(),
+          popularityScore: sql`${gamesPopularityTable.popularityScore} + 1`, // Органический рост
+        },
+      });
+
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+
+    await this.db
+      .insert(gamesStatsDailyTable)
+      .values({
+        gameId: game.id,
+        date: today,
+        launches: 1,
+        demoLaunches: demo ? 1 : 0,
+        realLaunches: demo ? 0 : 1,
+        uniquePlayers: 1, // В идеале тут нужен сложный SQL (INSERT IGNORE) для подсчета уников, но для упрощения ставим 1
+      })
+      .onConflictDoUpdate({
+        target: [gamesStatsDailyTable.gameId, gamesStatsDailyTable.date], // Ваш uniqueIndex
+        set: {
+          launches: sql`${gamesStatsDailyTable.launches} + 1`,
+          demoLaunches: demo
+            ? sql`${gamesStatsDailyTable.demoLaunches} + 1`
+            : gamesStatsDailyTable.demoLaunches,
+          realLaunches: demo
+            ? gamesStatsDailyTable.realLaunches
+            : sql`${gamesStatsDailyTable.realLaunches} + 1`,
+        },
+      });
 
     const response = await fetch(this.openGameUrl, {
       method: 'POST',
@@ -206,6 +262,21 @@ export class GamesService {
               betAmount > 0 ? (winAmount / betAmount).toFixed(4) : '0',
           })
           .returning();
+
+        await tx
+          .insert(gamesPopularityTable)
+          .values({
+            gameId: game?.id || sql`null`,
+            realBetsCount: 1,
+            popularityScore: betUsd * 2, // Больше ставка = больше популярность
+          })
+          .onConflictDoUpdate({
+            target: gamesPopularityTable.gameId,
+            set: {
+              realBetsCount: sql`${gamesPopularityTable.realBetsCount} + 1`,
+              popularityScore: sql`${gamesPopularityTable.popularityScore} + ${betUsd * 2}`, // На основе потраченных денег
+            },
+          });
 
         // 7. Ledger (Аудит)
         const [ledgerRecord] = await tx

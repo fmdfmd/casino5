@@ -18,7 +18,7 @@ const USER_ACTIONS = [
 	{
 		id: 'like',
 		tag: 'link',
-		href: '',
+		href: '/favourites',
 		src: '/like.svg',
 		alt: 'Like',
 		width: 32,

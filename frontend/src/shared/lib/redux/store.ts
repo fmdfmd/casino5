@@ -5,6 +5,7 @@ import { authReducer } from '@/features/auth/model/authSlice';
 import { supportChatReducer } from '@/widgets/chat/model/slice';
 import vipSlice from '@/entities/vip/model/vipSlice';
 import { configureStore } from '@reduxjs/toolkit';
+import gamesReducer from '@/entities/games/model/slice';
 
 export const makeStore = () => {
 	return configureStore({
@@ -15,6 +16,7 @@ export const makeStore = () => {
 			currencies: currencyReducer,
 			wallet: walletReducer,
 			vip: vipSlice,
+			games: gamesReducer,
 		},
 	});
 };
