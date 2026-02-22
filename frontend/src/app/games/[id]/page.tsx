@@ -2,7 +2,7 @@
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Center, Loader } from '@mantine/core';
-import { api, API_URL } from '@/shared/lib/api/axios';
+import { api } from '@/shared/lib/api/axios';
 
 export default function GamePlayPage() {
 	const { id } = useParams();
