@@ -7,7 +7,7 @@ import { api } from '../lib/api/axios';
 let socket: Socket | null = null;
 
 const API_URL_WEBSOCKET =
-	process.env.API_URL_FOR_WEBSOCKET || 'http://localhost:8000';
+	process.env.NEXT_PUBLIC_API_URL_FOR_WEBSOCKET || 'http://localhost:8000';
 
 export async function refreshSession() {
 	await api.get('/auth/refresh', { withCredentials: true });
