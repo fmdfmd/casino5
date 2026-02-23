@@ -17,7 +17,7 @@ export const useSocket = () => {
 	const [isConnected, setIsConnected] = useState(
 		socket ? socket.connected : false,
 	);
-
+	console.log(API_URL_WEBSOCKET, 'API_URL_WEBSOCKET');
 	useEffect(() => {
 		if (!socket) {
 			socket = io(API_URL_WEBSOCKET, {

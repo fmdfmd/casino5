@@ -11,6 +11,7 @@
     margin-bottom: rem(40);
     position: fixed;
     z-index: 999;
+    background: var(--bg-color);
 
     @media (max-width: 768px) {
         border-radius: 0 0 16px 16px;

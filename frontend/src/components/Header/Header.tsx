@@ -9,6 +9,7 @@ import BuregMenu from '../BuregMenu/BuregMenu';
 import NotificationsDropdown from '../NotificationsDropdown/NotificationsDropdown';
 import { useAppDispatch, useAppSelector } from '@/shared/lib/redux/hooks';
 import { useAuthModal } from '../AuthModal/provider/AuthModalProvider';
+import clsx from 'clsx';
 
 const USER_ACTIONS = [
 	{
