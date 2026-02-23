@@ -15,7 +15,7 @@ import Chat from '@/widgets/chat/ui';
 import SlotsCarousel from '@/components/SlotsCarousel/SlotsCarousel';
 import RecentWinnings from '@/components/RecentWinnings/RecentWinnings';
 import { Center, Loader } from '@mantine/core';
-import { api, API_URL } from '@/shared/lib/api/axios';
+import { api } from '@/shared/lib/api/axios';
 
 export default function SlotPage() {
 	const { id } = useParams();
@@ -27,7 +27,7 @@ export default function SlotPage() {
 
 		api
 			.post(
-				`${API_URL}/games/open`,
+				'/games/open',
 				{
 					id,
 					demo: false,
@@ -35,7 +35,6 @@ export default function SlotPage() {
 				{ withCredentials: true },
 			)
 			.then((res) => {
-				console.log(res.data.content.game.url, 'res-url');
 				setGameUrl(res.data.content.game.url);
 			});
 	}, [id]);

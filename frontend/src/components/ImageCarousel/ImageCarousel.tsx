@@ -55,12 +55,13 @@ export default function ImageCarousel() {
 			<Carousel
 				withIndicators
 				withControls={false}
-				// height={580}
 				classNames={{
 					root: classes.carousel,
 					viewport: classes.viewport,
 					indicator: classes.indicator,
 					indicators: classes.indicators,
+					container: classes.carouselContainer,
+					slide: classes.slide,
 				}}
 				emblaOptions={{
 					loop: true,

@@ -2,9 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { api, API_URL } from '../lib/api/axios';
+import { api } from '../lib/api/axios';
 
 let socket: Socket | null = null;
+
+const API_URL_WEBSOCKET =
+	process.env.API_URL_FOR_WEBSOCKET || 'http://localhost:8000';
 
 export async function refreshSession() {
 	await api.get('/auth/refresh', { withCredentials: true });
@@ -17,7 +20,7 @@ export const useSocket = () => {
 
 	useEffect(() => {
 		if (!socket) {
-			socket = io(API_URL, {
+			socket = io(API_URL_WEBSOCKET, {
 				transports: ['websocket'],
 				withCredentials: true,
 				autoConnect: false,
