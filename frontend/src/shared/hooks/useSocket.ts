@@ -6,8 +6,9 @@ import { api } from '../lib/api/axios';
 
 let socket: Socket | null = null;
 
-const API_URL_WEBSOCKET =
-	process.env.NEXT_PUBLIC_API_URL_FOR_WEBSOCKET || 'http://localhost:8000';
+const WS_ORIGIN = process.env.NEXT_PUBLIC_WS_ORIGIN || 'http://localhost:8000';
+
+const WS_PATH = process.env.NEXT_PUBLIC_WS_PATH || '/socket.io';
 
 export async function refreshSession() {
 	await api.get('/auth/refresh', { withCredentials: true });
@@ -17,10 +18,11 @@ export const useSocket = () => {
 	const [isConnected, setIsConnected] = useState(
 		socket ? socket.connected : false,
 	);
-	console.log(API_URL_WEBSOCKET, 'API_URL_WEBSOCKET');
+
 	useEffect(() => {
 		if (!socket) {
-			socket = io(API_URL_WEBSOCKET, {
+			socket = io(WS_ORIGIN, {
+				path: WS_PATH,
 				transports: ['websocket'],
 				withCredentials: true,
 				autoConnect: false,
