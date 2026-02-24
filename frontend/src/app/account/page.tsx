@@ -14,6 +14,9 @@ import ExitModal from '@/components/ExitModal/ExitModal';
 import AvatarSelectModal from '@/components/AvatarSelectModal/AvatarSelectModal';
 
 import styles from './page.module.scss';
+import { useAppDispatch } from '@/shared/lib/redux/hooks';
+import { logoutUser } from '@/entities/user/model/api/logout';
+import { useRouter } from 'next/navigation';
 
 const TIERS = [
 	{ name: 'Guest', label: '', value: '$0 / $0', icon: '/medal.svg' },
@@ -42,6 +45,7 @@ export default function ProfileDashboardPage() {
 	const [isEditing, setIsEditing] = useState(false);
 	const [userName, setUserName] = useState('Viktor Z');
 	const [copied, setCopied] = useState(false);
+	const router = useRouter();
 
 	// Состояния для модалок
 	const [isExitModalOpen, setIsExitModalOpen] = useState(false);
@@ -53,15 +57,21 @@ export default function ProfileDashboardPage() {
 	const totalTicks = 100;
 	const peakIndices = [12, 37, 62, 87];
 
+	const appDispatch = useAppDispatch();
+	const handleLogout = async () => {
+		await appDispatch(logoutUser());
+	};
+
 	const handleCopyLink = () => {
 		navigator.clipboard.writeText(referralLink);
 		setCopied(true);
 		setTimeout(() => setCopied(false), 2000);
 	};
 
-	const handleFinalExit = () => {
+	const handleFinalExit = async () => {
 		console.log('User logged out');
-		window.location.href = '/';
+		await handleLogout();
+		router.push('/');
 	};
 
 	// 3. Функция сохранения аватара из модалки

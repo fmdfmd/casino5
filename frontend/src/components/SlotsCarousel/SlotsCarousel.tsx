@@ -35,13 +35,10 @@ export default function SlotsCarousel() {
 	const { popular, personalized } = useAppSelector((state: any) => state.games);
 	const appDispatch = useAppDispatch();
 
-	console.log(popular, 'popular');
-	console.log(personalized, 'personalized');
 	useEffect(() => {
 		api.get('games/list').then((res) => {
 			const raw = res.data;
 			const flat: Game[] = Object.values(raw).flat();
-			console.log(flat, 'flat');
 			setGames(flat);
 			setLoading(false);
 		});
@@ -63,9 +60,7 @@ export default function SlotsCarousel() {
 	const handleScrollNext = useCallback(() => {
 		if (embla) embla.scrollNext();
 	}, [embla]);
-	const handleInfoClick = (id: number) => {
-		console.log('Клик по info ID:', id);
-	};
+	const handleInfoClick = (id: number) => {};
 
 	const newSlots = games.slice(0, 8);
 

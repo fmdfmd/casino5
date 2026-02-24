@@ -38,18 +38,10 @@ const USER_ACTIONS = [
 
 const Header = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	const { user } = useAppSelector((store) => store.user);
+	const user = useAppSelector((store) => store.user.user);
 	const { openLogin, openSignup } = useAuthModal();
 
-	const dispatch = useAppDispatch();
-
-	const handleLogout = () => {
-		// dispatch(logoutUser()).then(() => {
-		// 	// Редирект или обновление UI
-		// 	window.location.href = '/';
-		// });
-	};
-
+	console.log(user, 'user');
 	return (
 		<>
 			<header className={styles.header}>

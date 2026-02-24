@@ -104,14 +104,14 @@ export class AuthController {
     return user;
   }
 
-  @Get('logout')
-  // @UseGuards()
-  async logout(@Req() req, @Res() res: Response) {
-    if (req.user?.userId) {
-      await this.authService.logout(req.user.sub);
-    }
+  @Post('logout')
+  @UseGuards(AccessTokenGuard)
+  async logout(@Req() req, @Res({ passthrough: true }) res: Response) {
+    await this.authService.logout(req.user.sub);
+
     this.clearCookies(res);
-    return res.sendStatus(HttpStatus.OK);
+
+    return { success: true };
   }
 
   private setCookies(res: Response, access: string, refresh: string) {
@@ -137,7 +137,19 @@ export class AuthController {
   }
 
   private clearCookies(res: Response) {
-    res.clearCookie('access_token');
-    res.clearCookie('refresh_token');
+    const isProduction = this.config.get('NODE_ENV') === 'production';
+
+    res.clearCookie('access_token', {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: 'lax', // Lax нужен для прохождения редиректов OAuth
+      // maxAge: 1000 * 10,
+    });
+    res.clearCookie('refresh_token', {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: 'lax',
+      // path: '/auth/refresh', // Security hardening: токен не летит на обычные API запросы
+    });
   }
 }

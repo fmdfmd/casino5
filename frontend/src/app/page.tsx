@@ -13,7 +13,6 @@ import RecentWinnings from '@/components/RecentWinnings/RecentWinnings';
 import { useAppDispatch } from '@/shared/lib/redux/hooks';
 import { useEffect } from 'react';
 import { fetchMe } from '@/features/auth/model/authSlice';
-import axios from 'axios';
 
 export default function Home() {
 	const dispatch = useAppDispatch();
